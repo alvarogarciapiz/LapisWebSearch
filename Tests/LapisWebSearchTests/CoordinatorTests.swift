@@ -116,6 +116,9 @@ import Testing
             Issue.record("Expected cancellation")
         } catch let error as SearchError { #expect(error.code == .cancelled) }
         #expect(await next.calls == 0)
+        try await withinDeadline(ContinuousClock.now.advanced(by: .seconds(2))) {
+            while await slow.cancellations == 0 { try await Task.sleep(for: .milliseconds(1)) }
+        }
         #expect(await slow.cancellations == 1)
     }
 
@@ -164,19 +167,17 @@ import Testing
         #expect(await provider.calls == 2)
     }
 
-    @Test func concurrentSearchesDoNotDuplicateProviderRequests() async throws {
+    @Test func concurrentSearchesQueueInsteadOfFailingBusy() async throws {
         let provider = StubProvider(response: .results([try result()]), delay: .milliseconds(80))
         let client = LapisWebSearch(providers: [provider])
         let first = Task { try await client.search("one") }
         while await provider.calls == 0 { await Task.yield() }
-        do {
-            _ = try await client.search("two")
-            Issue.record("Expected busy")
-        } catch let error as SearchError { #expect(error.attempts.first?.error == .providerBusy) }
+        let second = Task { try await client.search("two", options: .init()) }
         _ = try await first.value
-        #expect(await provider.calls == 1)
-        _ = try await client.search("three")
+        let response = try await second.value
+        #expect(response.results.count == 1)
         #expect(await provider.calls == 2)
+        #expect(response.attempts[0].queueDuration > 0)
     }
 
     @Test func diagnosticsDoNotContainQuery() async throws {

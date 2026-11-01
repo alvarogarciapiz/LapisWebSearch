@@ -14,10 +14,10 @@ import Testing
             return
         }
         #expect(status == 200)
-        #expect(rows.count == 3)
+        #expect(rows.count == 2)
         #expect(rows[0].title == "Swift concurrency")
         #expect(rows[0].snippet.contains("日本語"))
-        #expect(rows[2].originalPosition == 4)
+        #expect(rows[1].originalPosition == 4)
         #expect(rows.allSatisfy { $0.publishedAt == nil })
         let request = try #require(await transport.requests.first)
         #expect(request.url?.absoluteString == "https://api.firecrawl.dev/v2/search")

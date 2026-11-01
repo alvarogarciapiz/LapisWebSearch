@@ -1,4 +1,6 @@
-# Performance and resource behavior
+# Historical Phase 1 performance and resource behavior
+
+The per-request-session design below describes Phase 1. Current connection reuse, concurrency and measured comparisons are in [Phase 2 results](research/RESULTS.md) and [architecture](ARCHITECTURE.md).
 
 Measurements below are observations from one bounded run, not a benchmark against other engines or an availability estimate. See [VALIDATION.md](VALIDATION.md) for inputs, review rubric and hardware.
 

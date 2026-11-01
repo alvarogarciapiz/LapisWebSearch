@@ -11,12 +11,15 @@ public struct HTTPResponse: Sendable {
     public let status: Int
     public let contentType: String?
     public let retryAfter: String?
+    /// Only used by the fixed-endpoint MCP adapter; never included in diagnostics.
+    public let mcpSessionID: String?
 
-    public init(data: Data, status: Int, contentType: String?, retryAfter: String? = nil) {
+    public init(data: Data, status: Int, contentType: String?, retryAfter: String? = nil, mcpSessionID: String? = nil) {
         self.data = data
         self.status = status
         self.contentType = contentType
         self.retryAfter = retryAfter
+        self.mcpSessionID = mcpSessionID
     }
 
     func validate(types: Set<String>, maximumBytes: Int) throws {
@@ -50,14 +53,33 @@ enum RetryAfter {
     }
 }
 
-/// Ephemeral URLSession with no cookies, credentials, cache or automatic redirects.
+/// A reusable ephemeral session. Copies share its connection pool, not cookies, credentials or caches.
 public struct URLSessionTransport: HTTPTransport {
-    private let protocolClasses: [AnyClass]
-    public init() { protocolClasses = [] }
-    init(protocolClasses: [AnyClass]) { self.protocolClasses = protocolClasses }
+    private let storage: SessionStorage
+    public init() { storage = SessionStorage(protocolClasses: []) }
+    init(protocolClasses: [AnyClass]) { storage = SessionStorage(protocolClasses: protocolClasses) }
 
     public func send(_ request: URLRequest, maximumResponseBytes: Int) async throws -> HTTPResponse {
-        guard request.url?.scheme == "https", maximumResponseBytes > 0 else { throw SearchError(.invalidConfiguration) }
+        guard request.url?.scheme == "https", maximumResponseBytes > 0,
+            request.timeoutInterval.isFinite, request.timeoutInterval > 0, request.timeoutInterval <= 300
+        else { throw SearchError(.invalidConfiguration) }
+        defer { withExtendedLifetime(storage) {} }
+        let receiver = BoundedReceiver(maximumBytes: maximumResponseBytes)
+        let task = storage.session.dataTask(with: request)
+        task.delegate = receiver
+        return try await withTaskCancellationHandler {
+            try await withCheckedThrowingContinuation { continuation in
+                receiver.start(task, continuation: continuation)
+            }
+        } onCancel: {
+            receiver.cancel()
+        }
+    }
+}
+
+private final class SessionStorage: Sendable {
+    let session: URLSession
+    init(protocolClasses: [AnyClass]) {
         let configuration = URLSessionConfiguration.ephemeral
         if !protocolClasses.isEmpty { configuration.protocolClasses = protocolClasses }
         configuration.httpCookieStorage = nil
@@ -66,32 +88,149 @@ public struct URLSessionTransport: HTTPTransport {
         configuration.urlCache = nil
         configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
         configuration.waitsForConnectivity = false
-        configuration.timeoutIntervalForResource = request.timeoutInterval
-        let session = URLSession(configuration: configuration, delegate: RedirectPolicy(), delegateQueue: nil)
-        defer { session.invalidateAndCancel() }
-        do {
-            let (bytes, response) = try await session.bytes(for: request)
-            guard let http = response as? HTTPURLResponse else { throw SearchError(.invalidResponse) }
-            let type = http.value(forHTTPHeaderField: "Content-Type")
-            let retryAfter = http.value(forHTTPHeaderField: "Retry-After")
-            // Classify errors before reading their potentially large or sensitive bodies.
-            if !(200...299).contains(http.statusCode) {
-                return HTTPResponse(data: Data(), status: http.statusCode, contentType: type, retryAfter: retryAfter)
-            }
-            guard http.expectedContentLength <= Int64(maximumResponseBytes) else {
-                throw SearchError(.responseTooLarge, httpStatus: http.statusCode)
-            }
-            var data = Data()
-            for try await byte in bytes {
-                try Task.checkCancellation()
-                guard data.count < maximumResponseBytes else {
-                    throw SearchError(.responseTooLarge, httpStatus: http.statusCode)
-                }
-                data.append(byte)
-            }
-            return HTTPResponse(data: data, status: http.statusCode, contentType: type, retryAfter: retryAfter)
-        } catch { throw SearchError.classify(error) }
+        configuration.timeoutIntervalForResource = 300
+        session = URLSession(configuration: configuration, delegate: RedirectPolicy(), delegateQueue: nil)
     }
+    deinit { session.invalidateAndCancel() }
+}
+
+/// Every mutable field is protected by lock. Callbacks/continuations are always invoked after unlocking.
+/// Chunks arrive on URLSession's delegate queue; no per-byte tasks, copies or cancellation checks.
+private final class BoundedReceiver: NSObject, URLSessionDataDelegate, @unchecked Sendable {
+    private let lock = NSLock()
+    private let maximumBytes: Int
+    private var task: URLSessionDataTask?
+    private var continuation: CheckedContinuation<HTTPResponse, any Error>?
+    private var response: HTTPURLResponse?
+    private var data = Data()
+    private var finished = false
+    private var cancelled = false
+    private var timer: DispatchWorkItem?
+
+    init(maximumBytes: Int) { self.maximumBytes = maximumBytes }
+
+    func start(_ task: URLSessionDataTask, continuation: CheckedContinuation<HTTPResponse, any Error>) {
+        lock.lock()
+        if cancelled {
+            lock.unlock()
+            task.cancel()
+            continuation.resume(throwing: SearchError(.cancelled))
+            return
+        }
+        self.task = task
+        self.continuation = continuation
+        let timeout = task.originalRequest?.timeoutInterval ?? 60
+        let timer = DispatchWorkItem { [weak self] in self?.finish(.failure(SearchError(.timeout))) }
+        self.timer = timer
+        lock.unlock()
+        DispatchQueue.global(qos: .utility).asyncAfter(deadline: .now() + timeout, execute: timer)
+        task.resume()
+    }
+
+    func cancel() {
+        lock.lock()
+        cancelled = true
+        let started = continuation != nil
+        lock.unlock()
+        if started { finish(.failure(SearchError(.cancelled))) }
+    }
+
+    private func finish(_ result: Result<HTTPResponse, any Error>) {
+        var result = result
+        lock.lock()
+        guard !finished else {
+            lock.unlock()
+            return
+        }
+        finished = true
+        if case .failure(let failure) = result, let error = failure as? SearchError,
+            error.httpStatus == nil, let status = response?.statusCode
+        {
+            result = .failure(SearchError(error.code, httpStatus: status, retryAfter: error.retryAfter))
+        }
+        let continuation = continuation
+        self.continuation = nil
+        let task = task
+        self.task = nil
+        let timer = timer
+        self.timer = nil
+        data = Data()
+        lock.unlock()
+        timer?.cancel()
+        task?.cancel()
+        continuation?.resume(with: result)
+    }
+
+    private func value(_ http: HTTPURLResponse, data: Data) -> HTTPResponse {
+        HTTPResponse(
+            data: data, status: http.statusCode,
+            contentType: http.value(forHTTPHeaderField: "Content-Type"),
+            retryAfter: http.value(forHTTPHeaderField: "Retry-After"),
+            mcpSessionID: http.value(forHTTPHeaderField: "Mcp-Session-Id"))
+    }
+
+    func urlSession(
+        _ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse,
+        completionHandler: @escaping @Sendable (URLSession.ResponseDisposition) -> Void
+    ) {
+        guard let http = response as? HTTPURLResponse else {
+            completionHandler(.cancel)
+            finish(.failure(SearchError(.invalidResponse)))
+            return
+        }
+        lock.lock()
+        self.response = http
+        let active = !finished
+        lock.unlock()
+        guard active else {
+            completionHandler(.cancel)
+            return
+        }
+        if !(200...299).contains(http.statusCode) {
+            completionHandler(.cancel)
+            finish(.success(value(http, data: Data())))
+        } else if http.expectedContentLength > Int64(maximumBytes) {
+            completionHandler(.cancel)
+            finish(.failure(SearchError(.responseTooLarge, httpStatus: http.statusCode)))
+        } else {
+            completionHandler(.allow)
+        }
+    }
+
+    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive chunk: Data) {
+        lock.lock()
+        guard !finished else {
+            lock.unlock()
+            return
+        }
+        if chunk.count > maximumBytes - data.count {
+            let status = response?.statusCode
+            lock.unlock()
+            finish(.failure(SearchError(.responseTooLarge, httpStatus: status)))
+        } else {
+            data.append(chunk)
+            lock.unlock()
+        }
+    }
+
+    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: (any Error)?) {
+        lock.lock()
+        let http = response
+        let body = data
+        lock.unlock()
+        if let error {
+            finish(.failure(SearchError.classify(error)))
+        } else if let http {
+            finish(.success(value(http, data: body)))
+        } else {
+            finish(.failure(SearchError(.invalidResponse)))
+        }
+    }
+
+    func urlSession(
+        _ session: URLSession, task: URLSessionTask, willPerformHTTPRedirection response: HTTPURLResponse,
+        newRequest request: URLRequest, completionHandler: @escaping @Sendable (URLRequest?) -> Void
+    ) { completionHandler(nil) }
 }
 
 final class RedirectPolicy: NSObject, URLSessionTaskDelegate {

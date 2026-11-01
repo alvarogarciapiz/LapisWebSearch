@@ -13,6 +13,7 @@ public struct SearchError: Error, Sendable, LocalizedError, Encodable {
     public let httpStatus: Int?
     public let retryAfter: Date?
     public let attempts: [ProviderAttempt]
+    public internal(set) var configuration: SearchDiagnostics? = nil
 
     public init(_ code: Code, httpStatus: Int? = nil, retryAfter: Date? = nil, attempts: [ProviderAttempt] = []) {
         self.code = code

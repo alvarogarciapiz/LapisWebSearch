@@ -1,0 +1,357 @@
+{
+  "version": "1.0.0",
+  "asOf": "2026-11-01",
+  "description": "Original public synthetic query corpus. No private user searches. Q20 repeats Q04 as an explicit timing control.",
+  "queries": [
+    {
+      "id": "Q01",
+      "query": "Últimas novedades de inteligencia artificial",
+      "language": "es",
+      "category": "current",
+      "criteria": "Recent AI reporting; generic undated topic hubs are partial, not proof of recency."
+    },
+    {
+      "id": "Q02",
+      "query": "Precio de la electricidad hoy en España",
+      "language": "es",
+      "category": "localized-current",
+      "criteria": "Spain electricity tariff sources explicitly dated to evaluation day; do not grade claimed prices as factually correct."
+    },
+    {
+      "id": "Q03",
+      "query": "Investigaciones recientes sobre modelos pequeños",
+      "language": "es",
+      "category": "research-current",
+      "criteria": "Recent small language model research, not education mini-investigations or old AI retrospectives."
+    },
+    {
+      "id": "Q04",
+      "query": "Apple Foundation Models Swift documentation",
+      "language": "en",
+      "category": "technical",
+      "criteria": "Official Foundation Models Swift documentation; generic Foundation pages are partial."
+    },
+    {
+      "id": "Q05",
+      "query": "MLX Swift LM latest release",
+      "language": "en",
+      "category": "technical-current",
+      "criteria": "Current mlx-swift-lm release/tag/changelog, not only an undated repository homepage."
+    },
+    {
+      "id": "Q06",
+      "query": "Valladolid noticias tecnología",
+      "language": "es",
+      "category": "localized-current",
+      "criteria": "Technology reporting related to Valladolid; generic national news is partial, old social video is insufficient."
+    },
+    {
+      "id": "Q07",
+      "query": "What is retrieval augmented generation?",
+      "language": "en",
+      "category": "knowledge",
+      "criteria": "Explanations of retrieval augmented generation with the retrieval/generation relationship."
+    },
+    {
+      "id": "Q08",
+      "query": "Modelos de lenguaje locales para iPhone",
+      "language": "es",
+      "category": "technical",
+      "criteria": "Sources explicitly about running language models locally on iPhone."
+    },
+    {
+      "id": "Q09",
+      "query": "Swift structured concurrency cancellation documentation",
+      "language": "en",
+      "category": "technical",
+      "criteria": "Swift cooperative cancellation and structured concurrency documentation/examples."
+    },
+    {
+      "id": "Q10",
+      "query": "latest on-device AI research November 2026",
+      "language": "en",
+      "category": "research-current",
+      "criteria": "Research about on-device AI with evidence of currentness; market-size forecasts do not satisfy research intent."
+    },
+    {
+      "id": "Q11",
+      "query": "Museo Nacional de Escultura Valladolid horario",
+      "language": "es",
+      "category": "localized",
+      "criteria": "Official museum visitor hours preferred; conflicting schedules require verification."
+    },
+    {
+      "id": "Q12",
+      "query": "How does photosynthesis work?",
+      "language": "en",
+      "category": "knowledge",
+      "criteria": "An explanation of photosynthesis, energy conversion and its inputs/outputs."
+    },
+    {
+      "id": "Q13",
+      "query": "Python 3.15 release notes",
+      "language": "en",
+      "category": "technical-current",
+      "criteria": "Python 3.15 release notes or official changelog; other versions are partial or irrelevant."
+    },
+    {
+      "id": "Q14",
+      "query": "energía solar autoconsumo España normativa 2026",
+      "language": "es",
+      "category": "localized-current",
+      "criteria": "Spanish self-consumption regulation applicable in 2026; primary legal/regulatory sources preferred."
+    },
+    {
+      "id": "Q15",
+      "query": "日本語 Swift concurrency documentation",
+      "language": "mixed",
+      "category": "technical",
+      "criteria": "Swift concurrency documentation; record language coverage separately from topical relevance."
+    },
+    {
+      "id": "Q16",
+      "query": "pequeños modelos lenguaje cuantización MLX Swift",
+      "language": "mixed",
+      "category": "technical",
+      "criteria": "Small language models and quantization in MLX Swift on Apple hardware."
+    },
+    {
+      "id": "Q17",
+      "query": "site:developer.apple.com FoundationModels LanguageModelSession",
+      "language": "en",
+      "category": "technical",
+      "criteria": "Apple documentation of LanguageModelSession; preserve the supplied site operator."
+    },
+    {
+      "id": "Q18",
+      "query": "LapisWebSearch nonexistentphrasezqxv91827",
+      "language": "en",
+      "category": "long-tail-negative",
+      "criteria": "Only sources matching the exact project plus rare phrase satisfy intent; unrelated Lua Lapis pages are irrelevant. Zero results can be a valid outcome."
+    },
+    {
+      "id": "Q19",
+      "query": "Becilla de Valderaduey patrimonio historia",
+      "language": "es",
+      "category": "long-tail-local",
+      "criteria": "History or heritage of the named municipality; generic province pages are partial."
+    },
+    {
+      "id": "Q20",
+      "query": "Apple Foundation Models Swift documentation",
+      "language": "en",
+      "category": "repeat-control",
+      "criteria": "Repeat of Q04 for timing/order sensitivity, not an independent query in population claims."
+    },
+    {
+      "id": "Q21",
+      "query": "Swift actor reentrancy examples",
+      "language": "en",
+      "category": "technical",
+      "criteria": "Examples explaining actor reentrancy across suspension points."
+    },
+    {
+      "id": "Q22",
+      "query": "URLSession HTTP2 connection reuse Apple documentation",
+      "language": "en",
+      "category": "technical",
+      "criteria": "Apple networking documentation or concrete technical material on session/connection reuse."
+    },
+    {
+      "id": "Q23",
+      "query": "Swift task cancellation handlers continuation race",
+      "language": "en",
+      "category": "technical",
+      "criteria": "Cancellation-handler/continuation race explanations, not generic async tutorials."
+    },
+    {
+      "id": "Q24",
+      "query": "MIT license commercial use software",
+      "language": "en",
+      "category": "knowledge",
+      "criteria": "The MIT license permissions and conditions; external service rights remain separate."
+    },
+    {
+      "id": "Q25",
+      "query": "¿Qué es una red neuronal?",
+      "language": "es",
+      "category": "knowledge",
+      "criteria": "Explanations of neural networks, not unrelated neural biology only."
+    },
+    {
+      "id": "Q26",
+      "query": "diferencia entre potencia y energía eléctrica",
+      "language": "es",
+      "category": "knowledge",
+      "criteria": "Distinguish power and energy with units and practical examples."
+    },
+    {
+      "id": "Q27",
+      "query": "cómo se forma una aurora boreal",
+      "language": "es",
+      "category": "knowledge",
+      "criteria": "Sources explaining the physical formation of auroras."
+    },
+    {
+      "id": "Q28",
+      "query": "why is the sky blue Rayleigh scattering",
+      "language": "en",
+      "category": "knowledge",
+      "criteria": "Explanations of blue sky and Rayleigh scattering."
+    },
+    {
+      "id": "Q29",
+      "query": "Mercury planet element ambiguity",
+      "language": "en",
+      "category": "ambiguous",
+      "criteria": "Sources addressing mercury as planet or element; record ambiguity rather than inventing a single intended meaning."
+    },
+    {
+      "id": "Q30",
+      "query": "jaguar animal coche",
+      "language": "es",
+      "category": "ambiguous",
+      "criteria": "Animal or car meanings are both legitimate; do not penalize ambiguity as parser failure."
+    },
+    {
+      "id": "Q31",
+      "query": "banco significado español",
+      "language": "es",
+      "category": "ambiguous",
+      "criteria": "Spanish meanings of banco; financial-only or furniture-only coverage is partial."
+    },
+    {
+      "id": "Q32",
+      "query": "rust ownership borrowing guide",
+      "language": "en",
+      "category": "technical",
+      "criteria": "Rust ownership/borrowing language concepts, not metal corrosion."
+    },
+    {
+      "id": "Q33",
+      "query": "horarios biblioteca pública Valladolid domingo",
+      "language": "es",
+      "category": "localized",
+      "criteria": "Library opening hours for Valladolid including Sunday; distinguish institutions."
+    },
+    {
+      "id": "Q34",
+      "query": "Valladolid España transporte urbano líneas autobús",
+      "language": "es",
+      "category": "localized",
+      "criteria": "Urban bus lines in Valladolid, Spain; avoid Valladolid Mexico confusion."
+    },
+    {
+      "id": "Q35",
+      "query": "Sevilla temperatura media noviembre climatología",
+      "language": "es",
+      "category": "localized",
+      "criteria": "November climate averages for Seville; forecast data is not the same intent."
+    },
+    {
+      "id": "Q36",
+      "query": "Madrid museo arqueológico entrada gratuita condiciones",
+      "language": "es",
+      "category": "localized",
+      "criteria": "National archaeological museum free-entry conditions; official visitor information preferred."
+    },
+    {
+      "id": "Q37",
+      "query": "latest Swift language release November 2026",
+      "language": "en",
+      "category": "technical-current",
+      "criteria": "A current Swift language release source, with dated/version evidence."
+    },
+    {
+      "id": "Q38",
+      "query": "latest iOS security updates November 2026",
+      "language": "en",
+      "category": "current",
+      "criteria": "Official Apple security updates applicable near evaluation date, not generic news only."
+    },
+    {
+      "id": "Q39",
+      "query": "noticias ciencia España noviembre 2026",
+      "language": "es",
+      "category": "current",
+      "criteria": "Science news in Spain dated close to the declared evaluation date."
+    },
+    {
+      "id": "Q40",
+      "query": "investigación modelos lenguaje eficientes octubre 2026",
+      "language": "es",
+      "category": "research-current",
+      "criteria": "Research on efficient language models dated to/near October 2026."
+    },
+    {
+      "id": "Q41",
+      "query": "small language model benchmark limitations",
+      "language": "en",
+      "category": "research",
+      "criteria": "Methodological limitations of small language model benchmarks."
+    },
+    {
+      "id": "Q42",
+      "query": "on device speech recognition energy consumption study",
+      "language": "en",
+      "category": "research",
+      "criteria": "Empirical studies about energy consumption in on-device speech recognition."
+    },
+    {
+      "id": "Q43",
+      "query": "OpenAlex API documentation rate limits",
+      "language": "en",
+      "category": "technical",
+      "criteria": "Official OpenAlex API and rate limit documentation; not generic academic search engines."
+    },
+    {
+      "id": "Q44",
+      "query": "AEMET datos abiertos documentación API",
+      "language": "es",
+      "category": "technical-local",
+      "criteria": "Official AEMET OpenData API documentation and access requirements."
+    },
+    {
+      "id": "Q45",
+      "query": "Museo del Pan Mayorga historia",
+      "language": "es",
+      "category": "long-tail-local",
+      "criteria": "Mayorga bread museum history, not generic bread recipes."
+    },
+    {
+      "id": "Q46",
+      "query": "Villalón de Campos rollo jurisdiccional",
+      "language": "es",
+      "category": "long-tail-local",
+      "criteria": "The jurisdictional monument in Villalón de Campos."
+    },
+    {
+      "id": "Q47",
+      "query": "\"cooperative cancellation\" Swift",
+      "language": "en",
+      "category": "exact-phrase",
+      "criteria": "Sources matching cooperative cancellation in Swift; providers unable to support quoted queries should say so."
+    },
+    {
+      "id": "Q48",
+      "query": "Unicode café 日本語 búsqueda Swift",
+      "language": "mixed",
+      "category": "unicode",
+      "criteria": "Unicode/multilingual strings in Swift or search handling; preserve all supplied characters."
+    },
+    {
+      "id": "Q49",
+      "query": "Swift Package Manager binary checksum documentation",
+      "language": "en",
+      "category": "technical",
+      "criteria": "SPM binary artifact checksums/documentation."
+    },
+    {
+      "id": "Q50",
+      "query": "Apple Foundation Models privacy acceptable use requirements",
+      "language": "en",
+      "category": "technical-policy",
+      "criteria": "Official Foundation Models privacy/use requirements; do not infer legal permission from a tutorial."
+    }
+  ]
+}

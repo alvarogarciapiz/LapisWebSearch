@@ -38,3 +38,14 @@ func withinDeadline<T: Sendable>(
         return first
     }
 }
+
+/// Single-pass deduplication: a stateful lazy Collection predicate may be evaluated more than once.
+func uniqueResults(_ candidates: [SearchResult], limit: Int) -> [SearchResult] {
+    var seen: Set<URL> = []
+    var results: [SearchResult] = []
+    for candidate in candidates where seen.insert(candidate.url).inserted {
+        results.append(candidate)
+        if results.count == limit { break }
+    }
+    return results
+}

@@ -16,7 +16,9 @@ public struct BingRSSProvider: SearchProvider {
     }
 
     public func search(_ request: SearchRequest) async throws -> ProviderResponse {
-        guard hasSeparatePermission, request.options.safeSearch == nil else { throw SearchError(.unsupportedOperation) }
+        guard hasSeparatePermission, request.options.safeSearch == nil, request.options.country == nil,
+            request.options.timeRange == nil
+        else { throw SearchError(.unsupportedOperation) }
         var parts = URLComponents(string: "https://www.bing.com/search")!
         parts.queryItems = [.init(name: "q", value: request.query), .init(name: "format", value: "rss")]
         if let locale = request.options.locale { parts.queryItems?.append(.init(name: "mkt", value: locale)) }

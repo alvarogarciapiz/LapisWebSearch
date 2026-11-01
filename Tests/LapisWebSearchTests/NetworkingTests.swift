@@ -79,6 +79,14 @@ import Testing
         }
     }
 
+    @Test func transportRejectsUnboundedTimeout() async {
+        var request = URLRequest(url: URL(string: "https://example.invalid/")!)
+        request.timeoutInterval = 1e100
+        await #expect(throws: SearchError.self) {
+            try await URLSessionTransport().send(request, maximumResponseBytes: 100)
+        }
+    }
+
     @Test func providerPropagatesTransportFailure() async throws {
         let transport = StubTransport(error: SearchError(.networkUnavailable))
         do {

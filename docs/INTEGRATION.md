@@ -58,3 +58,13 @@ When those gates are resolved, the later task should:
 7. Add application-level tests for this mapping and cancellation, then explicitly authorized live requests through the real tool path. A package unit test or curl response is insufficient to enable production search.
 
 An AI application can expose the returned discovery records to its existing tool pipeline as untrusted source data. The package does not build prompts, rank extracted passages, manage a context window or produce citations.
+
+## Phase 2 concurrency and provider choices
+
+The original public search/provider contract remains usable. New initializer configuration and SearchOptions arguments have defaults. Retain one client per end user; copies share its coordinator. Concurrent identical calls now share a job, and different queries queue within bounded limits rather than being refused as provider-busy. Apps can opt out with `SearchConfiguration(coalesceIdenticalRequests: false)` or explicitly allow more requests per provider within its quotas. Keep output sharing within one end-user scope, consistent with service terms.
+
+A safe latency budget for an explicitly authorized experiment can use `SearchOptions(timeout: 8, providerTimeout: 3)`: queue time consumes the overall budget, and an admitted slow provider cannot consume the full eight seconds. `strategy: .firstSuccess` races up to `maximumParallelProviders` configured services, cancels losers and can return a faster, weaker result set. Avoid wrapping it in another automatic retry loop. Cancellation is surfaced as SearchError.cancelled; cancelling one subscriber does not cancel other identical subscribers.
+
+`ParallelSearchProvider()` is an explicit documented keyless research option; it is not silently selected by the default initializer. It rejects locale/country/time-range/safe-search overrides in keyless mode and quoted queries rather than rewriting or dropping them. Firecrawl now accepts `country: "ES"` and `timeRange: .month` while still rejecting locale. These options do not guarantee freshness. The later Lapis adapter should pass them only when the user's/tool's explicit request calls for them.
+
+For local development, the package and thin discovery mapping are ready to exercise. Opt-in experimental integration is technically feasible subject to applicable provider evaluation permission and clear query-disclosure controls. Public production replacement remains blocked on service/distribution authorization, physical/multiple-network and real app-tool-path validation. This phase performs no Lapis edits. The existing seven-step replacement procedure above still applies; page extraction, BM25, context budgeting, citation receipts and tool execution remain in Lapis.

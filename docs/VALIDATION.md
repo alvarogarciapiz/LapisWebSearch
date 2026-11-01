@@ -1,4 +1,6 @@
-# Validation record — 2026-11-01
+# Historical Phase 1 validation — 2026-11-01
+
+This record describes reference revision `65f8a8a` and its implementation predecessor. For current counts, concurrency, providers and measurements, see [Phase 2 results](research/RESULTS.md).
 
 **Package: unreleased and experimental. No stable tag, release or production-readiness claim.** This record separates deterministic correctness, actual native network behavior, manual discovery quality and third-party usage rights.
 

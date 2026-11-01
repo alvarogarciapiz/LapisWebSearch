@@ -9,6 +9,10 @@ import LapisWebSearch
                 print(usage)
                 return
             }
+            if args.first == "benchmark" {
+                try await BenchmarkRunner.run(Array(args.dropFirst()))
+                return
+            }
             guard args.first == "search", args.count >= 2, !args[1].hasPrefix("--") else { throw CLIError.usage }
             var provider = "firecrawl"
             var limit = 5
@@ -16,6 +20,11 @@ import LapisWebSearch
             var locale: String?
             var safe: Bool?
             var permission = false
+            var strategy = SearchStrategy.sequential
+            var providerTimeout: Double?
+            var country: String?
+            var timeRange: SearchTimeRange?
+            var parallelism = 2
             var index = 2
             while index < args.count {
                 let flag = args[index]
@@ -35,6 +44,19 @@ import LapisWebSearch
                     guard let number = Double(value) else { throw CLIError.usage }
                     timeout = number
                 case "--locale": locale = value
+                case "--country": country = value
+                case "--time-range":
+                    guard let range = SearchTimeRange(rawValue: value) else { throw CLIError.usage }
+                    timeRange = range
+                case "--strategy":
+                    guard let selected = SearchStrategy(rawValue: value) else { throw CLIError.usage }
+                    strategy = selected
+                case "--provider-timeout":
+                    guard let number = Double(value) else { throw CLIError.usage }
+                    providerTimeout = number
+                case "--parallelism":
+                    guard let number = Int(value) else { throw CLIError.usage }
+                    parallelism = number
                 case "--safe":
                     guard ["true", "false"].contains(value) else { throw CLIError.usage }
                     safe = value == "true"
@@ -42,20 +64,14 @@ import LapisWebSearch
                 }
                 index += 2
             }
-            let providers: [any SearchProvider]
-            switch provider {
-            case "firecrawl": providers = [FirecrawlProvider()]
-            case "bing-rss":
-                guard permission else { throw CLIError.restricted }
-                providers = [BingRSSProvider(hasSeparatePermission: true)]
-            case "fallback":
-                guard permission else { throw CLIError.restricted }
-                providers = [FirecrawlProvider(), BingRSSProvider(hasSeparatePermission: true)]
-            default: throw CLIError.usage
-            }
+            let providers = try makeProviders(provider, bingPermission: permission)
             let client = LapisWebSearch(providers: providers)
             let response = try await client.search(
-                args[1], options: .init(limit: limit, timeout: timeout, locale: locale, safeSearch: safe))
+                args[1],
+                options: .init(
+                    limit: limit, timeout: timeout, locale: locale, safeSearch: safe, strategy: strategy,
+                    maximumParallelProviders: parallelism, providerTimeout: providerTimeout, country: country,
+                    timeRange: timeRange))
             try printJSON(response)
         } catch let error as SearchError {
             try? printJSON(error)
@@ -63,6 +79,26 @@ import LapisWebSearch
         } catch {
             FileHandle.standardError.write(Data(("\(error.localizedDescription)\n\(usage)\n").utf8))
             exit(2)
+        }
+    }
+
+    static func makeProviders(
+        _ name: String, bingPermission: Bool = false, transport: any HTTPTransport = URLSessionTransport()
+    ) throws -> [any SearchProvider] {
+        switch name {
+        case "firecrawl": return [FirecrawlProvider(transport: transport)]
+        case "parallel": return [ParallelSearchProvider(transport: transport)]
+        case "research-fallback":
+            return [FirecrawlProvider(transport: transport), ParallelSearchProvider(transport: transport)]
+        case "parallel-first":
+            return [ParallelSearchProvider(transport: transport), FirecrawlProvider(transport: transport)]
+        case "bing-rss":
+            guard bingPermission else { throw CLIError.restricted }
+            return [BingRSSProvider(hasSeparatePermission: true)]
+        case "fallback":
+            guard bingPermission else { throw CLIError.restricted }
+            return [FirecrawlProvider(), BingRSSProvider(hasSeparatePermission: true)]
+        default: throw CLIError.usage
         }
     }
 
@@ -86,8 +122,13 @@ import LapisWebSearch
 
     static let usage = """
         LapisWebSearchCLI (experimental; external provider terms apply)
-        search "query" [--provider firecrawl|bing-rss|fallback] [--limit 1...100]
-          [--timeout seconds] [--locale es-ES] [--safe true|false] [--bing-permission]
+        search "query" [--provider firecrawl|parallel|research-fallback|parallel-first|bing-rss|fallback] [--limit 1...100]
+          [--timeout seconds] [--provider-timeout seconds] [--strategy sequential|firstSuccess]
+          [--parallelism 1...4] [--locale es-ES] [--country ES] [--time-range day|week|month|year]
+          [--safe true|false] [--bing-permission]
+        benchmark --live --provider firecrawl|parallel|research-fallback|parallel-first --dataset path --count 1...20
+          [--offset 0] [--interval 3] [--strategy sequential|firstSuccess] [--include-results] [--output path]
+        Benchmark output omits query text and result content unless --include-results is explicitly requested.
         JSON on stdout; exit 0 = nonempty results, 1 = search failure, 2 = invalid input/usage.
         Firecrawl does not support locale. Bing requires separate permission and does not support safe search.
         No query logging, retries, scraping or browser impersonation.

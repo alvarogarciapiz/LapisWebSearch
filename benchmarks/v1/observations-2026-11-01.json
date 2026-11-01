@@ -1,0 +1,955 @@
+{
+  "schemaVersion": 1,
+  "corpusVersion": "1.0.0",
+  "evaluatedAt": "2026-11-01",
+  "baselineRevision": "65f8a8aa4497b1c073a21376a16cd9c016370d86",
+  "review": "Single unblinded agent-assisted review of native returned titles, URLs, provider dates and snippets. No independent human adjudication or webpage factual verification.",
+  "contentPolicy": "No query text, third-party titles/snippets, raw responses, IP addresses or session identifiers. Resource IDs are SHA-256 of returned normalized URLs for pooled metric matching.",
+  "runs": [
+    {
+      "id": "Q01",
+      "variant": "current",
+      "provider": "firecrawl",
+      "duration": 0.739951917,
+      "validResultCount": 5,
+      "error": null,
+      "results": [
+        {
+          "resourceID": "a970370a3a7ebaf5ef28fd0e0c1414fb1dda9b9d2a465992fea4592139a2c14a",
+          "grade": 1,
+          "reason": "AI news hub, no dated item evidence"
+        },
+        {
+          "resourceID": "ea323d61a74da2a3e50657db6e11e132362b73488629f3690f949577660dbdfb",
+          "grade": 1,
+          "reason": "AI topic hub, freshness not established"
+        },
+        {
+          "resourceID": "8deb6966da7cb478df97fed8efc9f2c5e9d37ba3a383a76ac8472169766cbae4",
+          "grade": 1,
+          "reason": "Relevant topic hub, freshness not established"
+        },
+        {
+          "resourceID": "7b56d0aa7ecae416da3ac3df1e1358bcc2f173487750713ce8f4fef29dbce35a",
+          "grade": 1,
+          "reason": "AI news hub, no evaluation-day item date"
+        },
+        {
+          "resourceID": "9d7050eafe724c0d33d4c178300a891ce053ecfed5d9d640874a0950f2b399ca",
+          "grade": 1,
+          "reason": "AI news video, current date unestablished"
+        }
+      ]
+    },
+    {
+      "id": "Q02",
+      "variant": "current",
+      "provider": "firecrawl",
+      "duration": 0.658070792,
+      "validResultCount": 5,
+      "error": null,
+      "results": [
+        {
+          "resourceID": "54b6376549d232071d8494106b9bf5723c78792b39bdae847f624a7bba6bed71",
+          "grade": 2,
+          "reason": "Evaluation-day date explicitly surfaced"
+        },
+        {
+          "resourceID": "01dc45b130eed4dffb73dcb2f229924f94a1b8e65c88d40646b7d36e827a9975",
+          "grade": 1,
+          "reason": "Hourly price source, evaluation-day date absent"
+        },
+        {
+          "resourceID": "7adcc428b591d9a34408cbbef7444ad63256fa16daf2f872dcfc6bfb7956ab8d",
+          "grade": 2,
+          "reason": "Evaluation-day date explicitly surfaced"
+        },
+        {
+          "resourceID": "37048eaf94eaef757cfc7b9bf2392d47f19e8e254978f009b2ba545ba08104f9",
+          "grade": 1,
+          "reason": "Relevant official tariff source, day not shown"
+        },
+        {
+          "resourceID": "0a8b400b5a3e9fc837ac9925db3f626e09029886ebfbfd6ae799aa55cb654b5d",
+          "grade": 1,
+          "reason": "Relevant tariff page, exact day not shown"
+        }
+      ]
+    },
+    {
+      "id": "Q03",
+      "variant": "current",
+      "provider": "firecrawl",
+      "duration": 0.516349292,
+      "validResultCount": 5,
+      "error": null,
+      "results": [
+        {
+          "resourceID": "06c31ed1dd4637b7e47bc2938d6405c7f7f9940fac9b80241bcc7fefee5e8f5c",
+          "grade": 1,
+          "reason": "Small-model topic but a 2023 retrospective"
+        },
+        {
+          "resourceID": "ef80d501e87a803f913e60d684f649e674026d728ba8f5e17c3b668663d10f35",
+          "grade": 0,
+          "reason": "Education document, wrong model sense"
+        },
+        {
+          "resourceID": "e945afbe95aa371fa2bc8845781f320597f52fc0a5b4e754546d71d596e413de",
+          "grade": 0,
+          "reason": "Classroom investigations, wrong intent"
+        },
+        {
+          "resourceID": "a4ed212a8a5722128090f53bd21460ba6b73812de9ab6a931e1bdbcfe5bae8be",
+          "grade": 0,
+          "reason": "Classroom learning, wrong intent"
+        },
+        {
+          "resourceID": "9583a89e548c4abb972f07c8beaacc2ec757e7e95a7f45f937c849cbf88430c5",
+          "grade": 0,
+          "reason": "Learning-style models, wrong intent"
+        }
+      ]
+    },
+    {
+      "id": "Q04",
+      "variant": "current",
+      "provider": "firecrawl",
+      "duration": 0.534356792,
+      "validResultCount": 5,
+      "error": null,
+      "results": [
+        {
+          "resourceID": "defcaf9847ded1d1690877a44c55af02aa8b6408d7003d9224ef0c959e05310f",
+          "grade": 2,
+          "reason": "Official requested framework documentation"
+        },
+        {
+          "resourceID": "448b18b62df5bcd90abf1482a8c2d20720f1fbc434ca42bd5dc3c75da66c0448",
+          "grade": 1,
+          "reason": "Different Foundation framework, partial overlap"
+        },
+        {
+          "resourceID": "3cd205dede17a2b9233b7afde3b32f4c16edbd4d1047be5910c482a59e57e676",
+          "grade": 2,
+          "reason": "Official requested framework overview"
+        },
+        {
+          "resourceID": "bffd8308016230160ddf3525afcffcae673c3a970da7811b8be88353d9a165fe",
+          "grade": 2,
+          "reason": "Official requested framework introduction"
+        },
+        {
+          "resourceID": "0dbdf118e9cf8a9fa9de48da29e072f99277062ceed17b848faf841215e631a0",
+          "grade": 1,
+          "reason": "Third-party tutorial, official-document intent partial"
+        }
+      ]
+    },
+    {
+      "id": "Q05",
+      "variant": "current",
+      "provider": "firecrawl",
+      "duration": 0.605783084,
+      "validResultCount": 5,
+      "error": null,
+      "results": [
+        {
+          "resourceID": "facc0ac7c70363ea20f6cd1235de91dea6b06f0d00190946045a6c8ae753abc2",
+          "grade": 1,
+          "reason": "Correct project, latest release not established"
+        },
+        {
+          "resourceID": "ce0d72a244aaf598ca0ba543fab8e2ae323db6787a1d69bec9d961438f5116fd",
+          "grade": 1,
+          "reason": "Correct project index, latest release not established"
+        },
+        {
+          "resourceID": "65295f508d04ef208d5d3177edb0829c8302c978f873ee19037db964a4b7340b",
+          "grade": 0,
+          "reason": "Old overview, not release information"
+        },
+        {
+          "resourceID": "64e3756857b39b7abbb5fde3e26bb0ccda16ee350b6934cd124464e1ad5d1379",
+          "grade": 1,
+          "reason": "Related MLX project, not requested release"
+        },
+        {
+          "resourceID": "9c4914cc9731b4250993c137c80646315ed54e0c027edfdbef5356bd39c5bcf9",
+          "grade": 0,
+          "reason": "Different inference-server project"
+        }
+      ]
+    },
+    {
+      "id": "Q06",
+      "variant": "current",
+      "provider": "firecrawl",
+      "duration": 0.501351542,
+      "validResultCount": 5,
+      "error": null,
+      "results": [
+        {
+          "resourceID": "918381652ea81a07c4b5dca9d89b592423ed2644be169321d83102b85020cd8b",
+          "grade": 1,
+          "reason": "Local technology topic hub without dated report"
+        },
+        {
+          "resourceID": "38c8287dd54ce6000013f7f5287e844942e8582bcfeceba070f2eaba5d3c3372",
+          "grade": 1,
+          "reason": "Old local technology video, inadequate currentness"
+        },
+        {
+          "resourceID": "b11fb193b96c61b1e3f19bf421db1c7cdf1a8eefd981c55998c4cfa88a4ab2e7",
+          "grade": 1,
+          "reason": "Technology section, local/current item unclear"
+        },
+        {
+          "resourceID": "f4e296f8f762396e3833c4cecccb9d6d3b219a233c1ea18f7957b690b5ee5f19",
+          "grade": 1,
+          "reason": "Relevant city technology project, date unclear"
+        },
+        {
+          "resourceID": "34ee07b39b40fb3a4910da458356ac2f81d92fd16ced2788a4cdf8026f2cf9ec",
+          "grade": 1,
+          "reason": "Local technology/social material, date unclear"
+        }
+      ]
+    },
+    {
+      "id": "Q01",
+      "variant": "current",
+      "provider": "parallel",
+      "duration": 1.5600615,
+      "validResultCount": 5,
+      "error": null,
+      "results": [
+        {
+          "resourceID": "64d6cbc4a8ff7e1c756302e7d21a6917a807104938ae5969b27431250662ca63",
+          "grade": 2,
+          "reason": "Evaluation-day AI news explicitly surfaced"
+        },
+        {
+          "resourceID": "37c9419717e259ff7e94b9bf492bf5ac14c2671f2f638d2eaceaf165e8de44dc",
+          "grade": 2,
+          "reason": "Recent dated AI reporting"
+        },
+        {
+          "resourceID": "a970370a3a7ebaf5ef28fd0e0c1414fb1dda9b9d2a465992fea4592139a2c14a",
+          "grade": 2,
+          "reason": "Recent dated AI reporting"
+        },
+        {
+          "resourceID": "a097ef0d441a7216b7cd0e2333e660cab42270878853c22c33f188284ed638d5",
+          "grade": 1,
+          "reason": "AI announcement, date not established in surface"
+        },
+        {
+          "resourceID": "81e95740ac635197c66822d87752c15de49951a9419aacfdbd0c26ee291171c9",
+          "grade": 2,
+          "reason": "Recent date supplied and on-topic AI reporting"
+        }
+      ]
+    },
+    {
+      "id": "Q02",
+      "variant": "current",
+      "provider": "parallel",
+      "duration": 0.818868709,
+      "validResultCount": 5,
+      "error": null,
+      "results": [
+        {
+          "resourceID": "1212240606a86ca4b79607bb5c48b0c16a1476ee702235166a8e4dd08b6cca17",
+          "grade": 2,
+          "reason": "Evaluation-day tariff explicitly surfaced"
+        },
+        {
+          "resourceID": "94fafe237f1b48b9d30142ae6f8c53c4d8650f064b8ca483b0d41bef26e533f9",
+          "grade": 1,
+          "reason": "Previous-day tariff, fails today requirement"
+        },
+        {
+          "resourceID": "611ad8d715a51fde22809ab93d84e07d04157b48df7ecebed7519dee14cabe4f",
+          "grade": 1,
+          "reason": "Older tariff, fails today requirement"
+        },
+        {
+          "resourceID": "54b6376549d232071d8494106b9bf5723c78792b39bdae847f624a7bba6bed71",
+          "grade": 1,
+          "reason": "Previous-day tariff, fails today requirement"
+        },
+        {
+          "resourceID": "44d87f6d073b0b9ff1a26b3fa20edc560eb2e92044b78b6c081ef69fb9573382",
+          "grade": 1,
+          "reason": "Dated tariff/company pricing, not evaluation-day tariff"
+        }
+      ]
+    },
+    {
+      "id": "Q03",
+      "variant": "current",
+      "provider": "parallel",
+      "duration": 0.768448833,
+      "validResultCount": 5,
+      "error": null,
+      "results": [
+        {
+          "resourceID": "532bb98f47b7a0e2b257d667b8a9c19e5c0e2c88535bc012546d85a39ea2b3e1",
+          "grade": 2,
+          "reason": "Recent small-model research report"
+        },
+        {
+          "resourceID": "c638e0a23b4ec794b43aaaf38fda97e2e987ddc7782831504445e1abe77198ba",
+          "grade": 2,
+          "reason": "Small-model research paper, provider supplies a recent date; not independently verified"
+        },
+        {
+          "resourceID": "23baa2cd67833a663a6973312380e0725a62c5f764299c26561e18911799dd14",
+          "grade": 0,
+          "reason": "Satellite processing, wrong model/research intent"
+        },
+        {
+          "resourceID": "fc1e76923a6d30abddb9b732a224de51a43e3cc07995d35dff5e0c1b135d25e7",
+          "grade": 1,
+          "reason": "Small-model economics, research specificity incomplete"
+        },
+        {
+          "resourceID": "ff52dc824d3d055226e81610da1cbb5b48d63623fcc581dd1b39e03baea6a6de",
+          "grade": 1,
+          "reason": "Specialized-model topic, research/currentness incomplete"
+        }
+      ]
+    },
+    {
+      "id": "Q04",
+      "variant": "current",
+      "provider": "parallel",
+      "duration": 0.807081167,
+      "validResultCount": 5,
+      "error": null,
+      "results": [
+        {
+          "resourceID": "1c5e170b0f37ff95fda39bd91cbbc5eebba3207c5238b3fa2fbe2ad758249862",
+          "grade": 2,
+          "reason": "Official requested framework material; URL aliases are not semantic-diversity evidence"
+        },
+        {
+          "resourceID": "bffd8308016230160ddf3525afcffcae673c3a970da7811b8be88353d9a165fe",
+          "grade": 2,
+          "reason": "Official requested framework material; URL aliases are not semantic-diversity evidence"
+        },
+        {
+          "resourceID": "517f228240ed6fb9d47b368e6bf79200d64d3750937362f0f968ec02a5ffeda1",
+          "grade": 2,
+          "reason": "Official requested framework material; URL aliases are not semantic-diversity evidence"
+        },
+        {
+          "resourceID": "defcaf9847ded1d1690877a44c55af02aa8b6408d7003d9224ef0c959e05310f",
+          "grade": 2,
+          "reason": "Official requested framework material; URL aliases are not semantic-diversity evidence"
+        },
+        {
+          "resourceID": "8dc9872cd514f337e674f4b746d67ee0de9e898e940a5f4b7babc983414cfb2f",
+          "grade": 2,
+          "reason": "Official requested framework material; URL aliases are not semantic-diversity evidence"
+        }
+      ]
+    },
+    {
+      "id": "Q05",
+      "variant": "current",
+      "provider": "parallel",
+      "duration": 0.649334625,
+      "validResultCount": 5,
+      "error": null,
+      "results": [
+        {
+          "resourceID": "f8141e25a1ddcc4682c1705e084f64fa4708242cc004206e7f843e9017837096",
+          "grade": 0,
+          "reason": "Python project instead of requested Swift package"
+        },
+        {
+          "resourceID": "2708b5cb0fc5ef85ece86628fd45a24017b239a13f43f1b55b032109c3e0efd6",
+          "grade": 0,
+          "reason": "Python package instead of requested Swift package"
+        },
+        {
+          "resourceID": "b53a23025a45e5985a168edb6e92e33e55767f37369dd8eb619fbb59b21fe4f9",
+          "grade": 1,
+          "reason": "Correct Swift project development docs, not latest release"
+        },
+        {
+          "resourceID": "687d1b1079a2612a698eb6b3ddea933f7d1893b2dca8d0367aec587226354b31",
+          "grade": 0,
+          "reason": "Python release instead of requested Swift package"
+        },
+        {
+          "resourceID": "b8c588d4a150c3f8c568b9e008993ef9ff5cb6dd2c1680f0e4135bf99866055f",
+          "grade": 1,
+          "reason": "Related Swift examples, not requested release"
+        }
+      ]
+    },
+    {
+      "id": "Q06",
+      "variant": "current",
+      "provider": "parallel",
+      "duration": 0.700843291,
+      "validResultCount": 5,
+      "error": null,
+      "results": [
+        {
+          "resourceID": "6a8a61457d390cf7bf0ddf453b9fd636f1a75bd4dae3cd08e9c8fc24d4d9918a",
+          "grade": 1,
+          "reason": "Local technology report, older than current reporting window"
+        },
+        {
+          "resourceID": "f7ada80d991d708a5f26da5352cd961cf75e68af316f457baf7439957cc17a19",
+          "grade": 1,
+          "reason": "Local industry event, technology specificity limited"
+        },
+        {
+          "resourceID": "74500331d03e415d6c0da2134196b6f6ee035581064a69191d7ae439adc322be",
+          "grade": 1,
+          "reason": "Local AI topic, old report"
+        },
+        {
+          "resourceID": "c0f0edd40904571ec0249abf5a32383cc6fbf290630facdfb82d7c0a112006a5",
+          "grade": 1,
+          "reason": "City equipment project, technology relevance partial"
+        },
+        {
+          "resourceID": "6dca87905f304136bc8df6811aeed328c57dc6ecd8dc8a9ad8103ef5cb6e5123",
+          "grade": 0,
+          "reason": "General city-news homepage, not technology-specific"
+        }
+      ]
+    },
+    {
+      "id": "Q07",
+      "variant": "current",
+      "provider": "parallel",
+      "duration": 1.003652334,
+      "validResultCount": 5,
+      "error": null,
+      "results": [
+        {
+          "resourceID": "1c9a1585d7701a2517f36a6b06f3d0ec8b6e6678ad7bc73b563e93a1d57a0f80",
+          "grade": 2,
+          "reason": "Direct RAG definition/explanation or foundational survey"
+        },
+        {
+          "resourceID": "cd928e0a00862118cce35b9cb7d96623d5226dbf9f566119f664e9bdb78ff9d0",
+          "grade": 2,
+          "reason": "Direct RAG definition/explanation or foundational survey"
+        },
+        {
+          "resourceID": "2f0c0de9306b80abec00b64079ffb145d58135577fa4d15720a931eb7d080a07",
+          "grade": 2,
+          "reason": "Direct RAG definition/explanation or foundational survey"
+        },
+        {
+          "resourceID": "e0b9164baba875454787188f91b8b040df3cfad261ec1064468ebcff256ed69c",
+          "grade": 2,
+          "reason": "Direct RAG definition/explanation or foundational survey"
+        },
+        {
+          "resourceID": "227595a125e7ac7864af0669a6b64458315da7071c3e0bc712bc173c63c70971",
+          "grade": 2,
+          "reason": "Direct RAG definition/explanation or foundational survey"
+        }
+      ]
+    },
+    {
+      "id": "Q08",
+      "variant": "current",
+      "provider": "parallel",
+      "duration": 0.765878083,
+      "validResultCount": 5,
+      "error": null,
+      "results": [
+        {
+          "resourceID": "12ef3c200b9c6eeda09d50841066ae0e0f9cc75031db591283b30b5d86deb794",
+          "grade": 2,
+          "reason": "Explicit local iPhone/Mac model application"
+        },
+        {
+          "resourceID": "cf172ac0b8fd84cb9ce82be31b1e2a81fa1dd30ffeb689db0945c528cc292d1f",
+          "grade": 1,
+          "reason": "General on-device models, iPhone support not established"
+        },
+        {
+          "resourceID": "f8c5975d1a9123f9b3ec4ccf4848061c972d34ee91912b53d4cc9492980f1acc",
+          "grade": 1,
+          "reason": "Local agents, iPhone support not established"
+        },
+        {
+          "resourceID": "3e7c7abab91634e911ba519f9039beb18c85d0a32fff5653b3ae74dee1f26d8e",
+          "grade": 1,
+          "reason": "Small local models, iPhone support not established"
+        },
+        {
+          "resourceID": "d04faebd5b778923f96d68a6f644b6cfcba21070066a83d5cd7e261a63af9a10",
+          "grade": 1,
+          "reason": "Local Linux models, iPhone support not established"
+        }
+      ]
+    },
+    {
+      "id": "Q09",
+      "variant": "current",
+      "provider": "parallel",
+      "duration": 0.85659775,
+      "validResultCount": 5,
+      "error": null,
+      "results": [
+        {
+          "resourceID": "f0bd1e4225b0a62590782ede16e6744ae8beb76bec0849405b3b685f56b57765",
+          "grade": 2,
+          "reason": "Official concurrency implementation/documentation with cancellation detail"
+        },
+        {
+          "resourceID": "b9f182c81b02f77d06cfe5e3dc6cfe3988458df4da130dff65d63096701a20e3",
+          "grade": 2,
+          "reason": "Official concurrency implementation/documentation with cancellation detail"
+        },
+        {
+          "resourceID": "f160d6ddf6e9e6ca476ba4ee610e9afb43b089b2cd9d5c1cf684e88d023cefd4",
+          "grade": 2,
+          "reason": "Official concurrency implementation/documentation with cancellation detail"
+        },
+        {
+          "resourceID": "3f6b644ab85f0d71075bf2a5aac6bc5d6473cfbfac3099b495cfe5b6c4700ede",
+          "grade": 2,
+          "reason": "Official concurrency implementation/documentation with cancellation detail"
+        },
+        {
+          "resourceID": "d488f00886842628df25e84e24efce740f3ae48b279f9f0b67795ac27e148a65",
+          "grade": 2,
+          "reason": "Official concurrency implementation/documentation with cancellation detail"
+        }
+      ]
+    },
+    {
+      "id": "Q10",
+      "variant": "current",
+      "provider": "parallel",
+      "duration": 0.847162708,
+      "validResultCount": 5,
+      "error": null,
+      "results": [
+        {
+          "resourceID": "d233c14c91690a621ec46d695bb04f70bed18b4ab496e50069b3418b6032cd0a",
+          "grade": 2,
+          "reason": "Recent on-device compute technique report"
+        },
+        {
+          "resourceID": "c43caec962fd3c4441e6119cd85137ff7728ece404cec054fc59278e185da535",
+          "grade": 1,
+          "reason": "Upcoming research talk, not published findings"
+        },
+        {
+          "resourceID": "e2e7cdd1a1b731009fab8be6ffd91a90dfda3b02dad948633f9d211c8beb2f19",
+          "grade": 2,
+          "reason": "Recent report of concrete on-device small-model research"
+        },
+        {
+          "resourceID": "5026b89a08ad35168d1414abac59db0dbed55dbf7a9c2e235408d2712a4f96b8",
+          "grade": 1,
+          "reason": "Chip announcement, research/date specificity limited"
+        },
+        {
+          "resourceID": "c943f605e795148ee70fe99919ffac09ca9cab09e189d0d0a773353fb0bb33ef",
+          "grade": 1,
+          "reason": "Research funding call, not research findings"
+        }
+      ]
+    },
+    {
+      "id": "Q07",
+      "variant": "baseline",
+      "provider": "firecrawl",
+      "duration": 0.853266458,
+      "validResultCount": 5,
+      "error": null,
+      "results": [
+        {
+          "resourceID": "8c8e54d9452466449395d4426ef50de942dd4a531ba8accdacdb73e2ae1834a3",
+          "grade": 2,
+          "reason": "Direct RAG explanation"
+        },
+        {
+          "resourceID": "cd928e0a00862118cce35b9cb7d96623d5226dbf9f566119f664e9bdb78ff9d0",
+          "grade": 2,
+          "reason": "Direct RAG explanation"
+        },
+        {
+          "resourceID": "2b77e76d73d4f3e98b045d48aed3561879ced1aaff786d3355339b7c21fb93f5",
+          "grade": 2,
+          "reason": "Direct RAG explanation"
+        },
+        {
+          "resourceID": "b43f8e16786a1aa94d7cbaee9352dea432bda5f8ff2c0ec9459e94db2594753a",
+          "grade": 2,
+          "reason": "Direct RAG explanation"
+        },
+        {
+          "resourceID": "9ee7abb8cc6547c45967d563d22c208636758985029a131680ecdb095297dcda",
+          "grade": 2,
+          "reason": "Direct RAG explanation"
+        }
+      ]
+    },
+    {
+      "id": "Q07",
+      "variant": "current",
+      "provider": "firecrawl",
+      "duration": 0.480905208,
+      "validResultCount": 5,
+      "error": null,
+      "results": [
+        {
+          "resourceID": "8c8e54d9452466449395d4426ef50de942dd4a531ba8accdacdb73e2ae1834a3",
+          "grade": 2,
+          "reason": "Direct RAG explanation"
+        },
+        {
+          "resourceID": "cd928e0a00862118cce35b9cb7d96623d5226dbf9f566119f664e9bdb78ff9d0",
+          "grade": 2,
+          "reason": "Direct RAG explanation"
+        },
+        {
+          "resourceID": "2b77e76d73d4f3e98b045d48aed3561879ced1aaff786d3355339b7c21fb93f5",
+          "grade": 2,
+          "reason": "Direct RAG explanation"
+        },
+        {
+          "resourceID": "b43f8e16786a1aa94d7cbaee9352dea432bda5f8ff2c0ec9459e94db2594753a",
+          "grade": 2,
+          "reason": "Direct RAG explanation"
+        },
+        {
+          "resourceID": "9ee7abb8cc6547c45967d563d22c208636758985029a131680ecdb095297dcda",
+          "grade": 2,
+          "reason": "Direct RAG explanation"
+        }
+      ]
+    },
+    {
+      "id": "Q08",
+      "variant": "current",
+      "provider": "firecrawl",
+      "duration": 0.498219583,
+      "validResultCount": 5,
+      "error": null,
+      "results": [
+        {
+          "resourceID": "90ed799db453ed86a713235054887e34b0c8515b4d8bdb4187ee96ac31c8fb58",
+          "grade": 2,
+          "reason": "Explicit local iPhone model application or discussion"
+        },
+        {
+          "resourceID": "f647585475147eeb89fcc165d35663ec093f57128573790f73899cf2ef386630",
+          "grade": 2,
+          "reason": "Explicit local iPhone model application or discussion"
+        },
+        {
+          "resourceID": "4be225d757f86b3151f3f96907020e04964a44fae2e47301a8c2b59837638a56",
+          "grade": 2,
+          "reason": "Explicit local iPhone model application or discussion"
+        },
+        {
+          "resourceID": "7ccd7b05d2a9a7787962fc9e09512490e20e8dd7554cec10e039a97d2cd03748",
+          "grade": 2,
+          "reason": "Explicit local iPhone model application or discussion"
+        },
+        {
+          "resourceID": "3a1dba8fe95a8a18354b00b34af6dd579605cf800ef5c0ce129f868c80a42395",
+          "grade": 2,
+          "reason": "Explicit local iPhone model application or discussion"
+        }
+      ]
+    },
+    {
+      "id": "Q08",
+      "variant": "baseline",
+      "provider": "firecrawl",
+      "duration": 0.403685959,
+      "validResultCount": 5,
+      "error": null,
+      "results": [
+        {
+          "resourceID": "90ed799db453ed86a713235054887e34b0c8515b4d8bdb4187ee96ac31c8fb58",
+          "grade": 2,
+          "reason": "Explicit local iPhone model application or discussion"
+        },
+        {
+          "resourceID": "f647585475147eeb89fcc165d35663ec093f57128573790f73899cf2ef386630",
+          "grade": 2,
+          "reason": "Explicit local iPhone model application or discussion"
+        },
+        {
+          "resourceID": "4be225d757f86b3151f3f96907020e04964a44fae2e47301a8c2b59837638a56",
+          "grade": 2,
+          "reason": "Explicit local iPhone model application or discussion"
+        },
+        {
+          "resourceID": "7ccd7b05d2a9a7787962fc9e09512490e20e8dd7554cec10e039a97d2cd03748",
+          "grade": 2,
+          "reason": "Explicit local iPhone model application or discussion"
+        },
+        {
+          "resourceID": "3a1dba8fe95a8a18354b00b34af6dd579605cf800ef5c0ce129f868c80a42395",
+          "grade": 2,
+          "reason": "Explicit local iPhone model application or discussion"
+        }
+      ]
+    },
+    {
+      "id": "Q09",
+      "variant": "baseline",
+      "provider": "firecrawl",
+      "duration": 0.632856916,
+      "validResultCount": 5,
+      "error": null,
+      "results": [
+        {
+          "resourceID": "5f8e6ec15749929323694d482bf96c92c0653c1c8368bb0014704c04e4f82186",
+          "grade": 2,
+          "reason": "Official cooperative cancellation documentation"
+        },
+        {
+          "resourceID": "d488f00886842628df25e84e24efce740f3ae48b279f9f0b67795ac27e148a65",
+          "grade": 2,
+          "reason": "Official structured concurrency and cancellation overview"
+        },
+        {
+          "resourceID": "228c8de2bccbbedf8f6eb63a2f4a5394d4a6c1bd484141ca77e3a94f6fe98124",
+          "grade": 1,
+          "reason": "Generic concurrency overview, cancellation specificity limited"
+        },
+        {
+          "resourceID": "6861f03719028d061b9b1bec13773b88751409b3f92c06be07ef680e300174da",
+          "grade": 2,
+          "reason": "Official structured concurrency/cancellation material"
+        },
+        {
+          "resourceID": "68dbd7a067a828ee721394546e26976cffe64a0cfbd698d04bdadeee89fdae2d",
+          "grade": 2,
+          "reason": "Direct cancellation implementation discussion"
+        }
+      ]
+    },
+    {
+      "id": "Q09",
+      "variant": "current",
+      "provider": "firecrawl",
+      "duration": 0.157868,
+      "validResultCount": 5,
+      "error": null,
+      "results": [
+        {
+          "resourceID": "5f8e6ec15749929323694d482bf96c92c0653c1c8368bb0014704c04e4f82186",
+          "grade": 2,
+          "reason": "Official cooperative cancellation documentation"
+        },
+        {
+          "resourceID": "d488f00886842628df25e84e24efce740f3ae48b279f9f0b67795ac27e148a65",
+          "grade": 2,
+          "reason": "Official structured concurrency and cancellation overview"
+        },
+        {
+          "resourceID": "228c8de2bccbbedf8f6eb63a2f4a5394d4a6c1bd484141ca77e3a94f6fe98124",
+          "grade": 1,
+          "reason": "Generic concurrency overview, cancellation specificity limited"
+        },
+        {
+          "resourceID": "6861f03719028d061b9b1bec13773b88751409b3f92c06be07ef680e300174da",
+          "grade": 2,
+          "reason": "Official structured concurrency/cancellation material"
+        },
+        {
+          "resourceID": "68dbd7a067a828ee721394546e26976cffe64a0cfbd698d04bdadeee89fdae2d",
+          "grade": 2,
+          "reason": "Direct cancellation implementation discussion"
+        }
+      ]
+    },
+    {
+      "id": "Q10",
+      "variant": "current",
+      "provider": "firecrawl",
+      "duration": 0.535207667,
+      "validResultCount": 5,
+      "error": null,
+      "results": [
+        {
+          "resourceID": "cd4d54c88f29ac9058b820a190b34ed592d24f3ad176b580b09e879f40da64e6",
+          "grade": 0,
+          "reason": "General AI index, not specific on-device research"
+        },
+        {
+          "resourceID": "894cc869c55f3db7fb0326e2525fccdaeb1e67e4936ff7328e4dbcc82f611000",
+          "grade": 1,
+          "reason": "On-device market forecast, not research findings"
+        },
+        {
+          "resourceID": "37c1ce3b09fdcf92889f830e7db0d15aed5cbc9f110b4d7ecafdf199bc16c946",
+          "grade": 1,
+          "reason": "On-device market forecast, not research findings"
+        },
+        {
+          "resourceID": "a2dbfc7b0d556003ca177070b8cb71bc71d909268d12a91bad91abeedd9f4399",
+          "grade": 1,
+          "reason": "On-device engineering review, recency/research findings unclear"
+        },
+        {
+          "resourceID": "f736744c2ef76e8547d82f3d11c2a7398b949c7831514888f7bc87baae34f011",
+          "grade": 1,
+          "reason": "Relevant research area, specific recent findings not established"
+        }
+      ]
+    },
+    {
+      "id": "Q10",
+      "variant": "baseline",
+      "provider": "firecrawl",
+      "duration": 0.333200875,
+      "validResultCount": 5,
+      "error": null,
+      "results": [
+        {
+          "resourceID": "cd4d54c88f29ac9058b820a190b34ed592d24f3ad176b580b09e879f40da64e6",
+          "grade": 0,
+          "reason": "General AI index, not specific on-device research"
+        },
+        {
+          "resourceID": "894cc869c55f3db7fb0326e2525fccdaeb1e67e4936ff7328e4dbcc82f611000",
+          "grade": 1,
+          "reason": "On-device market forecast, not research findings"
+        },
+        {
+          "resourceID": "37c1ce3b09fdcf92889f830e7db0d15aed5cbc9f110b4d7ecafdf199bc16c946",
+          "grade": 1,
+          "reason": "On-device market forecast, not research findings"
+        },
+        {
+          "resourceID": "a2dbfc7b0d556003ca177070b8cb71bc71d909268d12a91bad91abeedd9f4399",
+          "grade": 1,
+          "reason": "On-device engineering review, recency/research findings unclear"
+        },
+        {
+          "resourceID": "f736744c2ef76e8547d82f3d11c2a7398b949c7831514888f7bc87baae34f011",
+          "grade": 1,
+          "reason": "Relevant research area, specific recent findings not established"
+        }
+      ]
+    },
+    {
+      "id": "Q03",
+      "variant": "filtered",
+      "provider": "firecrawl",
+      "duration": 1.123098,
+      "validResultCount": 5,
+      "error": null,
+      "results": [
+        {
+          "resourceID": "f565335d6f7e864ca9690057f89a1383d84dca2c9711f96dc8b1edf909e45d80",
+          "grade": 1,
+          "reason": "Explicitly filtered result is topical but does not establish the requested recent research/release"
+        },
+        {
+          "resourceID": "b303f83874df1688cc57f4c92db43bf4f3cbcc1f5a48c698cac713e7d937cbb5",
+          "grade": 1,
+          "reason": "Explicitly filtered result is topical but does not establish the requested recent research/release"
+        },
+        {
+          "resourceID": "7e7a9c26f91ffe97decd58b56820622590778340156c48d9b8eafb68d7e10170",
+          "grade": 1,
+          "reason": "Explicitly filtered result is topical but does not establish the requested recent research/release"
+        },
+        {
+          "resourceID": "e4b68e0f2a1920850b28fc084c7e0150e5c453e79dd0fedb508cf6703077945f",
+          "grade": 1,
+          "reason": "Explicitly filtered result is topical but does not establish the requested recent research/release"
+        },
+        {
+          "resourceID": "a99c7ee7d57b9ef9c98d3797b1d5df189d757e71834d95d8e438c8dabec5f944",
+          "grade": 0,
+          "reason": "Filtered result does not satisfy the requested specific intent"
+        }
+      ]
+    },
+    {
+      "id": "Q05",
+      "variant": "filtered",
+      "provider": "firecrawl",
+      "duration": 0.834138334,
+      "validResultCount": 5,
+      "error": null,
+      "results": [
+        {
+          "resourceID": "f52a117e00d33355c968936d193aba83b2af9c215c6757f5d347104b7834a106",
+          "grade": 1,
+          "reason": "Explicitly filtered result is topical but does not establish the requested recent research/release"
+        },
+        {
+          "resourceID": "c38024edfbe83c43d297bbfcbb45d27f31ec994206236b1640b57ecc92b5e86d",
+          "grade": 1,
+          "reason": "Explicitly filtered result is topical but does not establish the requested recent research/release"
+        },
+        {
+          "resourceID": "164ff450cecf27bbc8ed1f577af93d8d8a9095f4368277afdf80d01fb1b50ce8",
+          "grade": 1,
+          "reason": "Explicitly filtered result is topical but does not establish the requested recent research/release"
+        },
+        {
+          "resourceID": "f871dd257f3c4ab9e97cce90fae037bf5a769855a393bd3605df42da14f85272",
+          "grade": 0,
+          "reason": "Filtered result does not satisfy the requested specific intent"
+        },
+        {
+          "resourceID": "d2afa6862eb296190cd423378bd5e4b477f56a4dbd495191c918bfe864fcbd5c",
+          "grade": 0,
+          "reason": "Filtered result does not satisfy the requested specific intent"
+        }
+      ]
+    },
+    {
+      "id": "Q10",
+      "variant": "filtered",
+      "provider": "firecrawl",
+      "duration": 1.434177209,
+      "validResultCount": 5,
+      "error": null,
+      "results": [
+        {
+          "resourceID": "de9902a6944547064f9b24c44c9a4598bc8056a99d786babf11008af7791a583",
+          "grade": 0,
+          "reason": "Filtered result does not satisfy the requested specific intent"
+        },
+        {
+          "resourceID": "5b8d359b8e0071ef1b35d743175d8a9a4fb06c643987a44e7941bc7c23a2c80f",
+          "grade": 1,
+          "reason": "Explicitly filtered result is topical but does not establish the requested recent research/release"
+        },
+        {
+          "resourceID": "12e809ca1e76cb6a047090534e8288caebfd1287b14cfeada863a6987843441f",
+          "grade": 0,
+          "reason": "Filtered result does not satisfy the requested specific intent"
+        },
+        {
+          "resourceID": "cdb29dbb65ac7b33427ac32a1d7ab5f106b3fdc19799fee326646a025822277e",
+          "grade": 1,
+          "reason": "Explicitly filtered result is topical but does not establish the requested recent research/release"
+        },
+        {
+          "resourceID": "ed23a1d38f92ba99c29040b556a349bfeca89361a34e50af2953724f0166a2d7",
+          "grade": 0,
+          "reason": "Filtered result does not satisfy the requested specific intent"
+        }
+      ]
+    }
+  ]
+}

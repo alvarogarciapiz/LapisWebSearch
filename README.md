@@ -1,43 +1,28 @@
 # LapisWebSearch
 
-**Native, keyless web search for Swift — experimental.**
+**Native keyless web discovery for Swift — research preview.**
 
-A lightweight Swift Package for searching the web directly from Apple devices, with replaceable providers, structured results and bounded fallback. No application backend is required. The library discovers URLs, titles and snippets; it does not fetch result pages or prepare AI context.
+A small Swift Package for obtaining titles, URLs and snippets directly from Apple devices. Replaceable providers, bounded concurrency, local diagnostics and graceful fallback; no Lapis backend, AI framework or external runtime required.
 
-**Readiness:** no stable release is available. Firecrawl keyless is the experimental default, subject to daily IP limits and service terms. Commercial deployment needs express Firecrawl authorization. Bing RSS is disabled unless the caller declares separate Microsoft permission. Neither adapter is approved here for unrestricted commercial production. See [provider evaluation](docs/PROVIDERS.md) and [measured validation](docs/VALIDATION.md).
+**Provider access is not unrestricted.** The compatible default is experimental Firecrawl keyless; its terms require express commercial authorization. Parallel is an opt-in documented keyless alternative for evaluation/light use, subject to its own terms and production-access requirements. Bing RSS remains permission-gated. The MIT code license does not grant search-service or content rights. **No stable release or commercially approved default is claimed.** [Provider evaluation](docs/research/SEARCH_PROVIDER_LANDSCAPE.md).
 
-## Features and requirements
+## Install
 
-- Swift 6 language mode and strict concurrency; async/await and native URLSession.
-- iOS/iPadOS 16+, macOS 13+. No external package dependencies.
-- Firecrawl v2 JSON search and a restricted, permission-gated Bing RSS adapter using XMLParser.
-- An extensible `SearchProvider` contract and ordered sequential fallback.
-- Conservative URL normalization, exact deduplication and international text preservation.
-- Overall deadlines, cancellation, response bounds and rate-limit cooldowns.
-- Local diagnostics without query logging, telemetry, cookies or persistent history.
-
-No Python, Node, Rust, AI framework, hosted Lapis proxy, account or API key is required by the library's default configuration. Internet access and permission to use the selected external service are required.
-
-## Installation
-
-Add the package in Xcode using `https://github.com/alvarogarciapiz/LapisWebSearch`, or add:
+Swift 6; iOS/iPadOS 16+, macOS 13+. Zero external package dependencies.
 
 ```swift
 .package(url: "https://github.com/alvarogarciapiz/LapisWebSearch", branch: "main")
 ```
 
-Then depend on `.product(name: "LapisWebSearch", package: "LapisWebSearch")`. During experimental development, pin a reviewed commit with `.revision(...)` for reproducible application builds. There is no stable version tag.
+Add `.product(name: "LapisWebSearch", package: "LapisWebSearch")`. During research-preview development, pin a reviewed revision for reproducible builds. There is no stable version tag.
 
 ## Search
 
 ```swift
 import LapisWebSearch
 
-let search = LapisWebSearch() // Experimental Firecrawl keyless; review its terms first.
-let results = try await search.search(
-    "Apple Foundation Models Swift documentation",
-    limit: 5
-)
+let search = LapisWebSearch() // Experimental Firecrawl; review its access terms first.
+let results = try await search.search("Apple Foundation Models Swift documentation", limit: 5)
 for result in results {
     print(result.title)
     print(result.url)
@@ -45,93 +30,107 @@ for result in results {
 }
 ```
 
-The native initial probe returned a result titled `Foundation Models` at `https://developer.apple.com/documentation/foundationmodels`. Results change over time; that example is an observed result, not a guarantee or fallback fixture.
+Native evaluation found the official Foundation Models documentation. Results change; the package does not ship fallback data, invent dates or download those pages. `SearchResult` retains provider identity, original position, optional actual publication date and optional source metadata. Text is untrusted data.
 
-## Configuration and diagnostics
+## Latency and concurrency
+
+Retain one client per end user. Its providers reuse ephemeral connections, with bounded chunk delivery, no cookies/credentials/cache and no redirects. Concurrent identical requests share in-flight work; cancelling one subscriber leaves the others running. The last subscriber cancels upstream. Completed results are not cached.
+
+Different queries wait in cancellation-aware FIFO queues rather than failing because a provider is busy. Defaults: four active searches, one admitted request per provider, 64 pending subscribers. Configure greater provider concurrency only within that service's permitted capacity:
 
 ```swift
+let search = LapisWebSearch(
+    providers: [FirecrawlProvider()],
+    configuration: SearchConfiguration(maximumConcurrentRequestsPerProvider: 2)
+)
+async let first = search.search("Swift task cancellation", limit: 5)
+async let second = search.search("Swift actor reentrancy", limit: 5)
+let results = try await (first, second)
+```
+
+For explicitly authorized research use, select independent service adapters and an optional bounded race:
+
+```swift
+let search = LapisWebSearch(providers: [ParallelSearchProvider(), FirecrawlProvider()])
 let response = try await search.search(
-    "Modelos de lenguaje locales para iPhone",
-    options: SearchOptions(limit: 3, timeout: 15, safeSearch: true, fallback: true)
+    "Apple Foundation Models Swift documentation",
+    options: SearchOptions(timeout: 8, strategy: .firstSuccess, providerTimeout: 3)
 )
 let results = response.results
-let attempts = response.attempts // Local timings, result counts and error classifications.
+let diagnostics = response.attempts
 ```
 
-`SearchOptions` supports a result limit (1...100), overall timeout (0 < seconds <= 300), optional BCP-47 locale, optional safe search and fallback on/off. Queries must contain 1...500 characters after trimming and no embedded control characters. Unsupported settings fail explicitly. Firecrawl supports the boolean safe-search option; it does not advertise a locale parameter, so this adapter rejects `locale`. Spanish queries work without forcing a locale. Bing's `mkt` mapping is experimental and its safe-search setting is unsupported.
+Sequential fallback remains the default. First-success races at most two providers by default (configurable 1...4), preserves the winner's ranking and cancels losers. It can send the query to multiple services and consume multiple quotas. **The fastest provider can return worse results.** Cancellation does not promise a quota refund. This is not fusion or a relevance guarantee. No retry, fan-out or hidden provider is enabled automatically.
 
-Providers are supplied in preference order:
+`timeout` covers queue time and the whole search (0 < seconds <= 300). `providerTimeout` optionally limits each admitted provider within the remaining deadline, leaving fallback time. Admission and pending limits bound resource use. Uncooperative custom providers cannot be forcibly stopped by Swift structured concurrency; built-in networking cooperates with cancellation.
+
+## Options and diagnostics
+
+`SearchOptions` supports `limit` (1...100), overall/per-provider timeouts, strategy, parallel-provider bound, fallback, locale, country, relative time range and safe search. Queries are trimmed, limited to 500 characters/4096 UTF-8 bytes, and reject embedded control characters. Query meaning, accents, operators and language are preserved.
 
 ```swift
-let search = LapisWebSearch(providers: [FirecrawlProvider(), MyPermittedProvider()])
+let response = try await LapisWebSearch().search(
+    "Investigaciones recientes sobre modelos pequeños",
+    options: .init(limit: 5, country: "ES", timeRange: .month)
+)
 ```
 
-`MyPermittedProvider` represents your own implementation of `SearchProvider`; see [integration](docs/INTEGRATION.md). A successful nonempty provider stops the search. There is no automatic top-up, parallel fan-out or same-provider retry. Empty/malformed lists fail; an explicit zero-result response is recorded separately. At most eight unique providers may be configured. Only configured providers receive the query, including during fallback.
+Country/date filters are explicit constraints and can worsen results. Unsupported settings fail clearly rather than being dropped. Locale is not inferred from query text.
 
-Bing is intentionally absent from default fallback. `BingRSSProvider(hasSeparatePermission: true)` declares permission you already hold; it does not obtain or grant rights. Leave the default `false` unless separately authorized by Microsoft for your use.
+| Adapter | Keyless interface | Supported optional controls | Status |
+|---|---|---|---|
+| Firecrawl | Official v2 REST JSON | Country, relative time range, boolean safe search; locale unsupported | Experimental default; commercial authorization unresolved |
+| Parallel | Official MCP JSON-RPC/SSE, structured `web_search` results | Keyless filters/locale/safe search unsupported; quoted queries rejected per tool contract | Opt-in research preview; production and output-use terms apply |
+| Bing RSS | Unofficial RSS/XML | Experimental `mkt` locale; other controls unsupported | Disabled unless separate Microsoft permission is declared |
 
-Keep a client alive to preserve cooldowns and prevent overlapping requests to a provider. Concurrent calls encountering a busy provider skip it and may fall back; they are not queued. After HTTP 429/402, the client observes `Retry-After` and waits at least 60 seconds before using that provider again. It never sleeps and retries automatically. There is no cache policy: local caching is deliberately unimplemented and disabled in the built-in transport.
-
-## Errors
+Parallel performs a small initialization/notification handshake, then reuses its in-memory MCP session. It calls only `web_search`, never fetch/research/decisions tools. The server can return up to its own default count; the library returns at most the requested limit and bounds snippets. No additional pages are fetched by this library. Firecrawl requests standard web results with highlighting/scraping disabled. Bing's `hasSeparatePermission: true` declares rights you already hold; it grants none.
 
 ```swift
 do {
-    let results = try await search.search("Swift structured concurrency")
-    print(results.count)
-} catch let error as SearchError {
-    switch error.code {
-    case .cancelled: break
-    case .noResults: print("No results found")
-    case .allProvidersUnavailable:
-        for attempt in error.attempts {
-            print(attempt.provider, attempt.error?.rawValue ?? "unknown")
-        }
-    default: print(error.code.rawValue)
+    let response = try await search.search("Swift concurrency", options: .init())
+    print(response.duration, response.wasCoalesced)
+    for attempt in response.attempts {
+        print(attempt.provider, attempt.duration, attempt.queueDuration, attempt.error?.rawValue ?? "success")
     }
+} catch let error as SearchError {
+    if error.code != .cancelled { print(error.code, error.attempts) }
 }
 ```
 
-Individual attempts distinguish network failure, timeout, cancellation, rate limiting, blocking, unauthorized access, invalid responses, parsing failures, unsupported options, server errors and oversized responses. Aggregate errors retain every attempted/skipped provider. Provider HTTP success does not imply relevant results or fresh information.
+Attempts expose status where available, result counts, timing, queue wait, skip/fallback/cancellation and Retry-After. Responses and executed-search failures include sanitized configuration, excluding queries, bodies and session IDs. `noResults` differs from `allProvidersUnavailable`; individual attempts distinguish network, timeout, blocking, rate limit, unauthorized, parsing and unsupported settings. `providerBusy` now represents a full pending-subscriber limit. Immediate caller cancellation may precede a completed attempt record.
 
-## Providers, privacy and limits
+## Privacy and scope
 
-| Provider | Default | Access | Status |
-|---|---|---|---|
-| Firecrawl | Yes, experimental | Official keyless REST; daily request and credit caps per public IP, exact numeric caps not published in reviewed docs | Experimental; commercial authorization unresolved |
-| Bing RSS | No | Unofficial RSS interface; separate permission required for this adapter | Disabled due to restrictions; weak relevance in initial probe |
+Queries and necessary metadata go to configured external services, which observe public IPs and may log/process data. Reused MCP sessions can correlate calls. Fallback/racing makes additional disclosures. No search telemetry, local documents, conversations, contacts or history are uploaded to Lapis. This is online search, not offline or anonymous search. [Privacy details](docs/PRIVACY.md).
 
-Standard Firecrawl web results are requested without scraping, highlighting, news or images. No account configuration or Authorization header was used in native validation. Shared IPs, VPNs, geographic differences, quotas, outages and service changes can affect availability. See [PROVIDERS.md](docs/PROVIDERS.md) for sources and review dates.
+No webpage extraction, BM25, embeddings, context budgeting, citations, AI inference, permanent cache or general MCP agent framework is included. URL normalization preserves path case, fragments and query ordering; exact duplicates are removed, but semantically equivalent aliases may remain. Provider order is retained; no LLM ranking, query rewriting or domain reshuffling occurs.
 
-Searches send your query to external services, which see your public IP and may retain data or use upstream services. Processing is local after the response. This is online search, not anonymous or offline search. No Lapis server, telemetry, uploaded history or local document access exists in this package. Fallback discloses the query to additional configured providers. [Privacy details](docs/PRIVACY.md).
-
-## Build, test and native live checks
+## Validation and research
 
 ```sh
-swift build
-swift test
+swift test -Xswiftc -warnings-as-errors
+swift build -c release -Xswiftc -warnings-as-errors
 swift run --package-path Examples/Consumer ConsumerSmoke
-swift format lint --strict --recursive Package.swift Sources Tests Examples
-swift run LapisWebSearchCLI search "Apple Foundation Models Swift documentation" --provider firecrawl
+swift format lint --strict --recursive Package.swift Sources Tests Examples scripts
+swift scripts/score-benchmark.swift --self-test
 ```
 
-Ordinary tests are deterministic and offline. The last command makes a real request. The CLI emits JSON with results and attempts; exits 0 for nonempty results, 1 for search failure, and 2 for invalid input/usage. It never echoes queries in diagnostics. Results themselves may contain query terms.
-
-An opt-in matrix uses public developer queries and stops on its first failure:
+Ordinary tests/CI are offline. To make genuine requests after reviewing terms/quotas:
 
 ```sh
-LAPIS_LIVE=1 ./scripts/validate-live.sh 20
+swift run LapisWebSearchCLI search "Apple Foundation Models Swift documentation" --provider parallel
+swift run -c release LapisWebSearchCLI benchmark --live --provider firecrawl \
+  --dataset benchmarks/v1/queries.json --count 5 --output validation-local/report.json
 ```
 
-It performs at most 20 searches, spaced at least three seconds apart after each completes. Raw outputs stay in ignored `validation-local/`. Review quota and terms before running it. Never run it automatically on public pull requests. Hardware, native validation, quality failures, timings and exact reproduction commands are in [VALIDATION.md](docs/VALIDATION.md).
+Search emits JSON; exit 0 means valid nonempty results, 1 search failure, 2 invalid input/usage. The benchmark requires `--live`, retains one client, spaces requests and stops on failure. It exports sanitized IDs/timings/counts by default; `--include-results` explicitly captures third-party result content locally. Never commit private queries or raw response dumps. The older `scripts/validate-live.sh` remains an initial bounded smoke matrix; use the retained-client benchmark for connection measurements.
 
-## Scope, limitations and roadmap
+Phase 2 includes a fifty-query corpus, a ten-query relevance sample per provider, four alternating baseline pairs, native concurrent-consumer checks, simulator requests and targeted Thread Sanitizer coverage. It demonstrated eight successful identical subscribers from one HTTP request, versus one success/seven busy failures in the reference version. Local transport processing improved substantially in a synthetic 1 MiB test; ordinary live latency remained mixed across four pairs. These are separate findings, not a production guarantee.
 
-There is no guaranteed free production backend, service SLA, completeness, currentness or commercial reuse permission. Bing RSS feed dates are preserved as raw `rssPubDate` metadata rather than asserted publication dates. Missing publication dates stay `nil`. URL normalization preserves fragments, path case and query ordering; it does not strip tracking parameters or rewrite provider redirects. Ranking is preserved; no domain-diversity reshuffle, BM25, embedding, page extraction or RAG is performed.
+[LAPIS Research](docs/research/README.md) contains the [audit and prompt review](docs/research/AUDIT.md), [ranked landscape](docs/research/SEARCH_PROVIDER_LANDSCAPE.md), [methods](docs/research/METHODOLOGY.md), [labels/metrics](docs/research/BENCHMARKS.md), [results](docs/research/RESULTS.md), and [limitations](docs/research/LIMITATIONS.md). Historical phase-1 results remain available.
 
-Release work: resolve commercial provider authorization, validate on a physical iPhone and more networks, accumulate longitudinal quality evidence, and add independently reviewed permitted providers. Categories, cache, health persistence and parallel searching are deferred.
+## Maintenance and roadmap
 
-Read [architecture](docs/ARCHITECTURE.md), [integration](docs/INTEGRATION.md), [performance](docs/PERFORMANCE.md), [contributing](CONTRIBUTING.md), [security](SECURITY.md) and [changelog](CHANGELOG.md).
+Next gates: provider distribution authorization, physical iPhone/iPad and multiple-network validation, repeated-day quality/availability, permitted real outage failover and sustained resource/energy testing. Research-preview API changes are additive where practical; breaking changes will be documented before a future semantic-version tag. No SLA, unlimited quota, guaranteed freshness or public-production readiness is promised.
 
-## License
-
-Original code and synthetic test fixtures are [MIT licensed](LICENSE). No third-party implementation or asset is incorporated. This license grants no rights to external search services or their returned content.
+See [architecture](docs/ARCHITECTURE.md), [integration](docs/INTEGRATION.md), [contributing](CONTRIBUTING.md), [security](SECURITY.md) and [changelog](CHANGELOG.md). New adapters need independent rights review, native evidence and deterministic fixtures. Original code/corpus/fixtures are [MIT licensed](LICENSE); no third-party service rights are granted.

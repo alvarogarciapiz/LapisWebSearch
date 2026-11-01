@@ -11,3 +11,14 @@
 - Provider rights/privacy evaluation, measured quality/latency evidence and Apple SDK CI.
 
 No version has been tagged and no GitHub Release has been published. Commercial authorization, physical-device/multiple-network testing and broader quality validation remain release blockers.
+
+## Phase 2 — unreleased research preview
+
+- Retain ephemeral URLSession connection pools and read bounded body chunks; preserve per-request cancellation/timeout isolation and available HTTP error status.
+- Add FIFO active/provider admission, bounded pending subscribers, queue-inclusive deadlines and optional provider budgets.
+- Coalesce identical in-flight searches with independent subscriber cancellation; no completed-result cache.
+- Add opt-in bounded first-success racing and local configuration/queue/coalescing diagnostics.
+- Add documented Parallel keyless MCP web search for evaluation/light use, explicit Firecrawl country/time controls and deduplication before truncation.
+- Preserve common public API calls, protocol conformances, experimental Firecrawl default and Bing permission gate. Busy-provider errors become bounded waiting; providerBusy now indicates full pending capacity.
+- Add versioned fifty-query corpus, reviewed per-result labels/scorers, native paired harness, public research materials and PR/CI improvements.
+- Retain unresolved commercial authorization, physical/multiple-network, freshness and real-outage failover gates. No stable release or unrestricted service rights.

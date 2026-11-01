@@ -22,6 +22,7 @@ private final class FixtureProtocol: URLProtocol, @unchecked Sendable {
         let response = HTTPURLResponse(
             url: request.url!, statusCode: status, httpVersion: "HTTP/1.1", headerFields: headers)!
         client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+        if route == "header-stall" { return }
         let count = route == "stream-large" ? 11 : 10
         client?.urlProtocol(self, didLoad: Data(repeating: 32, count: count))
         client?.urlProtocolDidFinishLoading(self)
@@ -88,4 +89,19 @@ private final class FixtureProtocol: URLProtocol, @unchecked Sendable {
             #expect(redirected == nil)
         }
     }
+    @Test(arguments: ["stall", "header-stall"]) func nativeTransportEnforcesWholeRequestDeadline(_ route: String)
+        async throws
+    {
+        var request = request(route)
+        request.timeoutInterval = 0.04
+        do {
+            _ = try await transport.send(request, maximumResponseBytes: 10)
+            Issue.record("Expected timeout")
+        } catch let error as SearchError {
+            #expect(error.code == .timeout)
+            #expect(error.httpStatus == (route == "header-stall" ? 200 : nil))
+        }
+        #expect(try await transport.send(self.request("exact"), maximumResponseBytes: 10).data.count == 10)
+    }
+
 }

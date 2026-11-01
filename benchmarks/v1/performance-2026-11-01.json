@@ -1,0 +1,215 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-01",
+  "pairedNative": [
+    {
+      "id": "Q07",
+      "variant": "baseline",
+      "duration": 0.853266458,
+      "actualHTTPRequests": 1
+    },
+    {
+      "id": "Q07",
+      "variant": "current",
+      "duration": 0.480905208,
+      "actualHTTPRequests": 1
+    },
+    {
+      "id": "Q08",
+      "variant": "current",
+      "duration": 0.498219583,
+      "actualHTTPRequests": 1
+    },
+    {
+      "id": "Q08",
+      "variant": "baseline",
+      "duration": 0.403685959,
+      "actualHTTPRequests": 1
+    },
+    {
+      "id": "Q09",
+      "variant": "baseline",
+      "duration": 0.632856916,
+      "actualHTTPRequests": 1
+    },
+    {
+      "id": "Q09",
+      "variant": "current",
+      "duration": 0.157868,
+      "actualHTTPRequests": 1
+    },
+    {
+      "id": "Q10",
+      "variant": "current",
+      "duration": 0.535207667,
+      "actualHTTPRequests": 1
+    },
+    {
+      "id": "Q10",
+      "variant": "baseline",
+      "duration": 0.333200875,
+      "actualHTTPRequests": 1
+    }
+  ],
+  "identicalBurst": [
+    {
+      "variant": "baseline",
+      "subscribers": 8,
+      "successes": 1,
+      "failures": 7,
+      "actualHTTPRequests": 1,
+      "coalescedSubscribers": 0,
+      "successfulDurations": [
+        0.420358625
+      ],
+      "failureCodes": [
+        "allProvidersUnavailable",
+        "allProvidersUnavailable",
+        "allProvidersUnavailable",
+        "allProvidersUnavailable",
+        "allProvidersUnavailable",
+        "allProvidersUnavailable",
+        "allProvidersUnavailable"
+      ]
+    },
+    {
+      "variant": "current",
+      "subscribers": 8,
+      "successes": 8,
+      "failures": 0,
+      "actualHTTPRequests": 1,
+      "coalescedSubscribers": 7,
+      "successfulDurations": [
+        0.124614666,
+        0.124597209,
+        0.124674042,
+        0.124647083,
+        0.124682583,
+        0.124664209,
+        0.1247125,
+        0.124708375
+      ],
+      "failureCodes": []
+    }
+  ],
+  "syntheticTransport1MiB16Chunks": {
+    "current": {
+      "samplesSeconds": [
+        0.001427417,
+        0.000356667,
+        0.000290167
+      ],
+      "medianSeconds": 0.000356667
+    },
+    "baseline": {
+      "samplesSeconds": [
+        0.023312167,
+        0.017457166,
+        0.017200875
+      ],
+      "medianSeconds": 0.017457166
+    }
+  },
+  "nativeFirstSuccessCases": [
+    {
+      "id": "Q03",
+      "strategy": "sequential",
+      "duration": 1.253471958,
+      "httpRequestCount": 3,
+      "searchRequestCount": 1,
+      "winner": "parallel",
+      "attempts": [
+        {
+          "provider": "parallel",
+          "duration": 1.253386334,
+          "validResultCount": 5
+        }
+      ]
+    },
+    {
+      "id": "Q04",
+      "strategy": "sequential",
+      "duration": 1.236751834,
+      "httpRequestCount": 1,
+      "searchRequestCount": 1,
+      "winner": "parallel",
+      "attempts": [
+        {
+          "provider": "parallel",
+          "duration": 1.236661084,
+          "validResultCount": 5
+        }
+      ]
+    },
+    {
+      "id": "Q03",
+      "strategy": "firstSuccess",
+      "duration": 0.386857333,
+      "httpRequestCount": 4,
+      "searchRequestCount": 2,
+      "winner": "firecrawl",
+      "attempts": [
+        {
+          "provider": "parallel",
+          "duration": 0.38668075,
+          "validResultCount": 0,
+          "error": "cancelled"
+        },
+        {
+          "provider": "firecrawl",
+          "duration": 0.386605791,
+          "validResultCount": 5
+        }
+      ]
+    },
+    {
+      "id": "Q04",
+      "strategy": "firstSuccess",
+      "duration": 0.16705975,
+      "httpRequestCount": 2,
+      "searchRequestCount": 2,
+      "winner": "firecrawl",
+      "attempts": [
+        {
+          "provider": "parallel",
+          "duration": 0.166956208,
+          "validResultCount": 0,
+          "error": "cancelled"
+        },
+        {
+          "provider": "firecrawl",
+          "duration": 0.166876083,
+          "validResultCount": 5
+        }
+      ]
+    }
+  ],
+  "memoryObservation": {
+    "maximumRSSBytes": 16400384,
+    "peakFootprintBytes": 5030632,
+    "wholeProcessSeconds": 0.99,
+    "resultLimit": 5,
+    "samples": 1
+  },
+  "countSemantics": "Counters record HTTPTransport.send invocations. Cancelled race attempts have unconfirmed wire delivery, server work and billing. Completed native responses establish genuine network requests.",
+  "platformChecks": [
+    {
+      "kind": "simulator",
+      "model": "iPhone 17",
+      "runtime": "iOS 27.0",
+      "provider": "firecrawl",
+      "queryID": "Q04",
+      "duration": 0.406009042,
+      "validResults": 5
+    },
+    {
+      "kind": "simulator",
+      "model": "iPad Pro 11-inch (M5)",
+      "runtime": "iOS 27.0",
+      "provider": "parallel",
+      "queryID": "Q08",
+      "duration": 1.11316425,
+      "validResults": 5
+    }
+  ]
+}

@@ -16,8 +16,10 @@ struct ExampleProvider: SearchProvider {
 
 @main struct ConsumerSmoke {
     static func main() async throws {
-        let client = LapisWebSearch(providers: [ExampleProvider()])
-        let response = try await client.search("sample", options: .init(limit: 1))
+        let client = LapisWebSearch(
+            providers: [ExampleProvider()], configuration: .init(maximumConcurrentRequestsPerProvider: 2))
+        let response = try await client.search(
+            "sample", options: .init(limit: 1, strategy: .firstSuccess, providerTimeout: 2))
         guard response.results.count == 1, response.results[0].provider == "example" else {
             throw SearchError(.invalidResponse)
         }

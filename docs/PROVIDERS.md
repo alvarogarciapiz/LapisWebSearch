@@ -1,4 +1,6 @@
-# Provider evaluation
+# Historical Phase 1 provider evaluation
+
+This page preserves the initial investigation. See the current [ranked landscape](research/SEARCH_PROVIDER_LANDSCAPE.md) for Parallel and other Phase 2 candidates, rights and decisions.
 
 Reviewed 2026-11-01. Service access rights are separate from the package's MIT license. Technical availability, source-code licensing and permission to embed a service are three different questions. This is an engineering review, not a grant of third-party rights.
 

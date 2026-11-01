@@ -4,7 +4,7 @@ import Foundation
 /// Experimental: commercial use requires express provider authorization; see docs/PROVIDERS.md.
 public struct FirecrawlProvider: SearchProvider {
     public let identifier = "firecrawl"
-    public var capabilities: ProviderCapabilities { .init(safeSearch: true) }
+    public var capabilities: ProviderCapabilities { .init(safeSearch: true, country: true, timeRange: true) }
     private let transport: any HTTPTransport
     private let maximumBytes = 2 * 1024 * 1024
 
@@ -20,7 +20,9 @@ public struct FirecrawlProvider: SearchProvider {
         http.setValue("LapisWebSearch/0.1 (experimental)", forHTTPHeaderField: "User-Agent")
         http.httpBody = try JSONEncoder().encode(
             Body(
-                query: request.query, limit: request.options.limit, safe: request.options.safeSearch
+                query: request.query, limit: request.options.limit, safe: request.options.safeSearch,
+                country: request.options.country,
+                tbs: request.options.timeRange.map { "qdr:" + String($0.rawValue.prefix(1)) }
             ))
         let response = try await transport.send(http, maximumResponseBytes: maximumBytes)
         try response.validate(types: ["application/json"], maximumBytes: maximumBytes)
@@ -40,13 +42,15 @@ public struct FirecrawlProvider: SearchProvider {
             )
         }
         guard !results.isEmpty else { throw SearchError(.invalidResponse, httpStatus: response.status) }
-        return .results(Array(results.prefix(request.options.limit)), httpStatus: response.status)
+        return .results(uniqueResults(results, limit: request.options.limit), httpStatus: response.status)
     }
 
     private struct Body: Encodable {
         let query: String
         let limit: Int
         let safe: Bool?
+        let country: String?
+        let tbs: String?
         let sources = ["web"]
         let highlights = false
     }
