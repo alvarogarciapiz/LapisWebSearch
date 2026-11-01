@@ -29,7 +29,7 @@ xcodebuild -scheme LapisWebSearch -destination 'generic/platform=iOS Simulator' 
   SWIFT_TREAT_WARNINGS_AS_ERRORS=YES build
 ```
 
-The independent `Examples/Consumer` is a separate Swift Package importing only the public library product. Its synthetic result is an offline API check, not live evidence.
+The independent `Examples/Consumer` is a separate Swift Package importing only the public library product. Its synthetic result is an offline API check, not live evidence. After publication, a separate temporary consumer also fetched revision `ce7319d07d1b355f4f30b06f11850c0dbf8b051f` from the public GitHub URL and successfully compiled an import of `LapisWebSearch` without any Lapis application dependency or search request.
 
 Simulator unit tests use the **aggregate package scheme**, not the library-only build scheme:
 
@@ -44,6 +44,8 @@ xcodebuild -scheme LapisWebSearch-Package \
 An initial `xcodebuild test -scheme LapisWebSearch` invocation failed before running tests because that generated library scheme had no test action. Switching to `LapisWebSearch-Package` succeeded. Xcode emitted simulator OS-build bookkeeping diagnostics after the successful test run; they were not Swift compiler or test failures. No failed assertion is suppressed.
 
 CI uses public macOS runners with Xcode 16.4/Swift 6 and no secrets, builds release, runs offline tests and the independent consumer, lints, and compiles iOS device/Simulator SDKs. No live quota is consumed on pull requests. Actual GitHub run status must be checked for the published commit; local success alone is not CI evidence.
+
+The published implementation revision `ce7319d07d1b355f4f30b06f11850c0dbf8b051f` passed [GitHub Actions run 41292863649](https://github.com/alvarogarciapiz/LapisWebSearch/actions/runs/41292863649), including all 49 tests, release build, independent consumer, formatting and both Apple SDK builds. Its deprecated checkout-action warning was subsequently addressed by pinning the official v7.0.1 release (Node 24) to an immutable commit. The runner's capacity notice concerns queue availability rather than code correctness.
 
 ## Actual live requests
 
