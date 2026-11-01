@@ -1,0 +1,28 @@
+name: Search backend failure
+description: Report transport, parsing, relevance or freshness problems without private query data.
+title: "[Backend] "
+body:
+  - type: input
+    id: provider
+    attributes:
+      label: Provider and package revision
+    validations:
+      required: true
+  - type: input
+    id: platform
+    attributes:
+      label: Platform, OS and Swift/Xcode version
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Sanitized evidence and expected behavior
+      description: Include codes, status, timings, result count and network conditions. Do not share IPs, private queries, credentials or raw response dumps.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Public reproduction (optional)
+      description: Use only a query you are comfortable publishing; distinguish mocked, simulator and physical-device evidence.

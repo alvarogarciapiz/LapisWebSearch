@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>Test feed — synthetic fixture</title>
+<item><title> Swift &amp; español </title><link>https://example.org/?q=caf%C3%A9&amp;x=1</link><description><![CDATA[ Hello  日本語
+world ]]></description><pubDate>Sun, 01 Nov 2026 08:00:00 GMT</pubDate></item>
+<item><title>Bad URL</title><link>file:///private/test</link><description>Discarded</description></item>
+<item><title>模型</title><link>https://example.net/model</link><description>Información útil</description></item>
+</channel></rss>

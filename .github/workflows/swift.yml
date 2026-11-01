@@ -1,0 +1,27 @@
+name: Swift
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: swift-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  macos:
+    runs-on: macos-15
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_16.4.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@v4
+      - run: swift --version
+      - run: swift build -c release -Xswiftc -warnings-as-errors
+      - run: swift test -Xswiftc -warnings-as-errors
+      - run: swift run --package-path Examples/Consumer ConsumerSmoke
+      - run: swift format lint --strict --recursive Package.swift Sources Tests Examples
+      - name: iOS and iPadOS device SDK compilation
+        run: xcodebuild -scheme LapisWebSearch -destination 'generic/platform=iOS' -derivedDataPath .build/ios CODE_SIGNING_ALLOWED=NO SWIFT_TREAT_WARNINGS_AS_ERRORS=YES build
+      - name: iOS and iPadOS Simulator SDK compilation
+        run: xcodebuild -scheme LapisWebSearch -destination 'generic/platform=iOS Simulator' -derivedDataPath .build/simulator CODE_SIGNING_ALLOWED=NO SWIFT_TREAT_WARNINGS_AS_ERRORS=YES build

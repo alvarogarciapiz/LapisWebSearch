@@ -1,0 +1,60 @@
+# Application integration
+
+Add the SPM library product to an iOS/iPadOS 16+ or macOS 13+ target. Use Swift 6 concurrency checking. Pin a reviewed revision during experimental development. No AI or UI framework is required. Sandboxed macOS apps need the outgoing network client entitlement; the package cannot grant app entitlements.
+
+```swift
+import LapisWebSearch
+
+let search = LapisWebSearch()
+let response = try await search.search(
+    "Apple Foundation Models Swift documentation",
+    options: SearchOptions(limit: 5, timeout: 15, safeSearch: true)
+)
+for item in response.results {
+    print(item.title, item.url, item.snippet)
+}
+```
+
+Keep a client for the lifetime of a search feature to preserve cooldowns. Cancellation of the calling task cancels native requests; handle `SearchError.code == .cancelled`. Use `SearchError.attempts` for failure diagnostics, and `SearchResponse.attempts` on success. A busy provider may cause another concurrent search to fail or fall back; serialize search work at the application level when all requests must be attempted.
+
+The independent executable package in `Examples/Consumer` imports only the public module and supplies a synthetic provider for an offline smoke check:
+
+```sh
+swift run --package-path Examples/Consumer ConsumerSmoke
+```
+
+## Custom provider
+
+This complete offline example demonstrates the contract without fabricating a live result:
+
+```swift
+import LapisWebSearch
+
+struct EmptyExampleProvider: SearchProvider {
+    let identifier = "empty-example"
+    func search(_ request: SearchRequest) async throws -> ProviderResponse {
+        try Task.checkCancellation()
+        return .noResults()
+    }
+}
+
+let custom = LapisWebSearch(providers: [EmptyExampleProvider(), FirecrawlProvider()])
+```
+
+A real adapter must construct genuine results with its own provider identifier and original position. Return `.noResults` only when the upstream response explicitly represents a valid empty search. Throw `SearchError` for blocking, quota exhaustion and malformed responses. Cap payloads, honor cancellation and assess service rights independently. Advertise capabilities only when implemented. Built-in endpoints cannot be redirected or overridden to arbitrary hosts; custom providers own their destinations.
+
+## Later Lapis replacement task
+
+Do not integrate automatically while the commercial authorization and device/network validation gates remain open. This repository has made no application edits.
+
+When those gates are resolved, the later task should:
+
+1. Add the pinned SPM product to both native application targets. Keep Lapis's existing tool registry, MLX/Foundation Models tool execution and user search consent controls.
+2. Implement a thin adapter at the existing discovery-provider seam. Retain one `LapisWebSearch` instance and call `search(_:options:)` with the explicitly authorized query, application result bound and remaining retrieval deadline. Do not forward conversation history or attachments. Do not set a locale on Firecrawl; preserve the query language. Do not enable Bing without separate written permission.
+3. Map `title`, `url`, `snippet`, `provider`, `originalPosition` and optional actual publication date into Lapis's existing discovery/evidence models. Preserve order and source provenance. Bing `rssPubDate` is raw feed metadata, not evidence of publication time.
+4. Keep page fetching, PublicWebTransport safeguards, SwiftReadability, relevance/BM25, Context Engine budgeting, citation receipts and source UI in Lapis. Do not duplicate them in this package or fetch pages through Firecrawl search options.
+5. Map `cancelled` to a quiet cancelled state; `noResults` to an empty-search explanation; and `allProvidersUnavailable` plus attempts to actionable unavailable/rate-limited/blocked UI. Preserve failures and Retry-After locally; do not log full queries. Do not retry automatically around this library's cooldown.
+6. Reuse existing search progress UI around the single awaited discovery operation. This initial API provides final attempt diagnostics, not a streaming progress callback. Keep feature enablement gated until real app requests on physical target hardware and ordinary networks pass.
+7. Add application-level tests for this mapping and cancellation, then explicitly authorized live requests through the real tool path. A package unit test or curl response is insufficient to enable production search.
+
+An AI application can expose the returned discovery records to its existing tool pipeline as untrusted source data. The package does not build prompts, rank extracted passages, manage a context window or produce citations.

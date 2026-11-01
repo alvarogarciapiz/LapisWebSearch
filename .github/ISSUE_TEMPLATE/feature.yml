@@ -1,0 +1,14 @@
+name: Feature or provider proposal
+description: Propose a focused discovery improvement or an independently authorized provider.
+body:
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Problem and proposed behavior
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Access terms, privacy, limits and validation evidence
+      description: For providers, link official documentation and explain authorization. An open-source adapter license is not service permission.
