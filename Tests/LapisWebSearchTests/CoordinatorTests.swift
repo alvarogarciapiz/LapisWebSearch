@@ -93,7 +93,7 @@ import Testing
         let next = StubProvider("next")
         let start = ContinuousClock.now
         do {
-            _ = try await LapisWebSearch(providers: [slow, next]).search("sample", options: .init(timeout: 0.03))
+            _ = try await LapisWebSearch(providers: [slow, next]).search("sample", options: .init(timeout: 1))
             Issue.record("Expected timeout")
         } catch let error as SearchError {
             #expect(error.code == .timeout)
@@ -136,14 +136,15 @@ import Testing
     }
 
     @Test func fallbackSharesOverallDeadline() async throws {
-        let first = StubProvider("first", delay: .milliseconds(30))
+        // Keep the first result immediate; this test concerns the shared deadline, not timer ordering.
+        let first = StubProvider("first")
         let second = StubProvider("second", delay: .seconds(20))
         do {
-            _ = try await LapisWebSearch(providers: [first, second]).search("sample", options: .init(timeout: 0.08))
+            _ = try await LapisWebSearch(providers: [first, second]).search("sample", options: .init(timeout: 1))
             Issue.record("Expected timeout")
         } catch let error as SearchError {
             #expect(error.code == .timeout)
-            #expect(error.attempts.count == 2)
+            try #require(error.attempts.count == 2)
             #expect(error.attempts[0].error == .noResults)
             #expect(error.attempts[1].error == .timeout)
         }

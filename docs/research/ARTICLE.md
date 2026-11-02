@@ -34,4 +34,4 @@ The corpus, labels, sanitized observations and native offline scorer are publish
 
 The package is more useful and better instrumented, but remains a research preview. Commercial authorization, physical mobile devices, multiple ordinary networks, repeated-day quality and real outage-triggered fallback still need evidence. Those gates are part of the result, not footnotes to a production claim.
 
-See [methods](METHODOLOGY.md), [benchmark definitions](BENCHMARKS.md), [provider landscape](SEARCH_PROVIDER_LANDSCAPE.md), [results](RESULTS.md) and [limitations](LIMITATIONS.md) for reproducible commands and the complete qualifications.
+See [methods](METHODOLOGY_V2.md), [benchmark definitions](BENCHMARKS_V2.md), [provider landscape](SEARCH_PROVIDER_LANDSCAPE_V2.md), [results](RESULTS_V2.md) and [limitations](LIMITATIONS_V2.md) for reproducible commands and the complete qualifications.

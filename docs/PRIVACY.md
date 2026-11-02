@@ -6,7 +6,9 @@ LapisWebSearch does online search. It is not offline, anonymous or completely pr
 
 | Configuration | Destination | Data sent |
 |---|---|---|
-| Default Firecrawl | `https://api.firecrawl.dev/v2/search` | Query in JSON, limit, optional safe-search flag, fixed web source/highlight settings, HTTP request metadata |
+| Explicit Firecrawl | `https://api.firecrawl.dev/v2/search` | Query in JSON, limit, optional safe-search flag, fixed web source/highlight settings, HTTP request metadata |
+| Explicit FreeSerp Global | `https://freeserp.ai/api.php` | Query, full-web index, size and optional language in URL; fixed User-Agent and necessary transport metadata |
+| Explicit Parallel | `https://mcp.parallel.ai/mcp` | Query, protocol metadata and in-memory MCP session header |
 | Separately permitted Bing RSS | `https://www.bing.com/search` | Query and RSS format in URL, optional market, HTTP request metadata |
 | Custom provider/transport | Defined by the application implementation | Must be reviewed by that application |
 
@@ -14,7 +16,7 @@ Providers observe the device's public IP, request timing and necessary transport
 
 The library reads no documents, conversations, contacts, location sensors, identifiers or application files. It sends no local context. No Lapis server, account infrastructure, advertising identifier or telemetry collector is involved. It does not upload search history. Results are processed locally and returned to the caller; the caller controls their subsequent use.
 
-The default transport disables cookies, URL credential storage and local URL caching, and uses a fixed honest library User-Agent. No authentication key is stored or accepted by the initial built-in adapters. There is no persistent query cache or history. In-memory results live as long as the caller retains them. Coordinator state holds only provider identifiers, busy flags and cooldown dates.
+The default transport disables cookies, URL credential storage and local URL caching, and uses a fixed honest library User-Agent. No authentication key is stored or accepted by the initial built-in adapters. There is no persistent query cache or history. In-memory results live as long as the caller retains them. Coordinator state holds provider identifiers, cooldowns, pending subscribers and in-flight query/options/results until completion or cancellation.
 
 ## Diagnostics and developer tools
 
@@ -41,3 +43,12 @@ Identical in-flight sharing is scoped to one client and all options; no complete
 Advanced diagnostics include execution configuration, queue duration and whether a response was coalesced. They omit query bodies/URLs, transport headers and MCP IDs. Immediate subscriber cancellation can return before an upstream attempt completes, so its error may not contain completed attempt records. The benchmark CLI's send counters count transport invocations, not confirmed wire delivery or billing.
 
 The fifty-query research corpus is original public input, not user history. Default benchmark reports contain IDs/timing/count/error metadata and no result content. `--include-results` is an explicit local developer capture and must not be used casually with private data. Published reviewed records include original grades/reasons and resource hashes rather than third-party response text. URL hashes support candidate matching; they are **not an anonymity or encryption guarantee** and are used only with this public corpus. Original responses stay in ignored `validation-local/`. Provider output restrictions can limit exact retrospective content review; see the research limitations.
+
+
+## V3 default and FreeSerp
+
+The parameterless initializer selects no provider and performs no search networking. Strict commercial selection rejects an unverified configured registry before any query or MCP handshake. This is a selection safeguard, not verification of a custom provider's legal claims.
+
+FreeSerp receives query text in URL parameters, optional language, requested size, timing and the public IP. Infrastructure logs can therefore contain query text. A sufficiently specific provider privacy/retention agreement was not established; no anonymity, ZDR, independent-index verification or commercial authorization is claimed. Results can include provider-generated site summaries and promotional recommendations; the adapter ignores those fields and uses only full-web result titles/URLs/snippets, language and actual page dates. It rejects fallback to homepage profiles. No additional result URLs, promotions, related APIs or AI tools are fetched.
+
+The `validate --live` CLI exports sanitized counts/attempts. Its fallback mode injects a local 503 and contacts Parallel once; coalescing mode contacts FreeSerp once for eight consumers. The fixed RAG query is public corpus input. These are opt-in developer tools, not telemetry or application startup behavior. FreeSerp [API documentation](https://freeserp.ai/docs.php) is an interface contract, not a replacement for missing privacy and commercial terms.

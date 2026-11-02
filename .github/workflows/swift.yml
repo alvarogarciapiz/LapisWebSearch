@@ -24,6 +24,7 @@ jobs:
       - run: swift scripts/validate-research.swift
       - run: swift scripts/score-benchmark.swift --self-test
       - run: swift scripts/score-benchmark.swift benchmarks/v1/observations-2026-11-01.json
+      - run: swift scripts/score-benchmark.swift benchmarks/v3/observations-2026-11-02.json
       - run: swift format lint --strict --recursive Package.swift Sources Tests Examples scripts
       - name: iOS and iPadOS device SDK compilation
         run: xcodebuild -scheme LapisWebSearch -destination 'generic/platform=iOS' -derivedDataPath .build/ios CODE_SIGNING_ALLOWED=NO SWIFT_TREAT_WARNINGS_AS_ERRORS=YES build

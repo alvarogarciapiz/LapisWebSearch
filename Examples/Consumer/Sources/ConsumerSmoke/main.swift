@@ -23,6 +23,21 @@ struct ExampleProvider: SearchProvider {
         guard response.results.count == 1, response.results[0].provider == "example" else {
             throw SearchError(.invalidResponse)
         }
-        print("Independent consumer imported LapisWebSearch and passed the offline API check.")
+        do {
+            _ = try await LapisWebSearch().search("never transmitted")
+            throw SearchError(.invalidResponse)
+        } catch let error as SearchError {
+            guard error.code == .noEligibleProviders else { throw error }
+        }
+        do {
+            _ = try await LapisWebSearch(
+                providers: [ExampleProvider()], configuration: .init(providerPolicy: .requireCommercialClearance)
+            ).search("never transmitted")
+            throw SearchError(.invalidResponse)
+        } catch let error as SearchError {
+            guard error.code == .providerNotPermitted else { throw error }
+        }
+        guard FreeSerpProvider().usage.status == .unverified else { throw SearchError(.invalidConfiguration) }
+        print("Independent consumer imported LapisWebSearch and passed offline API and policy checks.")
     }
 }

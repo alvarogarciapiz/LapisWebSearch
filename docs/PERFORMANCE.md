@@ -27,3 +27,10 @@ Response payloads are capped at 2 MiB of decoded bytes per built-in provider att
 Each search issues requests sequentially and stops on nonempty results. At most eight providers can be configured. Actor state is proportional to the number of configured providers; each active search retains its own bounded results/attempts. A client prevents overlapping calls to the same provider but does not impose a process-wide limit across independently created clients. Applications should retain and reuse a client, bound their own concurrency and avoid creating one per model token or event.
 
 Per-request sessions simplify redirect/resource isolation and deliberately trade connection-pool reuse for a small initial design. No claim of optimal energy use or sustained memory stability is made. A single-process memory observation, when recorded in VALIDATION.md, includes runtime/network overhead and is not an allocation profile or a leak test. Long-duration Instruments testing and physical iPhone energy/memory validation remain outstanding.
+
+
+## V3 — 2026-11-02
+
+No new causal transport speedup is claimed. Existing connection reuse, bounded queues, request coalescing and explicit racing remain. Eight identical native FreeSerp consumers shared one request (0.236 s attempt); this is a bounded observation, not a sustained throughput guarantee. Raising provider concurrency cannot expand its quota or permission.
+
+On common Q01/Q04/Q07, current medians were Firecrawl 0.693 s, Parallel 1.031 s and FreeSerp 0.072 s. The FreeSerp queries repeated earlier probes and are especially cache/order-confounded. Across its six-query cohort the median was 0.535 s and max/sample p95 4.657 s. Both existing-provider same-ID historical medians were lower than this V3 repeat; no significance or causal regression is established. See [current results/methodology](research/RESULTS.md). Memory was not remeasured; earlier values are historical single-process samples.

@@ -46,14 +46,18 @@ public struct SearchConfiguration: Sendable {
     public let maximumConcurrentRequestsPerProvider: Int
     public let maximumPendingSearches: Int
     public let coalesceIdenticalRequests: Bool
+    /// Requires explicit evidence in each provider's deployment-specific usage assessment.
+    public let providerPolicy: SearchProviderPolicy
     public init(
         maximumConcurrentSearches: Int = 4, maximumConcurrentRequestsPerProvider: Int = 1,
-        maximumPendingSearches: Int = 64, coalesceIdenticalRequests: Bool = true
+        maximumPendingSearches: Int = 64, coalesceIdenticalRequests: Bool = true,
+        providerPolicy: SearchProviderPolicy = .explicitSelection
     ) {
         self.maximumConcurrentSearches = maximumConcurrentSearches
         self.maximumConcurrentRequestsPerProvider = maximumConcurrentRequestsPerProvider
         self.maximumPendingSearches = maximumPendingSearches
         self.coalesceIdenticalRequests = coalesceIdenticalRequests
+        self.providerPolicy = providerPolicy
     }
 }
 
@@ -146,11 +150,14 @@ public enum ProviderResponse: Sendable {
 public protocol SearchProvider: Sendable {
     var identifier: String { get }
     var capabilities: ProviderCapabilities { get }
+    var usage: ProviderUsage { get }
     func search(_ request: SearchRequest) async throws -> ProviderResponse
 }
 
 extension SearchProvider {
     public var capabilities: ProviderCapabilities { .init() }
+    /// Custom adapters are unverified unless their author supplies an assessment and evidence.
+    public var usage: ProviderUsage { .init(status: .unverified) }
 }
 
 /// Local, query-free diagnostics. No provider body or transport error text is retained.
@@ -181,7 +188,8 @@ public struct SearchDiagnostics: Sendable, Encodable {
     public let timeRange: SearchTimeRange?
     public let safeSearch: Bool?
     public let providers: [String]
-    init(_ options: SearchOptions, providers: [String]) {
+    public let providerPolicy: SearchProviderPolicy
+    init(_ options: SearchOptions, providers: [String], policy: SearchProviderPolicy = .explicitSelection) {
         limit = options.limit
         timeout = options.timeout
         providerTimeout = options.providerTimeout
@@ -192,6 +200,7 @@ public struct SearchDiagnostics: Sendable, Encodable {
         timeRange = options.timeRange
         safeSearch = options.safeSearch
         self.providers = providers
+        providerPolicy = policy
     }
 }
 

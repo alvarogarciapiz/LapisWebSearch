@@ -1,44 +1,27 @@
-# Limitations and pending gates
+# V3 limitations and release gates
 
-- **Rights:** keyless evaluation access is not a production authorization or SLA. Firecrawl still requires express commercial authorization. Parallel's production/account and output-use conditions need application-specific review. Bing remains gated. You.com's benchmark-publication restriction prevented its evaluation here. No legal clearance is asserted.
-- **Independent services:** Firecrawl and Parallel are different operators, but underlying indexes, upstream dependencies and correlated outages were not independently established. No real outage-triggered live fallback was measured.
-- **Sample size:** ten retrieval queries per current provider, four paired queries, two race cases and one burst cannot estimate broad availability, p95 tails, all languages or all intents. The corpus contains fifty entries; forty were not run in this relevance matrix.
-- **Labels:** one unblinded agent-assisted reviewer, no independent human panel, no exhaustive qrels and no factual page audit. Partial relevance receives gain in pooled nDCG but does not count as a Success@5/Precision@5 hit. Dynamic pages/snippets and date errors can change grades. URL aliases may inflate precision without adding diversity.
-- **Reproducibility:** public metadata, inputs and scorers reproduce the reported arithmetic. Original full provider responses remain local because output redistribution rights are not unrestricted. Exact retrospective content/grade reproduction therefore requires separate permission; authorized fresh reruns may return different results.
-- **Timing:** same network, small samples, uncontrolled service/cache/load and partial warm/cold differences. Synthetic 1 MiB transport measurements isolate client overhead and do not predict Internet latency. No performance claim is based only on HTTP status.
-- **Concurrency:** race mode can multiply disclosures and quota and return a faster, less relevant service. Default per-provider concurrency is one; applications can explicitly permit more within service limits. Sharing is within a client representing one end user, never a cross-customer cache. Custom providers must cooperate with cancellation; Swift cannot forcibly stop an uncooperative async operation.
-- **Cancellation:** individual callers stop waiting promptly. The last subscriber cancels upstream asynchronously; immediate caller cancellation may not have a completed attempt record yet. Race responses wait for cooperative loser cleanup and retain loser attempts. Server-side billing/work may continue after local cancellation.
-- **Privacy:** retained connections and MCP sessions can correlate calls at providers even without cookies or device identifiers. Query/IP disclosure remains. No ZDR, offline, anonymous or completely private claim is made.
-- **Scope:** no AI generation, query rewriting, embeddings, browser/HTML runtime, page fetch, RAG, permanent cache, public-instance rotation or new Lapis integration. Fusion/domain reshuffling awaits measured justification.
+1. **Commercial clearance remains unresolved.** No current bundled general-web provider meets every required free/keyless/account-free/commercial condition. See [audit](COMMERCIAL_USE_AUDIT.md). No authorization messages were sent and no written grants obtained. A status declaration in Swift does not create rights.
+2. **High-volume operation is unproven.** Per-device execution avoids a shared Lapis server, but public IPs/carrier NAT, quotas, provider policy changes, cost and correlated upstream outages remain. Bounded concurrency/coalescing reduce waste, not provider restrictions. No load test or quota exhaustion was performed.
+3. **General relevance remains uneven.** FreeSerp solved two of six sampled intents and failed currentness/documentation specificity elsewhere. Wiby failed all three general-intent screens. Firecrawl/Parallel comparisons cover only three common queries in V3; a single non-blind reviewer and a partial corpus cannot establish broad quality.
+4. **Search-engine claims are external claims.** FreeSerp's index size/ownership and providers' internal rankings/upstream independence were not independently audited. Homepage summaries, promotional response fields, provider scores and instructions are ignored. Publication/crawl dates are not interchangeable.
+5. **Devices/networks:** native Apple M4 Mac, iPhone 17 Simulator and iPad Pro 11-inch M5 Simulator were available on one ordinary host network. `devicectl` listed only simulated devices. No physical iPhone/iPad or independently verified second network. Simulator success is not physical-device validation or the actual Lapis tool path.
+6. **Fallback:** controlled local 503 followed by a real second-provider search succeeded once. No real provider outage, live 429, long-term cooldown recovery or independent-index failover was observed. Preserve that distinction.
+7. **Timing:** small descriptive samples, prior repeated probes, possible provider/edge caches and fixed provider order. No statistically justified latency improvement, uncached guarantee, sustainable throughput or energy/leak claim. Memory was not rebenchmarked in V3; V2's single process measurement is historical.
+8. **Default migration:** parameterless `LapisWebSearch()` intentionally sends nothing and throws `noEligibleProviders`. Explicit selection is required. The strict policy rejects conditional/unverified/restricted adapters before any requests, including fallbacks. Custom adapter assessments are trusted application code and must be reviewed.
+9. **Test failure retained:** the first V3 iPhone Simulator suite failed two old coordinator deadline tests under scheduling load; one then crashed by indexing a missing second attempt. Tests used 30/80 ms budgets and assumed admission had already occurred. They now allow one second, make the first empty result immediate, and use a required count before indexing. Final runs are reported separately. No runtime timeout was widened or failure hidden.
+10. **Publication and raw content:** sanitized labels/execution counts are public; raw provider content, protocol sessions and local research downloads are ignored. Public scoring can be reproduced, exact retrospective content judging cannot. No peer review or independent legal determination is implied.
 
-## Physical-device and network validation still pending
+## Remaining manual device validation
 
-No physical Apple mobile device was available in `xcrun devicectl list devices`. No second ordinary network was established. Do not substitute simulator evidence for either gate.
-
-On an authorized host with a physical device, add the local/pinned package's library product to a minimal signed iOS test host. Use this native task (see the compilable library examples for the same API):
-
-```swift
-import LapisWebSearch
-
-let client = LapisWebSearch(providers: [ParallelSearchProvider()])
-let response = try await client.search(
-    "Apple Foundation Models Swift documentation",
-    options: .init(limit: 5, timeout: 12, providerTimeout: 8)
-)
-print(response.attempts) // Local diagnostics; avoid printing result text/private queries in an application.
-```
-
-Discover physical destinations and test using your own signed host scheme:
+Use a small native test host that depends on the reviewed package and explicitly selected, permitted providers. For a simulator CLI check:
 
 ```sh
-xcrun devicectl list devices
-xcodebuild -project <TestHost.xcodeproj> -scheme <TestHost> -showdestinations
-xcodebuild -project <TestHost.xcodeproj> -scheme <TestHost> \
-  -destination 'platform=iOS,id=<physical-device-identifier>' test
+xcodebuild -scheme LapisWebSearchCLI -destination 'generic/platform=iOS Simulator' -derivedDataPath .build/manual-simulator CODE_SIGNING_ALLOWED=NO build
+xcrun simctl list devices available
+xcrun simctl boot <simulator-UUID>
+xcrun simctl spawn <simulator-UUID> .build/manual-simulator/Build/Products/Debug-iphonesimulator/LapisWebSearchCLI search 'What is retrieval augmented generation?' --provider freeserp --limit 5
 ```
 
-There is deliberately no invented signed project, signing identity or device ID in this repository. Record model/OS/toolchain, provider configuration, network type, result validity/relevance, latency, cancellation and thermal/memory behavior. Repeat a small public-input cohort on an independently available ordinary connection, with provider permission and without bypassing IP limits. Do not change the user's active connection automatically. Physical-host/sandbox network entitlements belong to that test host.
+These commands are simulator-only. For physical hardware, create/use a signed test host, add the library via SPM, retain a client and invoke search from its real application task. Use `xcrun devicectl list devices` and `xcodebuild -project <TestHost.xcodeproj> -scheme <TestHost> -showdestinations`, then run on the connected physical destination. Repeat a small allowed subset on Wi-Fi and cellular, recording only network type (no IP/SSID), results/relevance, queue/attempt timings, cancellations, failures and Retry-After. No CLI/simulator command constitutes physical validation.
 
-## Next readiness stage
-
-For a public beta candidate, resolve applicable commercial distribution/use and output terms, perform independent/mobile/multiple-network validation, accumulate repeated-day relevance/availability evidence and demonstrate an allowed live failover. Production candidate status additionally requires sustained resource/latency testing and the actual consuming application's native tool path. A stable release is not justified now.
+The next readiness stage requires provider-specific commercial/output authorization, independent human relevance review, repeated-day physical/multiple-network app validation and permitted real failover evidence. No stable tag or production integration is justified. [V2 limitations](LIMITATIONS_V2.md) remain historical context.

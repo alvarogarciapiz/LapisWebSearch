@@ -1,0 +1,284 @@
+{
+  "reviewedOn": "2026-11-02",
+  "queryBearingNativeRequests": 22,
+  "completedNativeSearchResponses": 22,
+  "byProvider": {
+    "freeserp": 12,
+    "wiby": 3,
+    "firecrawl": 3,
+    "parallel": 4
+  },
+  "notes": [
+    "Six standalone screening probes, twelve release-library benchmark searches, two Simulator library searches, one genuine fallback search after local injection, one coalesced native search.",
+    "Additional MCP handshakes/notifications and research-document fetches are not search requests. Injected 503 is not a native response.",
+    "Wiby general-intent judgments are a screening exclusion, not a normalized adapter benchmark. No physical device or high-volume reliability claim."
+  ],
+  "screening": [
+    {
+      "provider": "freeserp",
+      "id": "Q04",
+      "nativeStandaloneProbe": true,
+      "httpStatus": 200,
+      "parseableJSON": true,
+      "rawResultCount": 5,
+      "resourceIDs": [
+        "a89d96a617e703bb61587adc8dea557c1bf1000157b2f1009113e4ca118bae3d",
+        "bc1872be24c6920cd26e94fe61ad4b74524d098f109dce1d69dadc3aff312e81",
+        "ba91bbf579b1a3f7d06813e7495a1ddd7c9ede264fac1987415ef305940f68da",
+        "922146aa970d852f12bb30ee685b50aa013197eb23c6c1ec9d51379d2975ff18",
+        "176bc8ab06d0404c53dc53164dbce075fe5c331d06305fc2f9d31bdefc2d4541"
+      ],
+      "usefulGeneralIntent": false
+    },
+    {
+      "provider": "freeserp",
+      "id": "Q07",
+      "nativeStandaloneProbe": true,
+      "httpStatus": 200,
+      "parseableJSON": true,
+      "rawResultCount": 5,
+      "resourceIDs": [
+        "8c8e54d9452466449395d4426ef50de942dd4a531ba8accdacdb73e2ae1834a3",
+        "df04d3ab58c4dbb55c5a507227f9587b8b53ac0e2fee66ac2388b8cbbb102143",
+        "4a6b323d7ea6be7b140c323c075c26d7d9797a36afb355a9e52e8a4574e17b1f",
+        "c572590b97070392fb4c23232bbd8b4537f9ccae0860b60eaba675c3f4685477",
+        "4799fbc8e9bf75368362d96f0c2d8c5ec1a5f88f49ed8b696e029f28211c1d3b"
+      ],
+      "usefulGeneralIntent": true
+    },
+    {
+      "provider": "freeserp",
+      "id": "Q01",
+      "nativeStandaloneProbe": true,
+      "httpStatus": 200,
+      "parseableJSON": true,
+      "rawResultCount": 5,
+      "resourceIDs": [
+        "3582b9d6eee7b38f11b200fde3786c46c37aa89729a5749a10fd1fabbbe5b965",
+        "941718ceeb4fdf1faf58610d0592dc28d4af0c755ae2cd647b8ef67ce8422022",
+        "8727274120067a80a7ad82284a961739de980cd4ce14b08f1a13879184fd14d9",
+        "21d88cd0476e05822868bafa323fd6a22f6b9a8a69827aeabf849376ed4b0407",
+        "be1915160b263a28a53a96e7e7475875a0cc8e437fcb50a54a4b500bf4559a65"
+      ],
+      "usefulGeneralIntent": false
+    },
+    {
+      "provider": "wiby",
+      "id": "Q04",
+      "nativeStandaloneProbe": true,
+      "httpStatus": 200,
+      "parseableJSON": true,
+      "rawResultCount": 2,
+      "resourceIDs": [
+        "3f0d4aaf19d0ce95ccdb7495a0d000185fbdb3a3fd6151a8b2fa2e1f3e451421",
+        "65f59ab5db72972289a58bdd797f9e2c2310e1b76a2f5ec143e3671537b9472c"
+      ],
+      "usefulGeneralIntent": false
+    },
+    {
+      "provider": "wiby",
+      "id": "Q07",
+      "nativeStandaloneProbe": true,
+      "httpStatus": 200,
+      "parseableJSON": true,
+      "rawResultCount": 7,
+      "resourceIDs": [
+        "a46dd328fc45315046d65c8934703032a5ef2be041c0ba49429e41dba6b7df57",
+        "c86c99ff5eb27dc326ff86ca219f6d034baf64077fa439b30ac5a61f2f801880",
+        "391d1ae3908cc7d5dd2e954f4bd1238ddd9fe06f9ebf6df594573a9245cc5ac7",
+        "c5f586a8a6d7b602aa68e4cb0c9fc4ebe40fe7eab8bf7e6527b0a508ebd77155",
+        "e2a493353cb9cdbde939261b8050762b77bb78c60eabd0fd4e212afb88e41ef1"
+      ],
+      "usefulGeneralIntent": false
+    },
+    {
+      "provider": "wiby",
+      "id": "Q01",
+      "nativeStandaloneProbe": true,
+      "httpStatus": 200,
+      "parseableJSON": true,
+      "rawResultCount": 2,
+      "resourceIDs": [
+        "495344d9db0aff410393b7628c2ff31ee65f5a14467ff7dcf88e203871420fa0",
+        "ba109715aa7db4c95d0351786d300fa45692cdb784a3a1281c084b166140aae8"
+      ],
+      "usefulGeneralIntent": false
+    }
+  ],
+  "operations": {
+    "fallback": {
+      "attempts": [
+        [
+          {
+            "completedAt": "2026-11-02T09:20:58Z",
+            "duration": 0.001479667,
+            "error": "serverError",
+            "httpStatus": 503,
+            "provider": "freeserp",
+            "queueDuration": 1.667e-06,
+            "skipped": false,
+            "startedAt": "2026-11-02T09:20:58Z",
+            "validResultCount": 0,
+            "wasFallback": false
+          },
+          {
+            "completedAt": "2026-11-02T09:21:00Z",
+            "duration": 1.352872584,
+            "httpStatus": 200,
+            "provider": "parallel",
+            "queueDuration": 5.75e-06,
+            "skipped": false,
+            "startedAt": "2026-11-02T09:20:58Z",
+            "validResultCount": 5,
+            "wasFallback": true
+          }
+        ]
+      ],
+      "coalescedConsumers": 0,
+      "injectedPrimaryFailure": true,
+      "mode": "fallback",
+      "nativeHTTPInvocations": 3,
+      "successfulConsumers": 1,
+      "validResultsPerConsumer": [
+        5
+      ]
+    },
+    "coalescing": {
+      "attempts": [
+        [
+          {
+            "completedAt": "2026-11-02T09:21:01Z",
+            "duration": 0.235994709,
+            "httpStatus": 200,
+            "provider": "freeserp",
+            "queueDuration": 1.875e-06,
+            "skipped": false,
+            "startedAt": "2026-11-02T09:21:01Z",
+            "validResultCount": 5,
+            "wasFallback": false
+          }
+        ],
+        [
+          {
+            "completedAt": "2026-11-02T09:21:01Z",
+            "duration": 0.235994709,
+            "httpStatus": 200,
+            "provider": "freeserp",
+            "queueDuration": 1.875e-06,
+            "skipped": false,
+            "startedAt": "2026-11-02T09:21:01Z",
+            "validResultCount": 5,
+            "wasFallback": false
+          }
+        ],
+        [
+          {
+            "completedAt": "2026-11-02T09:21:01Z",
+            "duration": 0.235994709,
+            "httpStatus": 200,
+            "provider": "freeserp",
+            "queueDuration": 1.875e-06,
+            "skipped": false,
+            "startedAt": "2026-11-02T09:21:01Z",
+            "validResultCount": 5,
+            "wasFallback": false
+          }
+        ],
+        [
+          {
+            "completedAt": "2026-11-02T09:21:01Z",
+            "duration": 0.235994709,
+            "httpStatus": 200,
+            "provider": "freeserp",
+            "queueDuration": 1.875e-06,
+            "skipped": false,
+            "startedAt": "2026-11-02T09:21:01Z",
+            "validResultCount": 5,
+            "wasFallback": false
+          }
+        ],
+        [
+          {
+            "completedAt": "2026-11-02T09:21:01Z",
+            "duration": 0.235994709,
+            "httpStatus": 200,
+            "provider": "freeserp",
+            "queueDuration": 1.875e-06,
+            "skipped": false,
+            "startedAt": "2026-11-02T09:21:01Z",
+            "validResultCount": 5,
+            "wasFallback": false
+          }
+        ],
+        [
+          {
+            "completedAt": "2026-11-02T09:21:01Z",
+            "duration": 0.235994709,
+            "httpStatus": 200,
+            "provider": "freeserp",
+            "queueDuration": 1.875e-06,
+            "skipped": false,
+            "startedAt": "2026-11-02T09:21:01Z",
+            "validResultCount": 5,
+            "wasFallback": false
+          }
+        ],
+        [
+          {
+            "completedAt": "2026-11-02T09:21:01Z",
+            "duration": 0.235994709,
+            "httpStatus": 200,
+            "provider": "freeserp",
+            "queueDuration": 1.875e-06,
+            "skipped": false,
+            "startedAt": "2026-11-02T09:21:01Z",
+            "validResultCount": 5,
+            "wasFallback": false
+          }
+        ],
+        [
+          {
+            "completedAt": "2026-11-02T09:21:01Z",
+            "duration": 0.235994709,
+            "httpStatus": 200,
+            "provider": "freeserp",
+            "queueDuration": 1.875e-06,
+            "skipped": false,
+            "startedAt": "2026-11-02T09:21:01Z",
+            "validResultCount": 5,
+            "wasFallback": false
+          }
+        ]
+      ],
+      "coalescedConsumers": 7,
+      "injectedPrimaryFailure": false,
+      "mode": "coalescing",
+      "nativeHTTPInvocations": 1,
+      "successfulConsumers": 8,
+      "validResultsPerConsumer": [
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5
+      ]
+    },
+    "iphoneSimulator": {
+      "provider": "freeserp",
+      "resultCount": 5,
+      "duration": 0.390607584,
+      "httpStatus": 200,
+      "physicalDevice": false
+    },
+    "ipadSimulator": {
+      "provider": "freeserp",
+      "resultCount": 5,
+      "duration": 0.283700541,
+      "httpStatus": 200,
+      "physicalDevice": false
+    }
+  }
+}

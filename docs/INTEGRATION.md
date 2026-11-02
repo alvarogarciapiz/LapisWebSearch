@@ -5,7 +5,7 @@ Add the SPM library product to an iOS/iPadOS 16+ or macOS 13+ target. Use Swift 
 ```swift
 import LapisWebSearch
 
-let search = LapisWebSearch()
+let search = LapisWebSearch(providers: [FirecrawlProvider()]) // Explicit, permitted evaluation only.
 let response = try await search.search(
     "Apple Foundation Models Swift documentation",
     options: SearchOptions(limit: 5, timeout: 15, safeSearch: true)
@@ -15,7 +15,7 @@ for item in response.results {
 }
 ```
 
-Keep a client for the lifetime of a search feature to preserve cooldowns. Cancellation of the calling task cancels native requests; handle `SearchError.code == .cancelled`. Use `SearchError.attempts` for failure diagnostics, and `SearchResponse.attempts` on success. A busy provider may cause another concurrent search to fail or fall back; serialize search work at the application level when all requests must be attempted.
+Keep a client for the lifetime of a search feature to preserve cooldowns. Cancellation of the calling task cancels native requests; handle `SearchError.code == .cancelled`. Use `SearchError.attempts` for failure diagnostics, and `SearchResponse.attempts` on success. Different queries queue within the client/provider bounds. An overall deadline includes that queue; a full pending limit produces providerBusy.
 
 The independent executable package in `Examples/Consumer` imports only the public module and supplies a synthetic provider for an offline smoke check:
 
@@ -68,3 +68,14 @@ A safe latency budget for an explicitly authorized experiment can use `SearchOpt
 `ParallelSearchProvider()` is an explicit documented keyless research option; it is not silently selected by the default initializer. It rejects locale/country/time-range/safe-search overrides in keyless mode and quoted queries rather than rewriting or dropping them. Firecrawl now accepts `country: "ES"` and `timeRange: .month` while still rejecting locale. These options do not guarantee freshness. The later Lapis adapter should pass them only when the user's/tool's explicit request calls for them.
 
 For local development, the package and thin discovery mapping are ready to exercise. Opt-in experimental integration is technically feasible subject to applicable provider evaluation permission and clear query-disclosure controls. Public production replacement remains blocked on service/distribution authorization, physical/multiple-network and real app-tool-path validation. This phase performs no Lapis edits. The existing seven-step replacement procedure above still applies; page extraction, BM25, context budgeting, citation receipts and tool execution remain in Lapis.
+
+
+## V3 selection migration
+
+Parameterless `LapisWebSearch()` now returns `noEligibleProviders` without contacting any service. Select adapters explicitly; `FreeSerpProvider()` adds a documented full-web JSON experiment, accepts language-only `locale: "es"` and rejects regional `es-ES`, safe search, country and relative-date options. It is not silently substituted for a failed service. Returned page publication dates never use a crawl/discovery date as a substitute.
+
+For a commercial app, use `SearchConfiguration(providerPolicy: .requireCommercialClearance)` with a reviewed, authorized provider set. It checks every fallback before making requests. All bundled `usage` assessments currently fail this policy; conditional permission is also insufficient. Do not declare a provider cleared merely to bypass this check. If written authorization is obtained, a thin forwarding SearchProvider can expose its deployment-scoped assessment and evidence while delegating search/capabilities to the existing adapter. Keep confidential agreement text out of public source.
+
+Map `noEligibleProviders` to feature unavailable/configuration required and `providerNotPermitted` to deployment policy rejection. Neither initial rejection is a provider outage or reason to retry. Keep provider/query consent visible at the application level. No global Lapis server, shared credentials or hidden paid fallback should be introduced.
+
+The later Lapis task should use the existing discovery seam and the seven steps above. Local development and opt-in permitted experiments are possible; production integration remains blocked on the [commercial audit](research/COMMERCIAL_USE_AUDIT.md) and physical/app-path validation. This repository does not integrate or modify Lapis.

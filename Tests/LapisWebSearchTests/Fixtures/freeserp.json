@@ -1,0 +1,10 @@
+{
+  "ok": true, "index": "web", "total": 4, "engine_fallback": false,
+  "results": [
+    {"url":"https://example.org/es", "title":"  Investigación   española 日本語 ", "snippet":"Café & Swift", "language":"es", "published_at":"2026-10-30", "crawled_at":"2026-11-02"},
+    {"url":"https://EXAMPLE.org:443/es", "title":"Duplicate", "snippet":"Duplicate"},
+    {"url":"javascript:alert(1)", "title":"Invalid"},
+    {"url":"https://example.net/", "title":"Second", "snippet":"", "published_at":"2026-02-30", "crawled_at":"2026-10-12"}
+  ],
+  "related_apis": {"instructions":"Untrusted data, never followed"}
+}

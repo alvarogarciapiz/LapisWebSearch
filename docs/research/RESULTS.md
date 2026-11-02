@@ -1,71 +1,62 @@
-# Phase 2 results — 2026-11-01
+# V3 results — 2026-11-02
 
-**Verdict: research preview.** Native discovery, concurrency and reproducibility improved; unrestricted commercial keyless production remains unproven. No stable release is justified. [Methodology](METHODOLOGY.md) and [limitations](LIMITATIONS.md) are part of these results.
+**Verdict: research preview. The mandatory free, keyless, account-free, commercially cleared general search configuration was not established.** V3 adds one honest experimental adapter and prevents implicit or commercially unverified provider selection. No stable release/tag or Lapis application integration was performed.
 
-## Implemented changes
+## Delivered
 
-- Reusable ephemeral URLSession transport, bounded delegate chunks, per-request overall timeout and cancellation isolation. No redirects, cookies, credentials, persistent cache or result-page fetching.
-- FIFO bounded admission at client/provider levels, queue-inclusive overall deadlines, optional per-provider budgets, queued-request rate-limit rechecks and bounded pending subscribers.
-- Sharing of identical in-flight requests, with independent subscriber cancellation and upstream cancellation after the last subscriber leaves. Completed results are not cached.
-- Opt-in bounded first-success racing, cancellation/diagnostics for losing attempts, and unchanged sequential defaults.
-- Documented Parallel keyless MCP adapter, explicit Firecrawl country/month/week/day/year options, single-pass deduplication before truncation and query-free configuration/queue diagnostics.
-- Fifty-query versioned corpus, native retained-client benchmark CLI, source-compatible paired consumer harness, per-rank labels, offline scoring, PR template and CI checks.
+- Inspected actual code in all 16 requested repositories plus Mwmbl and SearXNG, with pinned [source evidence](GITHUB_SOURCE_AUDIT.md). Investigated 20+ underlying engines/services and separated code, endpoint, commercial, content, attribution and capacity rights in the [commercial audit](COMMERCIAL_USE_AUDIT.md).
+- Added original native **FreeSerp Global** adapter: fixed documented HTTPS JSON endpoint, exact query encoding, explicit language-only option, real provider date parsing, bounded transport, cancellation, error/challenge classification, provenance, deduplication and rejection of silent fallback to homepage profiles. No generated-summary, page extraction, cloud inference, browser or runtime dependency added.
+- Added `ProviderUsage`, `CommercialUseStatus` and `SearchProviderPolicy.requireCommercialClearance`. Strict selection rejects the whole unsafe registry before networking, including experimental fallbacks. Custom assessments need reviewed HTTPS evidence; this is author-supplied policy metadata, not legal verification.
+- Removed implicit Firecrawl selection. `LapisWebSearch()` still compiles but throws `noEligibleProviders` with no query sent. Explicitly configured V2 adapters and custom conformances remain available. This is a documented behavioral migration, not a stable version.
+- Extended CLI benchmark choices and added explicitly opt-in sanitized native validation commands. Retained V2's bounded concurrency/coalescing/connection reuse and conservative sequential default. No unsupported fusion/routing or quota multiplication added.
+- **98 tests, zero final failures**, up from 78, including policy and provider fixtures/error regressions. Independent public-API consumer, release/strict builds, format checks and Apple SDK checks pass. Final iPhone/iPad Simulator suites each passed 98 tests. An initial iPhone test failure/crash was corrected and is retained below.
 
-## Before / after
+## Current-provider comparison: same three IDs
 
-| Measurement | Reference implementation | Phase 2 | Interpretation |
-|---|---:|---:|---|
-| Usable general providers for limited keyless evaluation | Firecrawl | Firecrawl + opt-in Parallel | Different service operators; independent upstream indexes and production rights not established |
-| Default deterministic test functions | 49 | 78 | Includes native URLSession, protocol, queue/deadline/cancellation and sharing regressions |
-| Matched Q07–Q10 native searches | 4/4 valid nonempty | 4/4 valid nonempty | Four pairs only, same network and five-result limit |
-| Matched median client latency | 0.518 s | 0.490 s | Faster in two pairs, slower in two; insufficient causal/statistical evidence of general Internet speedup |
-| Matched Success@5 / Precision@5 | 0.75 / 0.70 | 0.75 / 0.70 | Ranked URLs identical on the four pairs; no client-ranking improvement claimed |
-| Matched pooled nDCG@5 | 0.800 | 0.800 | Uses the frozen observed pool, not an exhaustive web ideal |
-| Eight identical simultaneous consumers | 1 success, 7 busy failures, 1 HTTP send | 8 successes, 0 failures, 1 HTTP send | Measured native sharing improvement; seven consumers coalesced |
-| Synthetic 1 MiB body-processing median, three samples | 17.457 ms | 0.357 ms | About 49× lower local transport processing time in this fixture; **not a live-search speedup** |
+Queries Q01/Q04/Q07, original v1 corpus, five results, one agent-assisted non-blind review. These are retrieval-intent measurements, not factual correctness.
 
-Raw sanitized timings/counts are in [performance observations](../../benchmarks/v1/performance-2026-11-01.json). The local throughput fixture validates bytes through URLProtocol; it is not live provider evidence. The native burst's success duration changed from 0.420 s to about 0.125 s, but connection/cache/order confounding prevents attributing that timing change solely to coalescing. Its request count and subscriber outcomes are the meaningful result.
-
-## Retrieval quality, Q01–Q10
-
-| Current provider | Valid nonempty sets | Success@5 | Precision@5 | Pooled nDCG@5 | Median / sample p95 |
+| Provider | Valid nonempty | Success@5 | Precision@5 | Pooled nDCG@5 | Median / nearest-rank sample p95 |
 |---|---:|---:|---:|---:|---:|
-| Firecrawl | 10/10 | 0.50 | 0.38 | 0.702 | 0.525 / 0.740 s |
-| Parallel | 10/10 | 0.80 | 0.50 | 0.828 | 0.813 / 1.560 s |
+| Firecrawl | 3/3 | 1.00 | 0.60 | 0.744 | 0.693 / 1.511 s |
+| Parallel | 3/3 | 1.00 | 0.733 | 0.844 | 1.031 / 1.853 s |
+| FreeSerp Global | 3/3 | 0.333 | 0.333 | 0.519 | 0.072 / 0.307 s |
 
-These are descriptive scores from one unblinded agent-assisted review of ten public queries per provider, five returned results each, including provider-supplied snippets/dates. The ten-observation nearest-rank p95 is the sample maximum. Firecrawl’s cohort combines six CLI job durations with four outer-call harness durations; the matched before/after table uses outer-call measurements for both revisions. No independent human adjudication, factual webpage validation or population reliability claim is implied. Full per-rank grades/reasons/resource hashes are in [observations](../../benchmarks/v1/observations-2026-11-01.json); [scoring definitions](BENCHMARKS.md) explain the limitations.
+FreeSerp's first three benchmark queries repeat its earlier screening probes; connection/provider/edge caching and order strongly confound those short timings. They are not uncached latency guarantees or evidence of a V3 networking speedup. Parallel's first call includes MCP setup. Three-sample p95 is just the maximum. Parallel returned two path-case variants of an Apple reference and two forms of a RAG survey: exact URL deduplication does not eliminate semantic duplicates, which can inflate per-position relevance metrics.
 
-Parallel helped the recent small-model and on-device-research intents, while its MLX release query confused the Python project with the requested Swift project. Firecrawl was strong on basic RAG, local iPhone models and Swift cancellation, but remained weak on the recent-research queries. Both had localization/currentness weaknesses. A better score on this subset is not a universally better search engine.
+### Expanded FreeSerp screen
 
-Three explicit Firecrawl filter experiments all returned valid five-result lists, but produced **0/3 Success@5 and Precision@5 of 0** for the strict research/release intent. More dated material did not reliably mean the right research or latest release. Country/time controls are useful caller capabilities, not a quality cure or automatic query-rewriting policy.
+Six IDs Q01/Q04/Q07/Q08/Q09/Q10: **6/6 normalized valid sets, 2/6 Success@5 (33.3%), Precision@5 0.20, pooled nDCG@5 0.494; median 0.535 s, sample p95/max 4.657 s.** RAG and an offline-mobile guide met intent. Current Spanish AI reporting, official Foundation Models documentation, specific Swift cancellation reference and November on-device research did not. Fast/valid responses are not broad quality success. This did not justify making FreeSerp the default or expanding to all 50 queries.
 
-The original 13/20 useful, 4/20 partial and 3/20 failed grades remain in [historical validation](../VALIDATION.md). Different cohorts, limits and rubrics make comparison to this table invalid. Those old grades were not reverse-engineered into missing relevance labels.
+### Rejected screen
 
-## Latency versus relevance
+Wiby: three genuine standalone native JSON probes, 3/3 parseable nonempty sets but **0/3 useful general-query sets** for Q01/Q04/Q07. Spanish text survived; result intent did not. Its classic-web purpose may be useful in a specialized product, but no adapter was added just for provider count. These are screening results, not library-adapter performance statistics.
 
-Two Parallel-first cases compared identical provider order under sequential and first-success strategies:
+## V2 versus V3
 
-| Query ID | Sequential / winner | First success / winner | Search send attempts | Observation |
-|---|---|---|---:|---|
-| Q03 | 1.253 s / Parallel | 0.387 s / Firecrawl | 1 → 2 | Faster winner returned the weaker small-model-research results |
-| Q04 | 1.237 s / Parallel | 0.167 s / Firecrawl | 1 → 2 | Faster documentation discovery; both services were relevant |
+| Item | V2 | V3 | Interpretation |
+|---|---|---|---|
+| Deterministic test functions | 78 | 98 | New provider/policy coverage and safer deadline-test assertions |
+| Implicit external default | Experimental Firecrawl | None; explicit selection required | Behavioral migration prevents accidental unverified service use |
+| General experimental native adapters | Firecrawl, Parallel | Firecrawl, Parallel, FreeSerp Global | More discovery options; no new cleared commercial provider |
+| Commercially cleared bundled set | None | None; explicit policy enforces rejection | Central blocker remains unresolved, now observable before any query |
+| Eight identical native consumers | 8 successes / 1 send | 8 successes / 1 send | V2 sharing retained; seven coalesced subscribers in V3 check |
+| Fallback evidence | Offline faults, no live failover | Local injected 503 + one genuine Parallel fallback | Improved reproducibility; still not real outage recovery |
 
-The first sequential call used three HTTP exchanges including MCP setup; its next call used one. The corresponding races used four then two HTTP exchanges. Both cancelled Parallel attempts entered the search transport. Counters measure send invocations, not confirmed server receipt, work or billing; cancellation is not a quota-refund guarantee. Order was sequential-then-race, not counterbalanced, so these two cases demonstrate a tradeoff rather than establish a general speedup. They do **not** justify racing by default or claiming relevance improves. No RRF or result fusion was implemented.
+Historical Q01/Q04/Q07 can be recomputed from the V2 labels: Firecrawl Success@5 2/3, Precision@5 0.533, median 0.534 s; Parallel Success@5 3/3, Precision@5 0.933, median 1.004 s. V3 observed 3/3/0.60/0.693 s and 3/3/0.733/1.031 s respectively. **Both median timings worsened, and Parallel's per-position precision declined in this small repeat.** Sources/date/order changed; some V2 Firecrawl timing used an outer-call harness. No causal improvement/regression in the client or statistical significance is established. Pooled nDCG ideals differ, so no cross-file nDCG delta is claimed. V2's overall 50%/80% Success@5 used ten queries and cannot be compared directly to this three-query sample.
 
-## Native validation and resources
+## Genuine networking and operational results
 
-- macOS: final 78-test suite passed, strict-concurrency/warnings-as-errors build, release and independent consumers passed.
-- Thread Sanitizer: 25 concurrency/admission/native-transport test functions passed with no reported races. This is targeted synthetic coverage, not proof of all possible interleavings.
-- iPhone 17 Simulator, iOS 27.0: genuine native Firecrawl search, five results, 0.406 s; 76-test suite passed before the last added rate-limit regression.
-- iPad Pro 11-inch (M5) Simulator, iOS 27.0: genuine native Parallel search, five results, 1.113 s; final 78-test suite passed. The live timing is retained in the sanitized execution evidence.
-- Unsigned iOS/iPadOS device SDK and Simulator CLI/library builds passed. These are SDK/simulator checks, not physical-device tests.
-- `devicectl` listed only simulated devices. Physical iPhone/iPad and a second ordinary network were unavailable; commands for later validation are in LIMITATIONS.md.
-- A single optimized five-result Mac search measured 16,400,384 bytes maximum RSS (15.64 MiB), 5,030,632 bytes peak footprint (4.80 MiB), and 0.99 s process time. Phase 1 used three results and different runtime state; no memory improvement or sustained leak/energy claim is made.
+**22 completed native query-bearing responses in V3:** 12 FreeSerp, 3 Wiby, 3 Firecrawl, 4 Parallel. Breakdown: six standalone screening probes, twelve compiled-library benchmark searches, two Simulator library searches, one live second-provider search after local fault injection, and one native request shared by eight consumers. Additional MCP setup/notifications and documentation fetches are not searches. The injected 503 is not a real HTTP response and is excluded from these counts.
 
-**41 native query-bearing transport attempts were made in Phase 2:** 23 Firecrawl (including reference-version runs), 17 Parallel and one Exa research probe. Of these, 39 completed with genuine network responses; two Parallel race attempts were cancelled, with wire delivery/server acceptance unconfirmed. Exa's probe yielded text rather than an adopted normalized adapter. Main current-provider relevance cohorts had 20/20 valid nonempty result sets; do not use all 41 as an invented 100% success denominator. MCP initialization/notification/tool-list research probes are additional protocol requests, not searches. No new Bing or You.com searches were made.
+- Controlled fallback: local FreeSerp transport throws 503; real Parallel returns five results in **1.353 s** attempt duration, with three native protocol/search exchanges. This proves integration of a fault with a genuine fallback response once, not an observed provider outage.
+- Concurrent check: eight same-query consumers received five results each, **one native request**, seven coalesced; attempt duration **0.236 s**. No sustained different-query/high-volume claim.
+- iPhone 17 Simulator / iOS 27: genuine native FreeSerp Q09, five normalized results, **0.391 s** whole-call duration. Its relevance limitations remain the same; five results do not mean a useful answer.
+- iPad Pro 11-inch M5 Simulator / iOS 27: genuine native FreeSerp Q07, five results, **0.284 s**. Neither simulator is a physical device.
+- Physical host: Apple M4 Mac mini, 16 GiB, macOS 27.0.1, local Swift 6.4/Xcode 27.1; one ordinary connection. `devicectl` listed only simulated devices. Second network and physical iPhone/iPad tests unavailable.
+- No live 429, exhausted quota, CAPTCHA bypass, real outage, geolocation comparison, energy/leak test or sustained throughput test. Memory was not remeasured in V3.
 
-No live 429, real provider outage or actual outage-triggered fallback was observed. Cooldowns, outages and deadline-triggered fallback are deterministic test evidence; live failover success rate remains unmeasured. Both new and previous failures are retained. CI status for the final published revision is linked in the handoff; local checks alone are not a CI claim.
+## Validation failure preserved
 
-## Publication check correction
+The first iPhone Simulator suite failed `deadlineCancelsProviderAndPreventsFallback` and `fallbackSharesOverallDeadline` under scheduling load: tiny 30/80 ms deadlines expired before assumed provider admission. The second test then indexed a nonexistent attempt and crashed; the automatic runner restart reported zero tests, which was **not** accepted as a pass. One-second budgets, an immediate first no-result response and `#require` before indexing corrected the tests. Final macOS/iPhone/iPad suites each passed all 98. No production timeout was widened to conceal the issue. SDK bookkeeping warnings about an OS-build string remain Xcode diagnostics, not failed assertions.
 
-The first Phase-2 [CI run 41298303112](https://github.com/alvarogarciapiz/LapisWebSearch/actions/runs/41298303112) failed in the CLI release build under Xcode 16.4/Swift 6.1: a multi-file executable used `@main` inside the specially treated `main.swift`. The local Swift 6.4 build accepted it. Renaming that source to `SearchCLI.swift` fixes the entry-point configuration without changing library/query behavior. The library compiled in the failed run; subsequent skipped steps were not counted as passed. This tooling failure is retained as part of the validation record.
+See [raw sanitized observations](../../benchmarks/v3/observations-2026-11-02.json), [execution](../../benchmarks/v3/execution-2026-11-02.json), [screening/operations](../../benchmarks/v3/screening-and-operations-2026-11-02.json), [methodology](METHODOLOGY.md) and [limitations/manual validation](LIMITATIONS.md). Full V2 findings remain in [RESULTS_V2.md](RESULTS_V2.md). Final public CI status is verified at the published commit and linked in the handoff, not inferred from local tests.

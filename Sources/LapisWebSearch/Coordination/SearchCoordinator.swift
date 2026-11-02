@@ -37,13 +37,24 @@ public actor SearchCoordinator {
     }
 
     public func search(_ request: SearchRequest) async throws -> SearchResponse {
-        guard !providers.isEmpty, providers.count <= 8,
+        if Task.isCancelled { throw SearchError(.cancelled) }
+        guard !providers.isEmpty else { throw SearchError(.noEligibleProviders) }
+        guard providers.count <= 8,
             Set(providers.map(\.identifier)).count == providers.count,
             providers.allSatisfy({ !$0.identifier.isEmpty }),
             (1...32).contains(configuration.maximumConcurrentSearches),
             (1...8).contains(configuration.maximumConcurrentRequestsPerProvider),
             (1...1024).contains(configuration.maximumPendingSearches)
         else { throw SearchError(.invalidConfiguration) }
+        // Validate the whole registry before scheduling any query, including potential fallbacks.
+        if configuration.providerPolicy == .requireCommercialClearance,
+            !providers.allSatisfy({ $0.usage.permitsCommercialDeployment })
+        {
+            var error = SearchError(.providerNotPermitted)
+            error.configuration = SearchDiagnostics(
+                request.options, providers: providers.map(\.identifier), policy: configuration.providerPolicy)
+            throw error
+        }
         let subscriberID = UUID()
         return try await withTaskCancellationHandler {
             if Task.isCancelled { throw SearchError(.cancelled) }
@@ -107,7 +118,8 @@ public actor SearchCoordinator {
 
     private func execute(_ request: SearchRequest, started: ContinuousClock.Instant) async throws -> SearchResponse {
         let deadline = started.advanced(by: .seconds(request.options.timeout))
-        let diagnostics = SearchDiagnostics(request.options, providers: providers.map(\.identifier))
+        let diagnostics = SearchDiagnostics(
+            request.options, providers: providers.map(\.identifier), policy: configuration.providerPolicy)
         do {
             var response = try await searchGate.withPermit(deadline: deadline) {
                 try await self.run(request, deadline: deadline)

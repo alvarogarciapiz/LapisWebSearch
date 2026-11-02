@@ -4,6 +4,11 @@ import Foundation
 /// Commercial distribution and applicable provider agreements must be reviewed independently; never enabled implicitly.
 public struct ParallelSearchProvider: SearchProvider {
     public let identifier = "parallel"
+    public var usage: ProviderUsage {
+        .init(
+            status: .unverified, evidence: [URL(string: "https://docs.parallel.ai/integrations/mcp/quickstart")!],
+            reviewedOn: "2026-11-02")
+    }
     private let connection: ParallelConnection
     public init(transport: any HTTPTransport = URLSessionTransport()) {
         connection = ParallelConnection(transport: transport)

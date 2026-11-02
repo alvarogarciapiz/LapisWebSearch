@@ -1,10 +1,11 @@
-/// Native keyless search. The compatible default Firecrawl adapter is for experimental evaluation.
-/// Default selection grants no commercial service authorization; select providers permitted for your deployment.
+/// Native keyless search. No external provider is selected implicitly.
+/// The empty default fails with `noEligibleProviders` without sending a query.
+/// Pass providers explicitly for evaluation or a deployment you have authorized.
 /// Keep an instance alive to preserve per-provider rate-limit cooldowns. No cache or history is persisted.
 public struct LapisWebSearch: Sendable {
     private let coordinator: SearchCoordinator
 
-    public init(providers: [any SearchProvider] = [FirecrawlProvider()], configuration: SearchConfiguration = .init()) {
+    public init(providers: [any SearchProvider] = [], configuration: SearchConfiguration = .init()) {
         coordinator = SearchCoordinator(providers: providers, configuration: configuration)
     }
 

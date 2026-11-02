@@ -1,6 +1,15 @@
 # Changelog
 
-## Unreleased — experimental
+## V3 development iteration — unreleased research preview
+
+- **Behavior change:** the parameterless client and CLI no longer choose Firecrawl implicitly. Select providers explicitly; empty selection returns noEligibleProviders with no request.
+- Add original experimental FreeSerp Global native JSON adapter, language-only locale, publication-date validation and rejection of silent homepage-index fallback.
+- Add provider usage assessments and a strict commercial policy rejecting unsafe registries before any request, including fallbacks. No bundled provider is commercially cleared for the required deployment.
+- Add 20 test functions (98 total), public consumer policy checks, fault-injection/live-fallback and native coalescing CLI checks. Fix old deadline tests exposed by Simulator scheduling load, including a test-only out-of-bounds crash.
+- Add 18 pinned source inspections, 20+ service/engine rights audit, public sanitized V3 measurements and LAPIS Research article draft. Preserve V2 records separately.
+- No runtime dependencies, Lapis app edits, stable tag or release. Source-code MIT does not license provider access/content.
+
+## Initial development — experimental
 
 - Independent Swift 6 package for iOS/iPadOS 16+ and macOS 13+ with no external dependencies.
 - Experimental official Firecrawl v2 keyless search; no scraping or Authorization header.

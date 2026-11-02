@@ -1,0 +1,426 @@
+{
+  "schemaVersion": 1,
+  "review": "One unblinded agent-assisted relevance review of public v1 corpus queries. Third-party content remains in ignored local captures. Not factual verification or independent human adjudication.",
+  "runs": [
+    {
+      "id": "Q01",
+      "variant": "v3",
+      "provider": "freeserp",
+      "duration": 0.307269708,
+      "validResultCount": 5,
+      "error": null,
+      "results": [
+        {
+          "resourceID": "3582b9d6eee7b38f11b200fde3786c46c37aa89729a5749a10fd1fabbbe5b965",
+          "grade": 1,
+          "reason": "AI regulation event from June, not current reporting"
+        },
+        {
+          "resourceID": "941718ceeb4fdf1faf58610d0592dc28d4af0c755ae2cd647b8ef67ce8422022",
+          "grade": 1,
+          "reason": "Undated AI event, currentness not established"
+        },
+        {
+          "resourceID": "8727274120067a80a7ad82284a961739de980cd4ce14b08f1a13879184fd14d9",
+          "grade": 1,
+          "reason": "Undated SQL/AI event, not current reporting"
+        },
+        {
+          "resourceID": "21d88cd0476e05822868bafa323fd6a22f6b9a8a69827aeabf849376ed4b0407",
+          "grade": 0,
+          "reason": "2021 film festival does not answer current AI news"
+        },
+        {
+          "resourceID": "be1915160b263a28a53a96e7e7475875a0cc8e437fcb50a54a4b500bf4559a65",
+          "grade": 0,
+          "reason": "Industrial webinar listing lacks current AI reporting"
+        }
+      ]
+    },
+    {
+      "id": "Q04",
+      "variant": "v3",
+      "provider": "freeserp",
+      "duration": 0.072091167,
+      "validResultCount": 5,
+      "error": null,
+      "results": [
+        {
+          "resourceID": "a89d96a617e703bb61587adc8dea557c1bf1000157b2f1009113e4ca118bae3d",
+          "grade": 1,
+          "reason": "Generic Swift starting point, missing requested framework reference"
+        },
+        {
+          "resourceID": "bc1872be24c6920cd26e94fe61ad4b74524d098f109dce1d69dadc3aff312e81",
+          "grade": 1,
+          "reason": "Python SDK rather than Swift API documentation"
+        },
+        {
+          "resourceID": "ba91bbf579b1a3f7d06813e7495a1ddd7c9ede264fac1987415ef305940f68da",
+          "grade": 1,
+          "reason": "Third-party framework example, not official documentation"
+        },
+        {
+          "resourceID": "922146aa970d852f12bb30ee685b50aa013197eb23c6c1ec9d51379d2975ff18",
+          "grade": 1,
+          "reason": "Framework launch news rather than reference documentation"
+        },
+        {
+          "resourceID": "176bc8ab06d0404c53dc53164dbce075fe5c331d06305fc2f9d31bdefc2d4541",
+          "grade": 0,
+          "reason": "2024 model release predates the requested Swift framework"
+        }
+      ]
+    },
+    {
+      "id": "Q07",
+      "variant": "v3",
+      "provider": "freeserp",
+      "duration": 0.069505583,
+      "validResultCount": 5,
+      "error": null,
+      "results": [
+        {
+          "resourceID": "8c8e54d9452466449395d4426ef50de942dd4a531ba8accdacdb73e2ae1834a3",
+          "grade": 2,
+          "reason": "Direct RAG explanation"
+        },
+        {
+          "resourceID": "df04d3ab58c4dbb55c5a507227f9587b8b53ac0e2fee66ac2388b8cbbb102143",
+          "grade": 2,
+          "reason": "Direct RAG explanation"
+        },
+        {
+          "resourceID": "4a6b323d7ea6be7b140c323c075c26d7d9797a36afb355a9e52e8a4574e17b1f",
+          "grade": 2,
+          "reason": "Direct RAG explanation"
+        },
+        {
+          "resourceID": "c572590b97070392fb4c23232bbd8b4537f9ccae0860b60eaba675c3f4685477",
+          "grade": 2,
+          "reason": "Direct RAG explanation"
+        },
+        {
+          "resourceID": "4799fbc8e9bf75368362d96f0c2d8c5ec1a5f88f49ed8b696e029f28211c1d3b",
+          "grade": 2,
+          "reason": "Direct RAG explanation"
+        }
+      ]
+    },
+    {
+      "id": "Q08",
+      "variant": "v3",
+      "provider": "freeserp",
+      "duration": 3.363224417,
+      "validResultCount": 5,
+      "error": null,
+      "results": [
+        {
+          "resourceID": "1f19309d541530b2a937d58e4ca76d7d30fcb6d3574808ecc715c1356c4dd109",
+          "grade": 0,
+          "reason": "SLM market forecast, not local iPhone deployment"
+        },
+        {
+          "resourceID": "02293a172c662a440e778833f5c403d8e216b42116ecc0d225efd65f175108b9",
+          "grade": 1,
+          "reason": "App directory only partially identifies local inference"
+        },
+        {
+          "resourceID": "1f2a3e3eabd4a1a1d8dda3db2432ee2e1500162214c36b913788ffbd4f301ad2",
+          "grade": 2,
+          "reason": "Offline mobile guide explicitly includes iPhone local models"
+        },
+        {
+          "resourceID": "d3bc4fb7b73e7cfe643e744349ee8928d68d88dc169a4d83444b1096421535b6",
+          "grade": 1,
+          "reason": "Small-model phone context but not iPhone deployment instructions"
+        },
+        {
+          "resourceID": "25e5a6a0504b14e2145cbd1bf0833daf07b1ad3121234e72d7fa4e63aae4ae02",
+          "grade": 1,
+          "reason": "iPhone rumour article touches local models, not an implementation guide"
+        }
+      ]
+    },
+    {
+      "id": "Q09",
+      "variant": "v3",
+      "provider": "freeserp",
+      "duration": 0.763440625,
+      "validResultCount": 5,
+      "error": null,
+      "results": [
+        {
+          "resourceID": "2bf6af5c2da3bc817fe011c51014c6caa18d5afd535e4c4607bde034680ada78",
+          "grade": 0,
+          "reason": "Embedded multicore topic, not requested cancellation documentation"
+        },
+        {
+          "resourceID": "f4856517802188f5b7bccec4af383c96fc10eb8149b0daf31dee0814375b3ef6",
+          "grade": 1,
+          "reason": "General concurrency forum tag rather than cancellation reference"
+        },
+        {
+          "resourceID": "f56998d95a3e5f1563385e79066318a3f065f7c2fd99cd4c84dcc023f41ecd31",
+          "grade": 1,
+          "reason": "Swift lab discussion, cancellation intent only partially covered"
+        },
+        {
+          "resourceID": "d89888fc1fb771a7d9b565c7e9eb715a72a542787eef7feeffb2352f2df6fbc0",
+          "grade": 1,
+          "reason": "State-machine library announcement, tangential concurrency"
+        },
+        {
+          "resourceID": "ce332d3c0a81bc2454a21154ff67bafafa0058d1b0f4cf12683040a445cb6d49",
+          "grade": 1,
+          "reason": "General Swift changes rather than cancellation documentation"
+        }
+      ]
+    },
+    {
+      "id": "Q10",
+      "variant": "v3",
+      "provider": "freeserp",
+      "duration": 4.6567135,
+      "validResultCount": 5,
+      "error": null,
+      "results": [
+        {
+          "resourceID": "5e8f0cada6cd6182c17801c38e1ccf6e1d5c1bfc9d45c697328bb98e521c4e41",
+          "grade": 0,
+          "reason": "2025 medical regulation is not November 2026 on-device research"
+        },
+        {
+          "resourceID": "03b3205956e2b8f44fb1e36e9f03ed8c35005253b205a63a29ca6c40bb5d760b",
+          "grade": 0,
+          "reason": "Market forecast is not research and is from 2025"
+        },
+        {
+          "resourceID": "316d4cc3db9f5945195eb8497ef1d39d7a20e0966ed6d87f245d2e988fca8c28",
+          "grade": 0,
+          "reason": "Market forecast is not on-device AI research"
+        },
+        {
+          "resourceID": "ed6bdf7326bb8436b66691a8194ace68d919cc3bcb6a57d840229b68c921cf29",
+          "grade": 0,
+          "reason": "2025 news roundup does not establish November 2026 research"
+        },
+        {
+          "resourceID": "142dce3b34f875883a99ba793d9c0f8e58a4fa3e1bd088d0c3ebf172f39d4913",
+          "grade": 0,
+          "reason": "Security landing page with 2025 dates is not current on-device research"
+        }
+      ]
+    },
+    {
+      "id": "Q01",
+      "variant": "v3",
+      "provider": "firecrawl",
+      "duration": 1.511476083,
+      "validResultCount": 5,
+      "error": null,
+      "results": [
+        {
+          "resourceID": "a970370a3a7ebaf5ef28fd0e0c1414fb1dda9b9d2a465992fea4592139a2c14a",
+          "grade": 1,
+          "reason": "AI topic hub without established date in snippet"
+        },
+        {
+          "resourceID": "ea323d61a74da2a3e50657db6e11e132362b73488629f3690f949577660dbdfb",
+          "grade": 1,
+          "reason": "AI topic hub without established date in snippet"
+        },
+        {
+          "resourceID": "8deb6966da7cb478df97fed8efc9f2c5e9d37ba3a383a76ac8472169766cbae4",
+          "grade": 1,
+          "reason": "AI topic hub without established date in snippet"
+        },
+        {
+          "resourceID": "ed54063be62506730344b4f27050bc4974cebaa4c7d87f6625684055b65d64ae",
+          "grade": 2,
+          "reason": "Spanish AI reporting hub explicitly carries November 1 2026"
+        },
+        {
+          "resourceID": "9d7050eafe724c0d33d4c178300a891ce053ecfed5d9d640874a0950f2b399ca",
+          "grade": 0,
+          "reason": "Video title is not current Spanish AI reporting evidence"
+        }
+      ]
+    },
+    {
+      "id": "Q04",
+      "variant": "v3",
+      "provider": "firecrawl",
+      "duration": 0.692552833,
+      "validResultCount": 5,
+      "error": null,
+      "results": [
+        {
+          "resourceID": "defcaf9847ded1d1690877a44c55af02aa8b6408d7003d9224ef0c959e05310f",
+          "grade": 2,
+          "reason": "Official Foundation Models reference"
+        },
+        {
+          "resourceID": "448b18b62df5bcd90abf1482a8c2d20720f1fbc434ca42bd5dc3c75da66c0448",
+          "grade": 1,
+          "reason": "Generic Foundation rather than Foundation Models"
+        },
+        {
+          "resourceID": "3cd205dede17a2b9233b7afde3b32f4c16edbd4d1047be5910c482a59e57e676",
+          "grade": 2,
+          "reason": "Official Swift Foundation Models framework page"
+        },
+        {
+          "resourceID": "bffd8308016230160ddf3525afcffcae673c3a970da7811b8be88353d9a165fe",
+          "grade": 2,
+          "reason": "Official framework introduction session"
+        },
+        {
+          "resourceID": "0dbdf118e9cf8a9fa9de48da29e072f99277062ceed17b848faf841215e631a0",
+          "grade": 1,
+          "reason": "Third-party framework guide, not official reference"
+        }
+      ]
+    },
+    {
+      "id": "Q07",
+      "variant": "v3",
+      "provider": "firecrawl",
+      "duration": 0.1273485,
+      "validResultCount": 5,
+      "error": null,
+      "results": [
+        {
+          "resourceID": "8c8e54d9452466449395d4426ef50de942dd4a531ba8accdacdb73e2ae1834a3",
+          "grade": 2,
+          "reason": "Direct RAG explanation"
+        },
+        {
+          "resourceID": "cd928e0a00862118cce35b9cb7d96623d5226dbf9f566119f664e9bdb78ff9d0",
+          "grade": 2,
+          "reason": "Direct RAG explanation"
+        },
+        {
+          "resourceID": "2b77e76d73d4f3e98b045d48aed3561879ced1aaff786d3355339b7c21fb93f5",
+          "grade": 2,
+          "reason": "Direct retrieval/generation relationship explanation"
+        },
+        {
+          "resourceID": "b43f8e16786a1aa94d7cbaee9352dea432bda5f8ff2c0ec9459e94db2594753a",
+          "grade": 2,
+          "reason": "Direct RAG explanation"
+        },
+        {
+          "resourceID": "9ee7abb8cc6547c45967d563d22c208636758985029a131680ecdb095297dcda",
+          "grade": 2,
+          "reason": "Direct RAG explanation"
+        }
+      ]
+    },
+    {
+      "id": "Q01",
+      "variant": "v3",
+      "provider": "parallel",
+      "duration": 1.8534567499999999,
+      "validResultCount": 5,
+      "error": null,
+      "results": [
+        {
+          "resourceID": "64d6cbc4a8ff7e1c756302e7d21a6917a807104938ae5969b27431250662ca63",
+          "grade": 2,
+          "reason": "AI reporting explicitly dated to evaluation day, English rather than Spanish"
+        },
+        {
+          "resourceID": "37c9419717e259ff7e94b9bf492bf5ac14c2671f2f638d2eaceaf165e8de44dc",
+          "grade": 2,
+          "reason": "Spanish AI reporting with October 27 2026 date"
+        },
+        {
+          "resourceID": "77120c0ca6f4e79f494dcac3644148f01b78c7e2cdc4d9a4e6c1d6f10e5a2cad",
+          "grade": 2,
+          "reason": "Spanish AI news section with October 26 2026 date"
+        },
+        {
+          "resourceID": "21c9686f7d170b600e91bc4b0225fc89c6d2af9d98adb0d434b3d452e05ceecc",
+          "grade": 1,
+          "reason": "AI research listing without date established in retained excerpt"
+        },
+        {
+          "resourceID": "a970370a3a7ebaf5ef28fd0e0c1414fb1dda9b9d2a465992fea4592139a2c14a",
+          "grade": 2,
+          "reason": "Spanish AI reporting dated October 28 2026"
+        }
+      ]
+    },
+    {
+      "id": "Q04",
+      "variant": "v3",
+      "provider": "parallel",
+      "duration": 1.030584792,
+      "validResultCount": 5,
+      "error": null,
+      "results": [
+        {
+          "resourceID": "05e9dd36705edee6d8a22a57dcbffff9fca978f06fb75c325fb503d72396b5b5",
+          "grade": 1,
+          "reason": "Broad Apple Intelligence resource hub"
+        },
+        {
+          "resourceID": "defcaf9847ded1d1690877a44c55af02aa8b6408d7003d9224ef0c959e05310f",
+          "grade": 2,
+          "reason": "Official Swift framework reference"
+        },
+        {
+          "resourceID": "86381460fe7b54a75e5a78d50a6e75b461a320f4840fe9eb0f3374ec917456c0",
+          "grade": 1,
+          "reason": "Third-party Swift examples, not official documentation"
+        },
+        {
+          "resourceID": "517f228240ed6fb9d47b368e6bf79200d64d3750937362f0f968ec02a5ffeda1",
+          "grade": 2,
+          "reason": "Official reference with path-case alias; duplicate content risk retained"
+        },
+        {
+          "resourceID": "45454d7df53018b7a13d4d4f52eca9ce15c4f31b6ca5abea608e32246428ee85",
+          "grade": 1,
+          "reason": "Third-party framework guide, not official reference"
+        }
+      ]
+    },
+    {
+      "id": "Q07",
+      "variant": "v3",
+      "provider": "parallel",
+      "duration": 1.014914209,
+      "validResultCount": 5,
+      "error": null,
+      "results": [
+        {
+          "resourceID": "2f0c0de9306b80abec00b64079ffb145d58135577fa4d15720a931eb7d080a07",
+          "grade": 2,
+          "reason": "RAG definition from NIST"
+        },
+        {
+          "resourceID": "cd928e0a00862118cce35b9cb7d96623d5226dbf9f566119f664e9bdb78ff9d0",
+          "grade": 2,
+          "reason": "Direct RAG explanation"
+        },
+        {
+          "resourceID": "e0b9164baba875454787188f91b8b040df3cfad261ec1064468ebcff256ed69c",
+          "grade": 2,
+          "reason": "Survey explaining retriever-generator relationship"
+        },
+        {
+          "resourceID": "8798e4f9b38b9581766944cf43b591ef82b439cb9e915c2c91b9bc2c45fbe93e",
+          "grade": 2,
+          "reason": "Survey explaining retriever-generator relationship; near duplicate of preceding work"
+        },
+        {
+          "resourceID": "f21b3086228012981b6080452022f4caf753944b75e0786a375bb26489c4d893",
+          "grade": 2,
+          "reason": "Direct RAG explanation"
+        }
+      ]
+    }
+  ]
+}

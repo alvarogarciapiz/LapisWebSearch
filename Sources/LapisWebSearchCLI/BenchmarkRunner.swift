@@ -56,7 +56,8 @@ enum BenchmarkRunner {
             index += 2
         }
         guard let path = values["--dataset"], let provider = values["--provider"],
-            ["firecrawl", "parallel", "research-fallback", "parallel-first"].contains(provider),
+            ["firecrawl", "parallel", "freeserp", "freeserp-first", "research-fallback", "parallel-first"].contains(
+                provider),
             let count = Int(values["--count"] ?? "5"), (1...20).contains(count),
             let offset = Int(values["--offset"] ?? "0"), offset >= 0,
             let interval = Double(values["--interval"] ?? "3"), interval.isFinite, (1...60).contains(interval),
@@ -126,7 +127,7 @@ private actor BenchmarkTransport: HTTPTransport {
     var counts = (http: 0, search: 0)
     func send(_ request: URLRequest, maximumResponseBytes: Int) async throws -> HTTPResponse {
         counts.http += 1
-        if request.url?.host == "api.firecrawl.dev" {
+        if request.url?.host == "api.firecrawl.dev" || request.url?.host == "freeserp.ai" {
             counts.search += 1
         } else if let body = request.httpBody,
             let object = try? JSONSerialization.jsonObject(with: body) as? [String: Any],

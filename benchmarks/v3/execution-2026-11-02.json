@@ -1,0 +1,257 @@
+{
+  "schemaVersion": 1,
+  "observations": [
+    {
+      "attempts": [
+        {
+          "completedAt": "2026-11-02T09:16:04Z",
+          "duration": 0.307118875,
+          "httpStatus": 200,
+          "provider": "freeserp",
+          "queueDuration": 4.042e-06,
+          "skipped": false,
+          "startedAt": "2026-11-02T09:16:04Z",
+          "validResultCount": 5,
+          "wasFallback": false
+        }
+      ],
+      "duration": 0.307269708,
+      "httpRequestCount": 1,
+      "id": "Q01",
+      "resultCount": 5,
+      "searchRequestCount": 1,
+      "provider": "freeserp"
+    },
+    {
+      "attempts": [
+        {
+          "completedAt": "2026-11-02T09:16:07Z",
+          "duration": 0.072016583,
+          "httpStatus": 200,
+          "provider": "freeserp",
+          "queueDuration": 5.708e-06,
+          "skipped": false,
+          "startedAt": "2026-11-02T09:16:07Z",
+          "validResultCount": 5,
+          "wasFallback": false
+        }
+      ],
+      "duration": 0.072091167,
+      "httpRequestCount": 1,
+      "id": "Q04",
+      "resultCount": 5,
+      "searchRequestCount": 1,
+      "provider": "freeserp"
+    },
+    {
+      "attempts": [
+        {
+          "completedAt": "2026-11-02T09:16:10Z",
+          "duration": 0.069437291,
+          "httpStatus": 200,
+          "provider": "freeserp",
+          "queueDuration": 5.708e-06,
+          "skipped": false,
+          "startedAt": "2026-11-02T09:16:10Z",
+          "validResultCount": 5,
+          "wasFallback": false
+        }
+      ],
+      "duration": 0.069505583,
+      "httpRequestCount": 1,
+      "id": "Q07",
+      "resultCount": 5,
+      "searchRequestCount": 1,
+      "provider": "freeserp"
+    },
+    {
+      "attempts": [
+        {
+          "completedAt": "2026-11-02T09:16:17Z",
+          "duration": 3.363155833,
+          "httpStatus": 200,
+          "provider": "freeserp",
+          "queueDuration": 6.292e-06,
+          "skipped": false,
+          "startedAt": "2026-11-02T09:16:13Z",
+          "validResultCount": 5,
+          "wasFallback": false
+        }
+      ],
+      "duration": 3.363224417,
+      "httpRequestCount": 1,
+      "id": "Q08",
+      "resultCount": 5,
+      "searchRequestCount": 1,
+      "provider": "freeserp"
+    },
+    {
+      "attempts": [
+        {
+          "completedAt": "2026-11-02T09:16:21Z",
+          "duration": 0.763372959,
+          "httpStatus": 200,
+          "provider": "freeserp",
+          "queueDuration": 5.334e-06,
+          "skipped": false,
+          "startedAt": "2026-11-02T09:16:20Z",
+          "validResultCount": 5,
+          "wasFallback": false
+        }
+      ],
+      "duration": 0.763440625,
+      "httpRequestCount": 1,
+      "id": "Q09",
+      "resultCount": 5,
+      "searchRequestCount": 1,
+      "provider": "freeserp"
+    },
+    {
+      "attempts": [
+        {
+          "completedAt": "2026-11-02T09:16:28Z",
+          "duration": 4.656637,
+          "httpStatus": 200,
+          "provider": "freeserp",
+          "queueDuration": 5.791e-06,
+          "skipped": false,
+          "startedAt": "2026-11-02T09:16:24Z",
+          "validResultCount": 5,
+          "wasFallback": false
+        }
+      ],
+      "duration": 4.6567135,
+      "httpRequestCount": 1,
+      "id": "Q10",
+      "resultCount": 5,
+      "searchRequestCount": 1,
+      "provider": "freeserp"
+    },
+    {
+      "attempts": [
+        {
+          "completedAt": "2026-11-02T09:16:30Z",
+          "duration": 1.511335916,
+          "httpStatus": 200,
+          "provider": "firecrawl",
+          "queueDuration": 4.041e-06,
+          "skipped": false,
+          "startedAt": "2026-11-02T09:16:28Z",
+          "validResultCount": 5,
+          "wasFallback": false
+        }
+      ],
+      "duration": 1.511476083,
+      "httpRequestCount": 1,
+      "id": "Q01",
+      "resultCount": 5,
+      "searchRequestCount": 1,
+      "provider": "firecrawl"
+    },
+    {
+      "attempts": [
+        {
+          "completedAt": "2026-11-02T09:16:34Z",
+          "duration": 0.692479166,
+          "httpStatus": 200,
+          "provider": "firecrawl",
+          "queueDuration": 6.375e-06,
+          "skipped": false,
+          "startedAt": "2026-11-02T09:16:33Z",
+          "validResultCount": 5,
+          "wasFallback": false
+        }
+      ],
+      "duration": 0.692552833,
+      "httpRequestCount": 1,
+      "id": "Q04",
+      "resultCount": 5,
+      "searchRequestCount": 1,
+      "provider": "firecrawl"
+    },
+    {
+      "attempts": [
+        {
+          "completedAt": "2026-11-02T09:16:37Z",
+          "duration": 0.127276542,
+          "httpStatus": 200,
+          "provider": "firecrawl",
+          "queueDuration": 5.875e-06,
+          "skipped": false,
+          "startedAt": "2026-11-02T09:16:37Z",
+          "validResultCount": 5,
+          "wasFallback": false
+        }
+      ],
+      "duration": 0.1273485,
+      "httpRequestCount": 1,
+      "id": "Q07",
+      "resultCount": 5,
+      "searchRequestCount": 1,
+      "provider": "firecrawl"
+    },
+    {
+      "attempts": [
+        {
+          "completedAt": "2026-11-02T09:16:39Z",
+          "duration": 1.8533206660000001,
+          "httpStatus": 200,
+          "provider": "parallel",
+          "queueDuration": 4.25e-06,
+          "skipped": false,
+          "startedAt": "2026-11-02T09:16:37Z",
+          "validResultCount": 5,
+          "wasFallback": false
+        }
+      ],
+      "duration": 1.8534567499999999,
+      "httpRequestCount": 3,
+      "id": "Q01",
+      "resultCount": 5,
+      "searchRequestCount": 1,
+      "provider": "parallel"
+    },
+    {
+      "attempts": [
+        {
+          "completedAt": "2026-11-02T09:16:43Z",
+          "duration": 1.030513292,
+          "httpStatus": 200,
+          "provider": "parallel",
+          "queueDuration": 6.292e-06,
+          "skipped": false,
+          "startedAt": "2026-11-02T09:16:42Z",
+          "validResultCount": 5,
+          "wasFallback": false
+        }
+      ],
+      "duration": 1.030584792,
+      "httpRequestCount": 1,
+      "id": "Q04",
+      "resultCount": 5,
+      "searchRequestCount": 1,
+      "provider": "parallel"
+    },
+    {
+      "attempts": [
+        {
+          "completedAt": "2026-11-02T09:16:47Z",
+          "duration": 1.014815416,
+          "httpStatus": 200,
+          "provider": "parallel",
+          "queueDuration": 4.25e-06,
+          "skipped": false,
+          "startedAt": "2026-11-02T09:16:46Z",
+          "validResultCount": 5,
+          "wasFallback": false
+        }
+      ],
+      "duration": 1.014914209,
+      "httpRequestCount": 1,
+      "id": "Q07",
+      "resultCount": 5,
+      "searchRequestCount": 1,
+      "provider": "parallel"
+    }
+  ]
+}

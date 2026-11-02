@@ -6,7 +6,7 @@ public struct SearchError: Error, Sendable, LocalizedError, Encodable {
         case invalidInput, invalidConfiguration, networkUnavailable, timeout, cancelled
         case rateLimited, blocked, unauthorized, invalidResponse, parsingFailure
         case unsupportedOperation, allProvidersUnavailable, noResults, responseTooLarge
-        case serverError, providerBusy
+        case serverError, providerBusy, noEligibleProviders, providerNotPermitted
     }
 
     public let code: Code

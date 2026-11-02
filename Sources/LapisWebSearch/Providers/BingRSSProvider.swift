@@ -5,6 +5,11 @@ import Foundation
 /// requires written permission. This type provides no such permission.
 public struct BingRSSProvider: SearchProvider {
     public let identifier = "bing-rss"
+    public var usage: ProviderUsage {
+        .init(
+            status: .restricted, evidence: [URL(string: "https://www.microsoft.com/en-us/servicesagreement")!],
+            reviewedOn: "2026-11-02")
+    }
     public var capabilities: ProviderCapabilities { .init(locale: true) }
     private let transport: any HTTPTransport
     private let hasSeparatePermission: Bool

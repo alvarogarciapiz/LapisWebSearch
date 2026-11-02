@@ -1,0 +1,223 @@
+{
+  "reviewedOn": "2026-11-02",
+  "sourceExecuted": false,
+  "incorporatedCode": false,
+  "repositories": [
+    {
+      "repository": "sweetcornna/free-search-mcp",
+      "revision": "2c7fee99b890994f28ad5584166fa6acd022baa1",
+      "observedPushDate": "2026-10-31T08:44:40Z",
+      "archived": false,
+      "licenseObservation": "MIT",
+      "inspectedFiles": [
+        "src/search_mcp/aggregator.py",
+        "src/search_mcp/net.py",
+        "src/search_mcp/engines/anysearch.py",
+        "src/search_mcp/engines/bing.py",
+        "src/search_mcp/engines/duckduckgo.py"
+      ]
+    },
+    {
+      "repository": "McKenzieIT/smart-web-search",
+      "revision": "76a774f40a2919f3c6ebbd85f909ff6f7a202122",
+      "observedPushDate": "2026-05-03T00:43:02Z",
+      "archived": false,
+      "licenseObservation": "MIT declared in pyproject; standalone notice not identified",
+      "inspectedFiles": [
+        "pyproject.toml",
+        "src/searchlight/search/native.py"
+      ]
+    },
+    {
+      "repository": "drmikecrypto/WebSearchFree",
+      "revision": "7ef69b47d56de677cca1c3e28c63f056f8c2b92b",
+      "observedPushDate": "2026-09-08T13:01:00Z",
+      "archived": false,
+      "licenseObservation": "MIT",
+      "inspectedFiles": [
+        "src/engines/searx.cpp",
+        "src/engines/ddg.cpp"
+      ]
+    },
+    {
+      "repository": "deedy5/ddgs",
+      "revision": "8e74959141106702645020dcb853c6453b5e5195",
+      "observedPushDate": "2026-10-23T21:16:26Z",
+      "archived": false,
+      "licenseObservation": "MIT",
+      "inspectedFiles": [
+        "ddgs/ddgs.py",
+        "ddgs/engines/yahoo.py",
+        "ddgs/engines/bing.py",
+        "ddgs/engines/yandex.py",
+        "ddgs/engines/duckduckgo.py"
+      ]
+    },
+    {
+      "repository": "DDDMUC/dsh-free-search",
+      "revision": "88ee7fdf65171505bd4019605afc4324327e5453",
+      "observedPushDate": "2026-11-02T07:23:35Z",
+      "archived": false,
+      "licenseObservation": "MIT",
+      "inspectedFiles": [
+        "lib/client.js",
+        "lib/index.js",
+        "lib/multi_policy.js",
+        "lib/fetch_upstream.js"
+      ]
+    },
+    {
+      "repository": "liustack/modsearch",
+      "revision": "d5582ce9f2e0af09eeb85f0eb3d46eb93b5caa2c",
+      "observedPushDate": "2026-10-28T11:03:36Z",
+      "archived": false,
+      "licenseObservation": "MIT",
+      "inspectedFiles": [
+        "src/providers/youcom.ts",
+        "src/providers/exa.ts"
+      ]
+    },
+    {
+      "repository": "sjlgg/dsh-free-web-search",
+      "revision": "9bfbd111ea5c84a9dba86d8ca613d33ca3e12dd5",
+      "observedPushDate": "2026-08-23T11:42:21Z",
+      "archived": false,
+      "licenseObservation": "Apache-2.0",
+      "inspectedFiles": [
+        "src/backends/so360.ts",
+        "src/backends/bing.ts"
+      ]
+    },
+    {
+      "repository": "tickernelz/mcp-web-search",
+      "revision": "5e43efd0854e24ad8ac9bb7e1e7ea91011d4ec5f",
+      "observedPushDate": "2026-05-03T08:45:25Z",
+      "archived": false,
+      "licenseObservation": "MIT",
+      "inspectedFiles": [
+        "src/providers/duckduckgo.ts",
+        "src/providers/bing.ts",
+        "src/providers/searxng.ts"
+      ]
+    },
+    {
+      "repository": "HughesCuit/heventure-search-mcp",
+      "revision": "9ce29f924f8d25debab2913a20a0adc327fb8bc5",
+      "observedPushDate": "2026-05-13T13:17:32Z",
+      "archived": false,
+      "licenseObservation": "MIT declared in pyproject; standalone notice not identified",
+      "inspectedFiles": [
+        "pyproject.toml",
+        "heventure_search_mcp/server.py"
+      ]
+    },
+    {
+      "repository": "karust/openserp",
+      "revision": "948f0acdef79181314ffc4e7109e9673242f22a9",
+      "observedPushDate": "2026-10-28T21:56:54Z",
+      "archived": false,
+      "licenseObservation": "MIT",
+      "inspectedFiles": [
+        "core/browser.go",
+        "duckduckgo/search.go",
+        "google/search.go",
+        "ecosia/search.go"
+      ]
+    },
+    {
+      "repository": "rafaelpierre/kestrelsearch",
+      "revision": "1d0a23b332b9f5d7301c6509d537c73f74791c3e",
+      "observedPushDate": "2026-08-28T18:38:30Z",
+      "archived": false,
+      "licenseObservation": "Not identified",
+      "inspectedFiles": [
+        "src/kestrelsearch/search.py"
+      ]
+    },
+    {
+      "repository": "Aas-ee/open-webSearch",
+      "revision": "fb11fd94df736819a0d2765bf7645224f98b2c6b",
+      "observedPushDate": "2026-10-08T05:52:09Z",
+      "archived": false,
+      "licenseObservation": "Apache-2.0",
+      "inspectedFiles": [
+        "src/utils/httpRequest.ts",
+        "src/engines/duckduckgo/searchDuckDuckGo.ts",
+        "src/engines/bing/bing.ts",
+        "src/engines/brave/brave.ts",
+        "src/engines/startpage/startpage.ts"
+      ]
+    },
+    {
+      "repository": "mrkrsl/web-search-mcp",
+      "revision": "eeb03f88525cbf74c4019e59a3fea45a537a760b",
+      "observedPushDate": "2025-08-08T19:58:47Z",
+      "archived": false,
+      "licenseObservation": "MIT",
+      "inspectedFiles": [
+        "src/browser-pool.ts",
+        "src/search-engine.ts"
+      ]
+    },
+    {
+      "repository": "nickclyde/duckduckgo-mcp-server",
+      "revision": "8182af3f2295017ca90527a924f48147fbf18d5b",
+      "observedPushDate": "2026-09-04T18:31:25Z",
+      "archived": false,
+      "licenseObservation": "MIT",
+      "inspectedFiles": [
+        "src/duckduckgo_mcp_server/server.py"
+      ]
+    },
+    {
+      "repository": "VincentKaufmann/noapi-google-search-mcp",
+      "revision": "fe5a37f05725200c4a718e0c3255d476772ef153",
+      "observedPushDate": "2026-08-16T12:19:04Z",
+      "archived": false,
+      "licenseObservation": "MIT",
+      "inspectedFiles": [
+        "src/google_search_mcp/server.py"
+      ]
+    },
+    {
+      "repository": "dotnetpower/infomesh",
+      "revision": "891687273c379271b72d4a78e7b4f7effae2a7ba",
+      "observedPushDate": "2026-09-20T01:11:09Z",
+      "archived": false,
+      "licenseObservation": "MIT",
+      "inspectedFiles": [
+        "infomesh/search/query.py",
+        "infomesh/p2p/bootstrap.py",
+        "infomesh/index/distributed.py",
+        "infomesh/index/starter.py"
+      ]
+    },
+    {
+      "repository": "mwmbl/mwmbl",
+      "revision": "68448d3b97ae01854bb40de85c1923a8caa5f71c",
+      "observedPushDate": "2026-11-02T06:26:20Z",
+      "archived": false,
+      "licenseObservation": "AGPL-3.0",
+      "inspectedFiles": [
+        "mwmbl/search_auth.py",
+        "mwmbl/tinysearchengine/search.py"
+      ]
+    },
+    {
+      "repository": "searxng/searxng",
+      "revision": "10db664f14bc34565d4fd6ca6d846b6f932976aa",
+      "observedPushDate": "2026-11-01T22:52:49Z",
+      "archived": false,
+      "licenseObservation": "AGPL-3.0",
+      "inspectedFiles": [
+        "searx/engines/swisscows.py",
+        "searx/engines/mwmbl.py",
+        "searx/engines/yep.py",
+        "searx/engines/qwant.py",
+        "searx/engines/duckduckgo.py",
+        "searx/engines/360search.py",
+        "searx/engines/marginalia.py"
+      ]
+    }
+  ]
+}

@@ -4,6 +4,11 @@ import Foundation
 /// Experimental: commercial use requires express provider authorization; see docs/PROVIDERS.md.
 public struct FirecrawlProvider: SearchProvider {
     public let identifier = "firecrawl"
+    public var usage: ProviderUsage {
+        .init(
+            status: .restricted, evidence: [URL(string: "https://www.firecrawl.dev/terms-of-service")!],
+            reviewedOn: "2026-11-02")
+    }
     public var capabilities: ProviderCapabilities { .init(safeSearch: true, country: true, timeRange: true) }
     private let transport: any HTTPTransport
     private let maximumBytes = 2 * 1024 * 1024

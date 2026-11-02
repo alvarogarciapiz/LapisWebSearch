@@ -1,0 +1,35 @@
+[
+  {
+    "medianSeconds" : 0.69255283300000003,
+    "nonempty" : 3,
+    "pooled_nDCG@5" : 0.74354844704980649,
+    "Precision@5" : 0.59999999999999998,
+    "queries" : 3,
+    "sampleP95NearestRankSeconds" : 1.511476083,
+    "Success@5" : 1,
+    "transportSuccess" : 3,
+    "variantProvider" : "v3:firecrawl"
+  },
+  {
+    "medianSeconds" : 0.53535516650000003,
+    "nonempty" : 6,
+    "pooled_nDCG@5" : 0.49421170686888938,
+    "Precision@5" : 0.19999999999999998,
+    "queries" : 6,
+    "sampleP95NearestRankSeconds" : 4.6567135000000004,
+    "Success@5" : 0.33333333333333331,
+    "transportSuccess" : 6,
+    "variantProvider" : "v3:freeserp"
+  },
+  {
+    "medianSeconds" : 1.030584792,
+    "nonempty" : 3,
+    "pooled_nDCG@5" : 0.84365029387127155,
+    "Precision@5" : 0.73333333333333339,
+    "queries" : 3,
+    "sampleP95NearestRankSeconds" : 1.8534567499999999,
+    "Success@5" : 1,
+    "transportSuccess" : 3,
+    "variantProvider" : "v3:parallel"
+  }
+]
