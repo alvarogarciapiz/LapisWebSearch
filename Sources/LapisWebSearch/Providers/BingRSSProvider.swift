@@ -27,6 +27,8 @@ public struct BingRSSProvider: SearchProvider {
         var parts = URLComponents(string: "https://www.bing.com/search")!
         parts.queryItems = [.init(name: "q", value: request.query), .init(name: "format", value: "rss")]
         if let locale = request.options.locale { parts.queryItems?.append(.init(name: "mkt", value: locale)) }
+        // URLComponents preserves literal +, but form-query servers interpret it as a space.
+        parts.percentEncodedQuery = parts.percentEncodedQuery?.replacingOccurrences(of: "+", with: "%2B")
         var http = URLRequest(url: parts.url!)
         http.timeoutInterval = request.options.timeout
         http.setValue("application/rss+xml, application/xml, text/xml", forHTTPHeaderField: "Accept")

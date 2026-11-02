@@ -3,6 +3,7 @@
 ## V3 development iteration — unreleased research preview
 
 - **Behavior change:** the parameterless client and CLI no longer choose Firecrawl implicitly. Select providers explicitly; empty selection returns noEligibleProviders with no request.
+- Fix literal plus query encoding in FreeSerp/Bing for form-decoding servers, with server-style decoding regressions (C++/Unicode).
 - Add original experimental FreeSerp Global native JSON adapter, language-only locale, publication-date validation and rejection of silent homepage-index fallback.
 - Add provider usage assessments and a strict commercial policy rejecting unsafe registries before any request, including fallbacks. No bundled provider is commercially cleared for the required deployment.
 - Add 20 test functions (98 total), public consumer policy checks, fault-injection/live-fallback and native coalescing CLI checks. Fix old deadline tests exposed by Simulator scheduling load, including a test-only out-of-bounds crash.

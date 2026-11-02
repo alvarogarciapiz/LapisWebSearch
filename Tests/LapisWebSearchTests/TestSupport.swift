@@ -58,3 +58,17 @@ func result(_ provider: String = "stub", _ url: String = "https://example.org/",
         title: "Example", url: URL(string: url)!, snippet: "A useful snippet", provider: provider,
         originalPosition: position)
 }
+
+/// Models standard server-side application/x-www-form-urlencoded query decoding, including plus-as-space.
+func formQueryValue(_ url: URL, name: String) -> String? {
+    let parts = URLComponents(url: url, resolvingAgainstBaseURL: false)
+    for item in (parts?.percentEncodedQuery ?? "").split(separator: "&") {
+        let pair = item.split(separator: "=", maxSplits: 1, omittingEmptySubsequences: false)
+        guard pair.count == 2 else { continue }
+        let key = String(pair[0]).replacingOccurrences(of: "+", with: " ").removingPercentEncoding
+        if key == name {
+            return String(pair[1]).replacingOccurrences(of: "+", with: " ").removingPercentEncoding
+        }
+    }
+    return nil
+}

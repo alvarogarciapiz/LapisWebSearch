@@ -30,6 +30,8 @@ public struct FreeSerpProvider: SearchProvider {
             URLQueryItem(name: "size", value: String(request.options.limit)),
         ]
         if let language = request.options.locale { url.queryItems!.append(.init(name: "lang", value: language)) }
+        // URLComponents preserves literal +, but form-query servers interpret it as a space.
+        url.percentEncodedQuery = url.percentEncodedQuery?.replacingOccurrences(of: "+", with: "%2B")
         var http = URLRequest(url: url.url!)
         http.timeoutInterval = request.options.timeout
         http.setValue("application/json", forHTTPHeaderField: "Accept")

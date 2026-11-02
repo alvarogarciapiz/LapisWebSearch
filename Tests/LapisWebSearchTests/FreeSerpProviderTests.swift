@@ -37,6 +37,7 @@ import Testing
         #expect(http.timeoutInterval == 3)
         #expect(http.httpBody == nil)
         #expect(values == ["index": "web", "q": query, "size": "2", "lang": "es"])
+        #expect(formQueryValue(http.url!, name: "q") == query)
         #expect(http.value(forHTTPHeaderField: "Authorization") == nil)
     }
 

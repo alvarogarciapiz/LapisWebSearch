@@ -89,6 +89,7 @@ import Testing
         let url = try #require(request.url)
         let parts = try #require(URLComponents(url: url, resolvingAgainstBaseURL: false))
         #expect(parts.queryItems?.first(where: { $0.name == "q" })?.value == query)
+        #expect(formQueryValue(url, name: "q") == query)
         #expect(parts.queryItems?.first(where: { $0.name == "mkt" })?.value == "es-ES")
     }
 
